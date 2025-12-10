@@ -1,0 +1,22 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /about
+Disallow: /datepicker
+Disallow: /home/aboutsection
+Disallow: /home/contact
+Disallow: /home/contactwithus
+Disallow: /home/digibimacta
+Disallow: /home/faqsection
+Disallow: /home/herosection
+Disallow: /home/insurancepartner
+Disallow: /home/whychooseus
+Disallow: /partial/
+Disallow: /admin/
+Disallow: /components/
+
+# Host
+Host: https://digibima.com/
+
+# Sitemaps
+Sitemap: https://digibima.com/sitemap.xml
