@@ -493,6 +493,7 @@ const [submitLoading, setSubmitLoading] = useState(false);
   const [otp, setOtp] = useState("");
   const [captcha, setCaptcha] = useState("");
   const [userCaptcha, setUserCaptcha] = useState("");
+  const [otpId, setOtpId] = useState(null);
 
   // Generate Captcha
   useEffect(() => {
@@ -548,6 +549,7 @@ const handleSendOtp = async () => {
 
       if (res?.status) {
         setOtp("");
+        setOtpId(res.otpId || null);
         setOtpVisible(true);
         setTimer(30);
         // showSuccess("OTP sent successfully!");
@@ -576,7 +578,7 @@ const handleVerifyOtp = async () => {
   try {
     setVerifyOtpLoading(true);
     const res = await callApi(constant.API.USER.VERIFYOTP, "POST", {
-      mobile,
+      otpId,
       otp,
     });
 
