@@ -6,6 +6,7 @@ import RGHSFAQ from "../components/rghs/rghsfaq";
 import { HiClock } from "react-icons/hi";
 import { Ri24HoursFill } from "react-icons/ri";
 import { MapPin, Phone, Mail } from "lucide-react";
+import Seo from "../components/seo";
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0 },
@@ -14,6 +15,9 @@ const fadeUp = {
 export default function Home() {
   return (
     <>
+    <Seo
+            title="RGHS Pharmacy Services | HealthSquare"
+            description="HealthSquare offers RGHS pharmacy services to help eligible members obtain free medicines under Rajasthan Government Health Scheme."/>
       <HeroSection />
 
       <main className="max-w-7xl mx-auto py-12 px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,2.2fr)_minmax(260px,0.8fr)] gap-10">
@@ -44,7 +48,7 @@ export default function Home() {
             className="rounded-2xl shadow-lg bg-gradient-to-br from-emerald-50 via-white to-blue-50 border border-emerald-100 p-6 md:p-7"
           >
             <h2 className="text-xl md:text-2xl font-semibold text-emerald-800 mb-3">
-              1. What is RGHS (Rajasthan Government Health Scheme)?
+              What is RGHS (Rajasthan Government Health Scheme)?
             </h2>
             <p>
               Rajasthan Government Health Scheme (RGHS) is formulated to provide
@@ -70,7 +74,7 @@ export default function Home() {
             className="rounded-2xl shadow-lg bg-white border border-blue-100 p-6 md:p-7"
           >
             <h2 className="text-xl md:text-2xl font-semibold text-blue-800 mb-3">
-              2. How to Apply for an RGHS Card
+              How to Apply for an RGHS Card
             </h2>
             <p>
               An RGHS card is necessary to enjoy the benefits under the scheme.
@@ -112,7 +116,7 @@ export default function Home() {
             className="rounded-2xl shadow-lg bg-gradient-to-br from-emerald-600/5 via-emerald-50 to-blue-100 border border-emerald-100 p-6 md:p-7"
           >
             <h2 className="text-xl md:text-2xl font-semibold text-emerald-900 mb-3">
-              3. RGHS for Pensioners
+              RGHS for Pensioners
             </h2>
             <p>
               The scheme is particularly useful for pensioners, who tend to have
@@ -139,9 +143,9 @@ export default function Home() {
               medicines without visiting the pharmacy in person, saving time and
               effort while ensuring continued treatment.
             </p>
-            <p className="mt-3 font-semibold text-emerald-700">
+            {/* <p className="mt-3 font-semibold text-emerald-700">
               More Description For Pensioners - Click Here
-            </p>
+            </p> */}
           </motion.section>
 
           <motion.section
@@ -153,7 +157,7 @@ export default function Home() {
             className="rounded-2xl shadow-lg bg-white border border-emerald-100 p-6 md:p-7"
           >
             <h2 className="text-xl md:text-2xl font-semibold text-blue-900 mb-3">
-              4. Benefits of the RGHS Scheme
+              Benefits of the RGHS Scheme
             </h2>
             <p>
               The RGHS scheme&apos;s advantages are extensive and encompass
@@ -200,7 +204,7 @@ export default function Home() {
             className="rounded-2xl shadow-lg bg-gradient-to-br from-emerald-50 to-blue-50 border border-blue-100 p-6 md:p-7"
           >
             <h2 className="text-xl md:text-2xl font-semibold text-emerald-900 mb-3">
-              5. RGHS Pharmacy Services
+              RGHS Pharmacy Services
             </h2>
             <p>
               An RGHS pharmacy is a government-approved pharmacy that is
@@ -231,7 +235,7 @@ export default function Home() {
             className="rounded-2xl shadow-lg bg-white border border-emerald-100 p-6 md:p-7"
           >
             <h2 className="text-xl md:text-2xl font-semibold text-blue-900 mb-3">
-              6. HealthSquare: An RGHS Verified Pharmacy
+              HealthSquare: An RGHS Verified Pharmacy
             </h2>
             <p>
               HealthSquare Pharmacy is a proud RGHS-verified pharmacy, offering
@@ -269,7 +273,7 @@ export default function Home() {
             className="rounded-2xl shadow-lg bg-gradient-to-br from-emerald-600/5 via-emerald-50 to-blue-100 border border-blue-100 p-6 md:p-7"
           >
             <h2 className="text-xl md:text-2xl font-semibold text-emerald-900 mb-3">
-              7. RGHS Medicines: Cashless and Accessible
+              RGHS Medicines: Cashless and Accessible
             </h2>
             <p>
               Access to RGHS medicines cashless is one of the largest strengths
@@ -293,7 +297,7 @@ export default function Home() {
             className="rounded-2xl shadow-lg bg-white border border-emerald-100 p-6 md:p-7"
           >
             <h2 className="text-xl md:text-2xl font-semibold text-blue-900 mb-3">
-              8. RGHS Toll-Free Number and Support
+              RGHS Toll-Free Number and Support
             </h2>
             <p>
               To provide a smooth and supportive experience to all its
@@ -329,7 +333,7 @@ export default function Home() {
           >
             <div>
               <h2 className="text-xl md:text-2xl font-semibold text-emerald-900 mb-3">
-                9. Additional Benefits with HealthSquare Pharmacy
+                Additional Benefits with HealthSquare Pharmacy
               </h2>
               <p>
                 Apart from the scheme, HealthSquare goes the extra mile to
@@ -351,7 +355,7 @@ export default function Home() {
               </ul>
             </div>
 
-            <div className="mt-4 pt-4 border-t border-emerald-200">
+            {/* <div className="mt-4 pt-4 border-t border-emerald-200">
               <h3 className="text-lg md:text-2xl font-semibold text-emerald-900 mb-3">
                 Conclusion
               </h3>
@@ -376,7 +380,7 @@ export default function Home() {
                 Your health is our priority, and with RGHS + HealthSquare,
                 you’re always in safe hands.
               </p>
-            </div>
+            </div> */}
           </motion.section>
         </div>
 

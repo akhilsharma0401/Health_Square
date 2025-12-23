@@ -1,6 +1,9 @@
 export const servicesData = [
   {
     slug: "smile-design",
+    metatitle: "Natural Smile Design at Healthsquare Clinic",
+    metadescription:
+      "Smile Design at HealthSquare enhances your smile’s shape, color, and alignment using advanced digital dental technology.",
     title: "Smile Design in Jaipur",
     banner: "/images/services/smile/smile-bg.png",
     intro:
@@ -114,6 +117,9 @@ export const servicesData = [
 
   {
     slug: "advanced-root-canal-treatment",
+      metatitle: "Advanced Root Canal Treatment Dental Clinic in Jaipur",
+    metadescription:
+      "Root canal treatment at HealthSquare treats infected teeth, reduces tooth pain, and restores oral health with modern endodontic care.",
     title: "Advanced Root Canal Treatment in Jaipur",
     banner: "/images/services/rootcanal/rootcanal-bg.png",
     intro:
@@ -217,6 +223,9 @@ export const servicesData = [
 
   {
     slug: "child-dental-care",
+      metatitle: "Gentle Child Dental Care in Jaipur | HealthSquare",
+    metadescription:
+      "Looking for child dental care? HealthSquare offers gentle pediatric dentistry, preventive treatments, and stress-free dental visits for kids.",
     title: "Child Dental Care in Jaipur",
     banner: "/images/services/child/child-bg.png",
     intro:
@@ -343,6 +352,9 @@ export const servicesData = [
 
   {
     slug: "teeth-whitening",
+      metatitle: "Teeth Whitening in Jaipur | HealthSquare Dental Clinic",
+    metadescription:
+      "Teeth whitening at HealthSquare helps remove tooth stains, improve tooth color, and restore a brighter smile using safe dental techniques.",
     title: "Teeth Whitening",
     banner: "/images/services/teethwhitening/teethwhitening-bg.png",
     intro:
@@ -459,6 +471,9 @@ export const servicesData = [
 
   {
     slug: "full-mouth-rehabilitation",
+      metatitle: "Full Mouth Rehabilitation Dental Clinic in Jaipur",
+    metadescription:
+      "HealthSquare offers full mouth rehabilitation to restore oral health, function, and smile aesthetics through advanced, personalized dental treatments.",
     title: "Full Mouth Rehabilitation",
     banner: "/images/services/mouth/mouth-bg.png",
     intro:
@@ -589,6 +604,9 @@ export const servicesData = [
 
   {
     slug: "veneers-and-crown",
+      metatitle: "Veneers & Crown Services at Jaipur Dental Clinic",
+    metadescription:
+      "HealthSquare provides veneers and crowns to restore damaged teeth, improve smile appearance, and ensure long-lasting strength with expert dental care.",
     title: "Veneers & Crown",
     banner: "/images/services/veneerscrown/veneerscrown-bg.png",
     intro:
@@ -706,6 +724,9 @@ export const servicesData = [
 
   {
     slug: "tooth-implant",
+      metatitle: "Tooth Implant Dental Clinic in Jaipur | HealthSquare",
+    metadescription:
+      "HealthSquare offers expert tooth implant solutions to replace missing teeth, restore function, and improve smile confidence with advanced dental care.",
     title: "Tooth Implant",
     banner: "/images/services/toothimplant/toothimplant-bg.png",
     intro:
@@ -821,6 +842,9 @@ export const servicesData = [
 
   {
     slug: "tooth-extraction",
+      metatitle: "Tooth Extraction in Jaipur | HealthSquare Dental Clinic",
+    metadescription:
+      "Need tooth extraction? HealthSquare provides gentle, professional tooth removal to treat infection, reduce pain, and support oral health.",
     title: "Tooth Extraction",
     banner: "/images/services/toothextraction/toothextraction-bg.png",
     intro:
@@ -956,6 +980,130 @@ export const servicesData = [
         answer:
           "Coverage depends on your insurance plan. Our clinic can help you understand your benefits and assist with financing options if needed.",
       },
+    ],
+  },
+
+  {
+    slug: "digital-x-ray-system",
+      metatitle: "Digital X-Ray System | Advanced Diagnostic Imaging",
+    metadescription:
+      "HealthSquare offers advanced Digital X-Ray Systems with high-resolution imaging, low radiation exposure, and fast diagnosis.",
+    title: "Digital X-Ray System",
+    banner: "/images/services/digitalxraysystem/digital-x-ray-system-bg.png",
+    intro:
+      "A Digital X-Ray System is a modern diagnostic imaging solution designed to deliver high-quality images, faster results, and enhanced patient safety. Compared to conventional film-based X-rays, digital systems offer superior image clarity, reduced radiation exposure, and efficient workflow.",
+    sections: [
+      {
+        heading: "What is a Digital X-Ray System?",
+        image: "/images/services/digitalxraysystem/digital-x-ray-system-01.png",
+        content:
+          "A Digital X-Ray System is an advanced dental imaging technology used to capture detailed images of teeth, gums, jawbone, and surrounding structures. Unlike traditional film X-rays, digital X-rays use electronic sensors to produce instant images on a computer screen.",
+        list: [
+          "Modern Imaging Technology: Uses digital sensors instead of films.",
+          "Instant Results: Images appear within seconds.",
+          "High Clarity: Enhanced detail for accurate diagnosis.",
+        ],
+      },
+      {
+        heading: "Why Do Dentists Recommend Digital X-Rays?",
+        image: "/images/services/digitalxraysystem/digital-x-ray-system-02.png",
+        content:
+          "Digital X-rays help dentists detect dental problems that are not visible during a regular oral examination. Early diagnosis allows timely and effective treatment.",
+        list: [
+          "Cavity Detection: Identifies decay between teeth.",
+          "Root Problems: Detects infections and abscesses.",
+          "Bone Health: Evaluates bone loss due to gum disease.",
+        ],
+      },
+      {
+        heading: "Problems Identified Through Digital X-Ray Imaging",
+        image: "/images/services/digitalxraysystem/digital-x-ray-system-03.png",
+        list: [
+          "Hidden Cavities: Decay beneath fillings or between teeth.",
+          "Impacted Teeth: Teeth trapped under gums or bone.",
+          "Jawbone Issues: Bone infections or abnormalities.",
+          "Wisdom Tooth Position: Growth direction and alignment.",
+          "Root Canal Infections: Inflammation around tooth roots.",
+        ],
+      },
+      {
+        heading: "Reasons for Digital X-Ray Examination",
+        image: "/images/services/digitalxraysystem/digital-x-ray-system-04.png",
+        content:
+          "Digital X-rays are recommended as part of routine checkups or before certain dental procedures to ensure accurate diagnosis and treatment planning.",
+        list: [
+          "Diagnostic Purpose: To identify hidden dental problems.",
+          "Treatment Planning: Before RCT, implants, or braces.",
+          "Monitoring Oral Health: Track changes over time.",
+        ],
+      },
+      {
+        heading: "What is Digital Dental X-Ray Imaging?",
+        image: "/images/services/digitalxraysystem/digital-x-ray-system-05.png",
+        content:
+          "Digital dental X-ray imaging is a quick, painless, and non-invasive procedure that provides detailed internal views of your mouth, helping dentists make informed clinical decisions.",
+        list: [
+          "Quick Process: Takes only a few minutes.",
+          "Painless Experience: No discomfort involved.",
+          "Immediate Review: Dentist explains results instantly.",
+        ],
+      },
+      {
+        heading: "Advantages of Choosing Digital X-Rays",
+        image: "/images/services/digitalxraysystem/digital-x-ray-system-06.png",
+        list: [
+          "Low Radiation Exposure: Much safer than traditional X-rays",
+          "High Accuracy: Clear images improve diagnosis",
+          "Eco-Friendly: No chemicals or film waste",
+          "Safe for All Ages: Suitable for children and adults",
+        ],
+      },
+      {
+        heading: "Situations Where Digital X-Rays Are Recommended",
+        image: "/images/services/digitalxraysystem/digital-x-ray-system-07.png",
+        list: [
+          "Severe Tooth Pain: To find the root cause.",
+          "Gum Disease: Assess bone loss.",
+          "Before Dental Surgery: Accurate planning",
+          "Orthodontic Evaluation: Teeth alignment assessment",
+        ],
+      },
+      
+    ],
+    faqs: [
+      {
+        question: "What is a digital dental X-ray?",
+        answer:
+          "A digital dental X-ray uses an electronic sensor instead of film to capture images of teeth and surrounding structures. The images are displayed instantly on a computer screen.",
+      },
+      {
+        question: "Are digital X-rays safe?",
+        answer:
+          "Yes. Digital X-rays emit much lower radiation than traditional X-rays. We also use protective gear like lead aprons to ensure maximum safety.",
+      },
+      {
+        question:
+          "How often do I need dental X-rays?",
+        answer:
+          "The frequency depends on your oral health, age, and risk factors. Some patients may need them once a year, while others may need them less often.",
+      },
+      {
+        question: "Can children get digital X-rays?",
+        answer:
+          "Yes. Digital X-rays are safe for children and are often essential for monitoring tooth development and detecting early problems.",
+      },
+      {
+        question:
+          "Are digital X-rays painful?",
+        answer:
+          "No. The procedure is completely painless and non-invasive.",
+      },
+      {
+        question: "Should pregnant women avoid dental X-rays?",
+        answer:
+          "If you are pregnant or think you may be, inform us beforehand. X-rays are only taken if absolutely necessary, with extra safety precautions.",
+      },
+      
     ],
   },
 ];

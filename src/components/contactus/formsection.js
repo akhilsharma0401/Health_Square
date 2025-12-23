@@ -651,9 +651,9 @@ const onSubmit = async (data) => {
         
         {/* RIGHT FORM */}
         <div className="w-full md:w-[55%] lg:w-[60%] bg-white/90 rounded-3xl p-6 sm:p-8 md:p-10 shadow-xl">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0070C9] mb-4 text-center lg:text-left">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0070C9] mb-4 text-center lg:text-left">
             HEALTH SQUARE
-          </h2>
+          </h1>
           <p className="text-gray-600 text-sm sm:text-base mb-8 text-center lg:text-left">
             Health Square Jaipur is a dental clinic cum pharmacy. Get 360°
             dental care and all your Medicines &amp; Health Care Products in one

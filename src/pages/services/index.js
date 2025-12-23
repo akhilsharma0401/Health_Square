@@ -77,7 +77,7 @@ const OurServices = () => {
   return (
     <>
       <Seo
-        title="Advanced Dental Services in Jaipur | Smile Design, Root Canal & More | Health Square"
+        title="Health Square – Advanced Dental Services & Root-Canal Care"
         description="Experience expert dental care in Jaipur with Health Square — from painless root canals to smile makeovers, teeth whitening, and complete oral treatments."
       />
       <section
@@ -145,13 +145,13 @@ const OurServices = () => {
                   >
                     {service.icon}
                   </div>
-                  <h3
+                  <h2
                     className={`text-lg sm:text-xl font-semibold mt-4 ${
                       i % 2 === 0 ? "text-[#0078C9]" : "text-[#00A859]"
                     }`}
                   >
                     {service.title}
-                  </h3>
+                  </h2>
                   <p className="text-gray-600 text-sm sm:text-base mt-2 leading-relaxed h-[72px] sm:h-[80px] overflow-hidden">
                     {service.desc}
                   </p>

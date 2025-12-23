@@ -8,7 +8,7 @@ const services = [
   { title: "Tooth Implant", icon: "/images/services/dental/02-dental-services.png",link:"/services/tooth-implant" },
   { title: "Atraumatic Tooth Extraction", icon: "/images/services/dental/03-dental-services.png",link:"/services/tooth-extraction" },
   { title: "Scaling & Polishing", icon: "/images/services/dental/04-dental-services.png",link:"/services/teeth-whitening" },
-  { title: "Digital X-ray System", icon: "/images/services/dental/05-dental-services.png" ,link:"/services"},
+  { title: "Digital X-ray System", icon: "/images/services/dental/05-dental-services.png" ,link:"/services/digital-x-ray-system"},
   { title: "Teeth Whitening / Bleaching", icon: "/images/services/dental/06-dental-services.png" ,link:"/services/teeth-whitening"},
   { title: "Full Mouth Rehabilitation", icon: "/images/services/dental/07-dental-services.png" ,link:"/services/full-mouth-rehabilitation"},
   { title: "Veneers & Crown", icon: "/images/services/dental/08-dental-services.png" ,link:"/services/veneers-and-crown"},
@@ -18,7 +18,7 @@ const services = [
 
 export default function DentalServices() {
   return (
-    <section className="relative py-24 bg-white overflow-hidden">
+    <section className="relative py-20 bg-white overflow-hidden">
       {/* 🫧 Animated background shapes */}
       <motion.div
         initial={{ rotate: 0, y: 0 }}

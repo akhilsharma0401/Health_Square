@@ -46,7 +46,7 @@ export default function HealthServicesSection() {
 
   return (
     <div className="bg-white">
-      <section className="container mx-auto relative py-16 px-6 md:px-20 flex flex-col md:flex-row items-center gap-12 overflow-hidden">
+      <section className="container mx-auto relative py-20 px-6 md:px-20 flex flex-col md:flex-row items-center gap-12 overflow-hidden">
    
         <motion.div
           initial={{ y: 0 }}
@@ -172,7 +172,7 @@ export default function HealthServicesSection() {
           </div>
 
 
-          <Link href="/services">
+          {/* <Link href="/services">
             <motion.button
               whileHover={{ scale: 1.07 }}
               whileTap={{ scale: 0.95 }}
@@ -184,7 +184,7 @@ export default function HealthServicesSection() {
               </span>
               <span className="absolute inset-0 bg-[#00B388] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-in-out"></span>
             </motion.button>
-          </Link>
+          </Link> */}
         </motion.div>
 
     

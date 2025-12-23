@@ -119,14 +119,14 @@ export default function HeroSection() {
           </p>
 
        <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+  {/* <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
     <Link
       href="/contact"
       className="bg-[#0082e6] text-white px-8 py-3 rounded-full font-semibold shadow-md hover:bg-[#1dba63] transition-all duration-300 block text-center"
     >
       Book Appointment
     </Link>
-  </motion.div>
+  </motion.div> */}
 
   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
     <Link

@@ -26,6 +26,7 @@ import {
   FaTwitter,
   FaLinkedinIn,
   FaEnvelope,
+  FaXRay ,
 } from "react-icons/fa";
 
 export default function Header() {
@@ -89,6 +90,11 @@ export default function Header() {
           name: "Tooth Extraction",
           path: "/services/tooth-extraction",
           icon: <FaHandScissors />,
+        },
+        {
+          name: "Digital X-ray System",
+          path: "/services/digital-x-ray-system",
+          icon: <FaXRay />,
         },
       ],
     },

@@ -10,7 +10,7 @@ export default function Rghs() {
       <>
       <Seo
         title="RGHS Explained: Card, Benefits & Free Medicines"
-        description="Know everything about the Rajasthan Government Health Scheme (RGHS), card benefits, cashless medicines, and HealthSquare RGHS Pharmacy services."/>
+        description="Health Square is an RGHS-empanelled dental clinic and pharmacy in Jaipur providing cashless treatment, authentic medicines, and trusted healthcare."/>
        <main>
       <SectionOne/>
       <SectionTwo/>

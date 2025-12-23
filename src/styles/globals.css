@@ -36,6 +36,11 @@
  background: linear-gradient(90deg, #02A864, #0C78D1);
 }
 
+body{
+  background: white !important;
+  color: black !important;
+}
+
 .thmbtn{
   background-color:#0E76CD;
   color:#FFF;
