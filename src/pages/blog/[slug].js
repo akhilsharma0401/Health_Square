@@ -50,30 +50,55 @@ const calcReadingTime = (html = "") =>
 const sanitizeAndAbsolutize = (html = "") => {
   if (!html || typeof html !== "string") return "";
 
-  // remove dangerous scripts and inline JS
+
   html = html.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "");
+
+
   html = html.replace(/\son[a-z]+\s*=\s*(['"]).*?\1/gi, "");
 
-  // fix null/undefined image and link URLs to prevent .startsWith errors
   html = html.replace(/(src|href)=["'](null|undefined)["']/gi, '$1="#"');
 
-  // ensure relative image paths have BASE_URL
+
   html = html.replace(
     /src=["'](?!https?:|data:|\/)([^"']+)["']/gi,
-    (m, path) => {
-      return `src="${constant.BASE_URL}/${path}"`;
+    (m, path) => `src="${constant.BASE_URL}/${path}"`
+  );
+
+
+  html = html.replace(
+    /style=["'][^"']*font-size:[^;"']*;?[^"']*["']/gi,
+    (m) => m.replace(/font-size:[^;]+;?/gi, "")
+  );
+
+
+  html = html.replace(
+    /<h2([^>]*)>/gi,
+    (match, attrs) => {
+      const tailwind = "text-xl md:text-3xl font-semibold my-4 leading-snug";
+
+      // If class already exists → merge
+      if (/class=/i.test(attrs)) {
+        return match.replace(
+          /class=(["'])(.*?)\1/i,
+          (m, q, cls) => `class=${q}${cls} ${tailwind}${q}`
+        );
+      }
+
+      // If no class → add new
+      return `<h2${attrs} class="${tailwind}">`;
     }
   );
 
   return html;
 };
 
-const pickTitle = (b) =>
-  b?.metatitle ||
-  (b?.title && b.title !== "Untitled post") ||
-  stripHtml(b?.content || "").slice(0, 80) ||
-  b?.slug ||
-  "Blog";
+
+// const pickTitle = (b) =>
+//   b?.metatitle ||
+//   (b?.title && b.title !== "Untitled post") ||
+//   stripHtml(b?.content || "").slice(0, 80) ||
+//   b?.slug ||
+//   "Blog";
 
 export default function BlogDetail() {
   const router = useRouter();
@@ -98,10 +123,11 @@ export default function BlogDetail() {
               ? res.data || res.blog
               : null;
           if (b && typeof b === "object") {
+            const tags = b?.tags?.split(",")
             setPost({
               id: b.id,
               slug: b.slug,
-              title: pickTitle(b),
+              title: b?.title,
               content: b.content || "",
               image: b.image || b.featured_image_url || "",
               date: b.publishdate || b.created_at || "",
@@ -111,7 +137,7 @@ export default function BlogDetail() {
                 keywords: b.keywords || "",
               },
               category: b.category || "",
-              tags: b.tags || "",
+              tags: tags,
             });
           } else setErr(res?.message || "Post not found.");
         }
@@ -131,6 +157,7 @@ export default function BlogDetail() {
     [post?.content]
   );
   const title = post ? post.title : "Blog";
+  console.log(post)
   console.log(title);
   const hero = toAbs(post?.image || "");
   const readMins = post ? calcReadingTime(post.content) : null;
@@ -165,91 +192,125 @@ export default function BlogDetail() {
       />
 
       <main className="relative w-full overflow-hidden">
-        <section className="relative w-full h-[75vh] overflow-hidden flex items-end justify-center">
-          {hero && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black">
-              <Image
-                src={hero}
-                alt={title}
-                fill
-                priority
-                sizes="100vw"
-                className="object-contain md:object-cover object-center brightness-95 transition-all duration-700"
-              />
-            </div>
-          )}
+        <section className="max-w-6xl mx-auto grid md:grid-cols-2 grid-cols-1 items-center justify-between gap-5 px-4 py-2 md:py-10">
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
-
+          {/* Left Content */}
           <motion.div
             {...fade}
-            className="relative z-10 text-center max-w-3xl mx-auto px-6 pb-16"
+            className="relative z-10 flex flex-col gap-6 text-center lg:text-left max-w-2xl"
           >
-            <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight drop-shadow-lg">
+            {/* Category + Tags */}
+            <div className="space-y-2 md:order-1 order-3">
+              {post?.category && (
+                <span className="inline-flex items-center gap-1 bg-blue-50 text-xs text-black px-3 py-1 rounded-lg shadow-sm">
+                  {post.category}
+                </span>
+              )}
+
+              {post?.tags?.length > 0 && (
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-sm text-slate-800">
+                  <span className="font-semibold">Tags:</span>
+                  {post.tags.map((tag, index) => (
+                    <span
+                      key={`${tag}-${index}`}
+                      className="font-normal text-slate-700 bg-slate-100 px-2 py-0.5 rounded-md"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Title */}
+            <h1 className="text-2xl md:text-3xl font-bold leading-snug text-left text-slate-900 md:order-2 order-1">
               {title}
             </h1>
-            <div className="mt-5 flex flex-wrap justify-center gap-3 text-sm text-gray-100">
+
+            {/* Meta */}
+            <div className="flex flex-wrap justify-center lg:justify-start gap-3 text-sm md:order-3 order-2">
               {post?.author && (
-                <span className="inline-flex items-center gap-1 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm">
-                  <FiUser /> {post.author}
+                <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-700 px-3 py-1 rounded-full shadow-sm">
+                  <FiUser size={14} /> {post.author}
                 </span>
               )}
-              {post?.date && (
-                <span className="inline-flex items-center gap-1 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm">
-                  <FiCalendar /> {formatDate(post.date)}
+
+              {post?.date && post.date !== "N/A" && (
+                <span className="inline-flex items-center gap-1 bg-green-50 text-green-700 px-3 py-1 rounded-full shadow-sm">
+                  <FiCalendar size={14} /> {formatDate(post.date)}
                 </span>
               )}
+
               {readMins && (
-                <span className="inline-flex items-center gap-1 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm">
-                  <FiClock /> {readMins} min read
+                <span className="inline-flex items-center gap-1 bg-purple-50 text-purple-700 px-3 py-1 rounded-full shadow-sm">
+                  <FiClock size={14} /> {readMins} min read
                 </span>
               )}
             </div>
+
+            {/* Buttons */}
             <motion.div
               {...fade}
-              className="mt-6 flex justify-center gap-4 flex-wrap"
+              className="flex flex-wrap justify-center lg:justify-start gap-4 md:order-4 order-4"
             >
               <button
                 onClick={async () => {
                   if (typeof window === "undefined") return;
                   const url = window.location.href;
+
                   try {
-                    if (navigator.share)
+                    if (navigator.share && window.location.protocol === "https:") {
                       await navigator.share({ title, text: title, url });
-                    else if (navigator.clipboard) {
+                    } else if (navigator.clipboard) {
                       await navigator.clipboard.writeText(url);
                       setCopied(true);
                       setTimeout(() => setCopied(false), 1400);
                     }
-                  } catch {}
+                  } catch { }
                 }}
-                className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm hover:bg-slate-50"
+                className="flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2 text-sm font-medium hover:bg-slate-100 transition"
               >
-                <FiShare2 /> Share
+                <FiShare2 size={16} />
+                Share
               </button>
+
               <button
                 onClick={async () => {
                   if (typeof window === "undefined") return;
                   const url = window.location.href;
+
                   if (navigator.clipboard) {
                     await navigator.clipboard.writeText(url);
                     setCopied(true);
                     setTimeout(() => setCopied(false), 1400);
                   }
                 }}
-                className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2 text-sm hover:bg-slate-50"
+                className="flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2 text-sm font-medium hover:bg-slate-100 transition"
               >
-                {copied ? <FiCheck /> : <FiCopy />}{" "}
-                {copied ? "Copied" : "Copy link"}
+                {copied ? <FiCheck size={16} /> : <FiCopy size={16} />}
+                {copied ? "Copied" : "Copy Link"}
               </button>
             </motion.div>
           </motion.div>
+
+
+          {/* Right Image */}
+          <div className="relative w-full  h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-xl">
+
+            <Image
+              src={hero || "/no-image.png"}
+              alt={title || "Blog Image"}
+              fill
+            />
+          </div>
+
         </section>
 
-        <section className="relative bg-gradient-to-b from-[#f8fbff] to-white py-20 px-6">
+
+        <section className="relative bg-gradient-to-b from-[#f8fbff] to-white py-5 md:py-16 px-6">
           <div className="max-w-5xl mx-auto">
-            <div className="mb-10 flex justify-between items-center text-sm text-gray-600">
-              <div className="flex items-center gap-2">
+            <div className="mb-2 md:mb-10 flex justify-between items-center text-sm text-gray-600">
+              <div className="flex flex-wrap items-center gap-2">
                 <Link href="/" className="hover:text-[#1F4C7A]">
                   Home
                 </Link>
@@ -274,7 +335,7 @@ export default function BlogDetail() {
 
             <motion.article
               {...fade}
-              className="relative bg-white/80 backdrop-blur-md border border-slate-100 rounded-[28px] shadow-lg ring-1 ring-slate-200/30 p-8 md:p-12 prose prose-lg prose-slate max-w-none text-justify leading-relaxed"
+              className="relative bg-white/80 backdrop-blur-md border border-slate-100 rounded-[28px] shadow-lg ring-1 ring-slate-200/30 p-4 md:p-12 prose prose-lg prose-slate max-w-none text-justify leading-relaxed"
             >
               <div dangerouslySetInnerHTML={{ __html: safeHtml }} />
             </motion.article>

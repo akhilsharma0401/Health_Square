@@ -10,6 +10,7 @@ import Image from "next/image";
 const AdminLogin = ({ usersData }) => {
   const [mobile, setMobile] = useState("");
   const [otp, setOtp] = useState("");
+  const [otpId, setOtpId] = useState(null);
   const [showOtp, setShowOtp] = useState(false);
   const [timer, setTimer] = useState(20);
   const [canResend, setCanResend] = useState(false);
@@ -38,29 +39,23 @@ const AdminLogin = ({ usersData }) => {
         return;
       }
 
-      const payload = { mobile };
-      const response = await callApi(
-        constant.API.ADMIN.ADMINLOGIN,
+      const data = { mobile };
+
+      const res = await callApi(
+        constant.API.ADMIN.SENDOTP,
         "POST",
-        payload
+        data
       );
-      if (response.status === false) {
-        showError(response.message);
-        return;
-      }
 
-      if (response.status === true) {
-        // if (typeof window !== "undefined") {
-        //   localStorage.setItem("token", response.token);
-        //   localStorage.setItem("logintype", "admin");
-        //   window.dispatchEvent(new Event("auth-change"));
-        // }
 
-        setToken(response.token);
+      if (res.status === true) {
+        showSuccess(res.message);
 
-        const data = { mobile };
-        const res = await callApi(constant.API.ADMIN.SENDOTP, "POST", data);
-        if (res.status === true) showSuccess(res.message);
+
+        if (res.otpId) {
+          setOtpId(res.otpId);
+        }
+
 
         setShowOtp(true);
         setTimer(20);
@@ -68,20 +63,21 @@ const AdminLogin = ({ usersData }) => {
       }
     } catch (error) {
       console.log(error);
+      showError("Something went wrong. Please try again.");
     }
   };
 
   const isValidOtp = (code) => /^[0-9]{6}$/.test(code);
 
   const verifyOTP = async () => {
-    console.log("ram");
+
     try {
       if (!isValidOtp(otp)) {
         showError("Please enter a valid OTP");
         return;
       }
 
-      const data = { mobile, otp };
+      const data = { mobile, otp, otpId, type: "auth" };
       const response = await callApi(
         constant.API.ADMIN.VERIFYOTP,
         "POST",

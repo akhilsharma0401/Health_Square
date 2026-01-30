@@ -11,7 +11,8 @@ const constant = {
     // add more routes here
   },
 
-   BASE_URL: "http://192.168.1.15:3593",
+  //  BASE_URL: "http://192.168.1.33:3593",
+  BASE_URL: "https://473ebaf3fb86.ngrok-free.app",
 
   //  SOFTWARE_URL: "https://insurance.digibima.com/",
 
@@ -21,7 +22,7 @@ const constant = {
       VERIFYOTP: "/api/user/verifyotp",
       //  SENDOTP: "/api/sendotp",
       // VERIFYOTP: "/api/verifyotp",
-       PINCODE: "/api/acpincode",
+      PINCODE: "/api/acpincode",
       USERINQUIRE: "/api/user/inquiry",
       USERLOGIN: "/api/motor/vehicle-type-select",
     },
@@ -31,10 +32,10 @@ const constant = {
       SENDOTP: "/api/user/sendotp",
       VERIFYOTP: "/api/user/verifyotp",
     },
-    BLOG:"/api/user/blog",
-    SINGLEBLOG:"/api/user/blog-show",
-    DELETEBLOG:"/api/user/delete",
-    TRASHBLOG:"/api/user/trash"
+    BLOG: "/api/user/blog",
+    SINGLEBLOG: "/api/user/blog-show",
+    DELETEBLOG: "/api/user/delete",
+    TRASHBLOG: "/api/user/trash"
   },
 };
 

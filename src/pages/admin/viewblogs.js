@@ -40,9 +40,9 @@ export default function BlogTable() {
       date: b.published_at || b.created_at || b.updated_at || b.date || "—",
       status:
         b.status == 1 ||
-        b.status == "1" ||
-        b.status === "published" ||
-        b.is_published
+          b.status == "1" ||
+          b.status === "published" ||
+          b.is_published
           ? "Published"
           : "Draft",
     };
@@ -122,19 +122,17 @@ export default function BlogTable() {
         return;
       }
 
-      const pg = res.data || {};
-      const rows = Array.isArray(pg.results)
-        ? pg.results
-        : Array.isArray(res.data)
-        ? res.data
+
+      const rows = Array.isArray(res.recentblog)
+        ? res.recentblog
         : [];
 
       setBlogs(rows.map(normalizeBlog));
 
-      const total = Number(pg.total) || rows.length || 1;
-      const last = Math.ceil(total / PER_PAGE);
+      const total = Number(res.totalPages);
+
       setPage(targetPage);
-      setTotalPages(last);
+      setTotalPages(total);
     } catch (err) {
       console.error("Unexpected error fetching blogs:", err);
       showError("Unexpected error occurred. Please try again later.");
@@ -288,7 +286,7 @@ export default function BlogTable() {
                     className="border-b hover:bg-gray-50 transition duration-200"
                   >
                     <td className="px-6 py-4">
-                      {(page - 1) * PER_PAGE + index + 1}.
+                      {index + 1}.
                     </td>
                     <td className="px-6 py-4 font-medium text-gray-900">
                       {blog.title}
