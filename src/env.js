@@ -11,7 +11,7 @@ const constant = {
     // add more routes here
   },
 
-  //  BASE_URL: "http://192.168.1.33:3593",
+  //  BASE_URL: "http://192.168.1.36:3593",
   BASE_URL: "https://473ebaf3fb86.ngrok-free.app",
 
   //  SOFTWARE_URL: "https://insurance.digibima.com/",

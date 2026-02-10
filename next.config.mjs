@@ -36,11 +36,11 @@ const nextConfig = {
   productionBrowserSourceMaps: false,
 
   images: {
-    domains: ["192.168.1.33"],
+    domains: ["192.168.1.36"],
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "192.168.1.33",
+        hostname: "192.168.1.36",
         port: "3593",
       },
       {
@@ -55,7 +55,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://192.168.1.33:3593/api/:path*",
+        destination: "http://192.168.1.36:3593/api/:path*",
       },
     ];
   },
