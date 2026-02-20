@@ -42,7 +42,7 @@ export default function FeatureCards() {
   };
 
   return (
-    <section className="relative bg-gradient-to-br from-[#E6F4FF] via-white to-[#E6F4FF] py-24 md:py-28 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-[#E6F4FF] via-white to-[#E6F4FF] py-10 md:py-28 overflow-hidden">
       <motion.div
         initial={{ y: 0 }}
         animate={{ y: [0, -15, 0] }}
@@ -64,7 +64,7 @@ export default function FeatureCards() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true }}
-        className="text-center mb-16 relative z-10"
+        className="text-center pb-5 md:mb-16 relative z-10"
       >
         <h2 className="text-3xl md:text-4xl font-bold text-[#0072CE] mb-4">
           OUR DENTAL AND PHARMACY <span className="text-[#00A859]">SERVICES</span>
@@ -125,7 +125,7 @@ export default function FeatureCards() {
             <p
               className="
                 text-gray-600 text-sm leading-relaxed relative z-10 
-                transition-colors duration-500 group-hover:text-white/90
+                transition-colors duration-500  group-hover:text-white/90
               "
             >
               {item.desc}

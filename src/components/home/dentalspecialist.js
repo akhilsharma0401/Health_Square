@@ -56,7 +56,7 @@ export default function DentalSpecialist() {
           <div className="w-24 h-[3px] bg-gradient-to-r from-[#0072CE] to-[#00A859] mx-auto mt-4 mb-6 rounded-full"></div>
           <p className="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed">
             Our experienced and specialized doctor is highly trained in aesthetic
-            dentistry from a reputed organization. You can place your trust in her
+            dentistry from a reputable organization. You can place your trust in her
             years of experience.
           </p>
         </motion.div>

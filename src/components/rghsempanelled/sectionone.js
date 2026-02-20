@@ -37,7 +37,7 @@ const Page = () => {
                 Welcome to Confident
               </h2>
               <p className="text-gray-600 leading-relaxed text-base font-medium">
-               Rajasthan Government Health Scheme (RGHS) is a landmark initiative to extend affordable and quality medical care to state government staff, pensioners, and dependents. Members are eligible for cashless treatment, reduced medicine prices, and impanelled hospitals and pharmacies with an RGHS card.
+               Rajasthan Government Health Scheme (RGHS) is a landmark initiative to extend affordable and quality medical care to state government staff, pensioners, and dependents. Members are eligible for cashless treatment, reduced medicine prices, and empaneled hospitals and pharmacies with an RGHS card.
               </p>
               
               <div className="absolute -bottom-6 -right-6 bg-gradient-to-br from-blue-200 via-white to-blue-200 w-20 h-20 rounded-full flex items-center justify-center shadow-xl">

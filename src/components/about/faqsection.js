@@ -8,17 +8,17 @@ const faqs = [
   {
     question: "How do I order medicines?",
     answer:
-      "You can avail of our home delivery service to order all your medical supplies from our pharmacy in Jaipur by calling us at +91 7403330888, or 7403330777.",
+      "You can avail of our home delivery service to order all your medical supplies from our pharmacy in Jaipur by calling us at +91 7403330888.",
   },
   {
     question: "Is this a 24/7 pharmacy?",
     answer:
-      "The Health Square Pharmacy is open from 7 AM to 11 PM every day. That’s 7 am-11 pm, seven days a week, twelve months a year.",
+      "The Health Square Pharmacy is open from 7 AM to 11 PM every day. That’s 7 AM to 11 PM, seven days a week, twelve months a year.",
   },
   {
     question: "Is Health Square child-friendly?",
     answer:
-      "Health Square offers specialized Child Dental care services and our team of medical professionals is well-versed in working with children with care and compassion while keeping them as calm as possible.",
+      "Health Square offers specialized child dental care services and our team of medical professionals is well-versed in working with children with care and compassion while keeping them as calm as possible.",
   },
   {
     question: "Are the Dentists at Health Square qualified and experienced?",
@@ -45,7 +45,7 @@ export default function FaqSection() {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       viewport={{ once: true }}
-      className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-2 gap-10 items-start"
+      className="max-w-7xl mx-auto px-6 py-10 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-10 items-start"
     >
       <div>
         {/* <p className="text-base font-bold text-gray-800 mb-2">Our FAQ</p> */}

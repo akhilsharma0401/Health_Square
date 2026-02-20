@@ -59,7 +59,7 @@ export default function SectionOne() {
         <div className="absolute -top-20 -left-20 w-96 h-96 bg-[#1dba63]/30 rounded-full mix-blend-multiply opacity-40 blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-[#0082e6]/30 rounded-full mix-blend-multiply opacity-40 blur-3xl animate-pulse"></div>
 
-        <div className="relative max-w-7xl mx-auto px-6 md:px-10 py-20 flex flex-col-reverse md:flex-row items-center justify-between gap-10">
+        <div className="relative max-w-7xl mx-auto px-6 md:px-10 py-10 md:py-20 flex flex-col-reverse md:flex-row items-center justify-between gap-10">
           <motion.div
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -73,17 +73,17 @@ export default function SectionOne() {
               <span className="text-[#1dba63]">Dental</span> Care
             </h1>
 
-            <p className="text-gray-600 text-base sm:text-lg md:text-xl leading-relaxed mb-6">
+            <p className="text-gray-600 text-base sm:text-lg md:text-xl leading-relaxed text-justify mb-6">
               Health Square is a{" "}
-              <strong>pharmacy cum modern-day dental clinic</strong> in Jaipur,
+              <strong>pharmacy-cum-modern-day dental clinic</strong> in Jaipur,
               providing a full range of top-notch dental services through our
               clinic, along with{" "}
               <strong>free home delivery of medicines</strong> via our pharmacy
               in Jaipur.
             </p>
 
-            <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed mb-8">
-              We are your trusted healthcare partner — delivering accessible,
+            <p className="text-gray-600 text-base sm:text-lg md:text-xl leading-relaxed text-justify mb-8">
+              We are your trusted healthcare partner delivering accessible,
               high-quality, and affordable dental and pharmacy services. Our
               mission is to bridge the gap between healthcare accessibility and
               excellence, ensuring every patient receives personalized care in a

@@ -46,7 +46,7 @@ const products = [
 
 export default function ProductsSection() {
   return (
-    <section className="bg-gradient-to-b from-blue-50 to-blue-200 py-16 px-4 md:px-10 lg:px-16">
+    <section className="bg-gradient-to-b from-blue-50 to-blue-200 py-10 md:py-16 px-4 md:px-10 lg:px-16">
 
       {/* Heading */}
       <motion.div
@@ -106,7 +106,7 @@ export default function ProductsSection() {
                 <motion.h3 className="text-xl font-semibold mb-3">{item.title}</motion.h3>
 
                 {/* Description */}
-                <motion.p className="text-base leading-relaxed">{item.desc}</motion.p>
+                <motion.p className="text-base leading-relaxed text-justify">{item.desc}</motion.p>
               </motion.div>
             </motion.div>
           );

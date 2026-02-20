@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function RghsSection() {
   return (
-    <section className="relative py-20 px-6 md:px-16 overflow-hidden bg-[#fff]">
+    <section className="relative py-10 md:py-20 px-6 md:px-16 overflow-hidden bg-[#fff]">
       <div className="absolute top-0 right-0 w-[420px] h-[420px] bg-blue-200 rounded-full blur-[140px] opacity-40" />
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-14 items-center relative">
@@ -64,17 +64,15 @@ export default function RghsSection() {
           </h2>
 
           <p className="text-gray-700 leading-relaxed mb-6">
-            Our RGHS Empanel Pharmacy is dedicated to supporting everyone with
-            their health requirements in the easiest, tension-free manner. No
-            cash transactions, no long waiting, and no unnecessary procedures.
+            Our RGHS Empanelled Pharmacy is dedicated to supporting everyone with their health requirements in the easiest, stress -free manner. No cash transactions, no long waits , and no unnecessary procedures.
           </p>
 
           <ul className="space-y-3 text-gray-700">
             {[
-              "Genuine medicines & professional guidance.",
-              "Quick paperwork & smooth cashless process.",
-              "Peaceful service for employees, pensioners & families.",
-              "Our mission is your confidence, comfort & care.",
+              "Genuine medicines and professional guidance.",
+              "Quick paperwork and smooth cashless process.",
+              "Peaceful service for employees, pensioners and families.",
+              "Our mission is your confidence, comfort and care.",
             ].map((item, index) => (
               <li key={index} className="flex items-start gap-2">
                 <FaCheckCircle className="text-green-600 mt-1" />

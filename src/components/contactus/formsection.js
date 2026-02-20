@@ -394,12 +394,7 @@
 //                   7403330888
 //                 </span>
 //               </Link>
-//               ,{" "}
-//               <Link href="tel:7403330777" passHref>
-//                 <span className="hover:underline cursor-pointer">
-//                   7403330777
-//                 </span>
-//               </Link>
+//               
 //             </p>
 //             <p className="flex items-center text-[#fff] gap-3 text-sm sm:text-base">
 //               <HiOutlineMail />
@@ -486,8 +481,8 @@ export default function ContactForm() {
   const [otpVisible, setOtpVisible] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const [sendOtpLoading, setSendOtpLoading] = useState(false);
-const [verifyOtpLoading, setVerifyOtpLoading] = useState(false);
-const [submitLoading, setSubmitLoading] = useState(false);
+  const [verifyOtpLoading, setVerifyOtpLoading] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
   const [formError, setFormError] = useState("");
   const [timer, setTimer] = useState(0);
   const [otp, setOtp] = useState("");
@@ -522,7 +517,7 @@ const [submitLoading, setSubmitLoading] = useState(false);
     criteriaMode: "firstError",
   });
 
-  const firstErrorKey = Object.keys(errors)[0]; 
+  const firstErrorKey = Object.keys(errors)[0];
   const mobile = watch("mobile");
 
   // OTP Timer
@@ -534,17 +529,17 @@ const [submitLoading, setSubmitLoading] = useState(false);
   }, [timer]);
 
   // SEND OTP
-const handleSendOtp = async () => {
-  if (!mobile || mobile.length !== 10) {
-    setError("mobile", {
-      type: "manual",
-      message: "Please enter a valid 10-digit mobile number.",
-    });
-    return;
-  }
+  const handleSendOtp = async () => {
+    if (!mobile || mobile.length !== 10) {
+      setError("mobile", {
+        type: "manual",
+        message: "Please enter a valid 10-digit mobile number.",
+      });
+      return;
+    }
 
-  try {
- setSendOtpLoading(true);
+    try {
+      setSendOtpLoading(true);
       const res = await callApi(constant.API.USER.SENDOTP, "POST", { mobile });
 
       if (res?.status) {
@@ -560,82 +555,82 @@ const handleSendOtp = async () => {
         });
       }
     } finally {
-     setSendOtpLoading(false);
+      setSendOtpLoading(false);
     }
-};
+  };
 
 
   // VERIFY OTP
-const handleVerifyOtp = async () => {
-  if (!otp || otp.length !== 6) {
-    setError("otp", {
-      type: "manual",
-      message: "Please enter a valid 6-digit OTP.",
-    });
-    return;
-  }
-
-  try {
-    setVerifyOtpLoading(true);
-    const res = await callApi(constant.API.USER.VERIFYOTP, "POST", {
-      otpId,
-      otp,
-    });
-
-    if (res?.verified || res?.status) {
-      clearErrors("otp");
-      setOtpVerified(true);
-      setOtpVisible(false);
-    } else {
-      setError("otp", { type: "manual", message: "Invalid OTP. Try again." });
+  const handleVerifyOtp = async () => {
+    if (!otp || otp.length !== 6) {
+      setError("otp", {
+        type: "manual",
+        message: "Please enter a valid 6-digit OTP.",
+      });
+      return;
     }
-  } catch (err) {
-    setError("otp", {
-      type: "manual",
-      message: "OTP verification failed.",
-    });
-  } finally {
-    setVerifyOtpLoading(false);
-  }
-};
+
+    try {
+      setVerifyOtpLoading(true);
+      const res = await callApi(constant.API.USER.VERIFYOTP, "POST", {
+        otpId,
+        otp,
+      });
+
+      if (res?.verified || res?.status) {
+        clearErrors("otp");
+        setOtpVerified(true);
+        setOtpVisible(false);
+      } else {
+        setError("otp", { type: "manual", message: "Invalid OTP. Try again." });
+      }
+    } catch (err) {
+      setError("otp", {
+        type: "manual",
+        message: "OTP verification failed.",
+      });
+    } finally {
+      setVerifyOtpLoading(false);
+    }
+  };
 
 
   // SUBMIT FORM
-const onSubmit = async (data) => {
-  if (userCaptcha.toUpperCase() !== captcha) {
-    setError("userCaptcha", {
-      type: "manual",
-      message: "Invalid CAPTCHA. Please try again.",
-    });
-    generateCaptcha();
-    return;
-  }
+  const onSubmit = async (data) => {
+    if (userCaptcha.toUpperCase() !== captcha) {
+      setError("userCaptcha", {
+        type: "manual",
+        message: "Invalid CAPTCHA. Please try again.",
+      });
+      generateCaptcha();
+      return;
+    }
 
-  if (!otpVerified) {
-    setFormError("Please verify your mobile number first.");
-    return;
-  }
+    if (!otpVerified) {
+      setFormError("Please verify your mobile number first.");
+      return;
+    }
 
-  try {
-    setSubmitLoading(true);
-    const res = await callApi(constant.API.USER.USERINQUIRE, "POST", data);
+    try {
+      setSubmitLoading(true);
+      const res = await callApi(constant.API.USER.USERINQUIRE, "POST", data);
 
-    showSuccess(res.message || "Inquiry submitted successfully!");
+      showSuccess(res.message || "Inquiry submitted successfully!");
 
-    reset();
-    setOtp("");
-    setOtpVisible(false);
-    setOtpVerified(false);
-    setTimer(0);
-    setFormError("");
-    setUserCaptcha("");
-    generateCaptcha();
-  } catch (err) {
-    setFormError("Submission failed. Try again.");
-  } finally {
-    setSubmitLoading(false);
-  }
-};
+      reset();
+      setOtp("");
+      setOtpVisible(false);
+      setOtpVerified(false);
+      setTimer(0);
+      setFormError("");
+      setUserCaptcha("");
+      generateCaptcha();
+    } catch (err) {
+      setFormError("Submission failed. Try again.");
+    } finally {
+      setSubmitLoading(false);
+    }
+  };
 
   return (
     <section className="w-full bg-gradient-to-b from-[#e0f0ff] to-[#ffffff] py-16 sm:py-20 px-4 sm:px-6 md:px-10 lg:px-20 relative overflow-hidden">
@@ -647,10 +642,10 @@ const onSubmit = async (data) => {
         }
       `}</style>
 
-      <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row-reverse items-start gap-10 relative z-10">
-        
+      <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row-reverse items-start gap-10 relative z-10">
+
         {/* RIGHT FORM */}
-        <div className="w-full md:w-[55%] lg:w-[60%] bg-white/90 rounded-3xl p-6 sm:p-8 md:p-10 shadow-xl">
+        <div className="w-full lg:w-[60%] bg-white/90 rounded-3xl p-6 sm:p-8 md:p-10 shadow-xl">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0070C9] mb-4 text-center lg:text-left">
             HEALTH SQUARE
           </h1>
@@ -659,7 +654,8 @@ const onSubmit = async (data) => {
             dental care and all your Medicines &amp; Health Care Products in one
             place!
           </p>
-          <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" >
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
 
             {/* NAME */}
             <div className="flex flex-col">
@@ -685,9 +681,10 @@ const onSubmit = async (data) => {
               />
               {firstErrorKey === "email" && <p className="form-error">{errors.email?.message}</p>}
             </div>
+            </div>
 
             {/* MOBILE + OTP */}
-            <div className="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="col-span-full grid grid-cols-1 xl:grid-cols-2 gap-4">
 
               <div className="flex flex-col">
                 <div className="flex gap-2">
@@ -710,22 +707,21 @@ const onSubmit = async (data) => {
                     type="button"
                     onClick={handleSendOtp}
                     disabled={mobile?.length !== 10 || sendOtpLoading || timer > 0}
-                    className={`px-5 py-3 rounded-full bg-[#0E76CD] text-white text-sm font-medium flex items-center justify-center gap-2 ${
-                      mobile?.length === 10 && timer === 0
+                    className={`px-5 py-3 rounded-full bg-[#0E76CD] text-white text-sm font-medium flex items-center justify-center gap-2 ${mobile?.length === 10 && timer === 0
                         ? "hover:scale-105 transition"
                         : "opacity-50 cursor-not-allowed"
-                    }`}
+                      }`}
                   >
-                   {sendOtpLoading ? (
-  <>
-    
-    Sending<FiLoader className="animate-spin" />
-  </>
-) : timer > 0 ? (
-  `Resend`
-) : (
-  "Send OTP"
-)}
+                    {sendOtpLoading ? (
+                      <>
+
+                        Sending<FiLoader className="animate-spin" />
+                      </>
+                    ) : timer > 0 ? (
+                      `Resend`
+                    ) : (
+                      "Send OTP"
+                    )}
 
                   </button>
                 </div>
@@ -760,20 +756,19 @@ const onSubmit = async (data) => {
                       type="button"
                       onClick={handleVerifyOtp}
                       disabled={otp.length !== 6 || verifyOtpLoading}
-                      className={`px-5 py-3 rounded-full text-white text-sm font-medium flex items-center justify-center gap-2 ${
-                        otp.length === 6
+                      className={`px-5 py-3 rounded-full text-white text-sm font-medium flex items-center justify-center gap-2 ${otp.length === 6
                           ? "bg-[#0E76CD] hover:scale-105"
                           : "bg-gray-300 cursor-not-allowed"
-                      }`}
+                        }`}
                     >
-                    {verifyOtpLoading ? (
-  <>
-    
-    Verifying<FiLoader className="animate-spin" />
-  </>
-) : (
-  "Verify OTP"
-)}
+                      {verifyOtpLoading ? (
+                        <>
+
+                          Verifying<FiLoader className="animate-spin" />
+                        </>
+                      ) : (
+                        "Verify OTP"
+                      )}
 
                     </button>
                   </div>
@@ -782,24 +777,27 @@ const onSubmit = async (data) => {
                 </div>
               )}
 
-              {/* DEPARTMENT */}
-              <div className="flex flex-col">
-                <select
-                  {...register("department", {
-                    required: "Please select a department",
-                  })}
-                  className="inputcls"
-                >
-                  <option value="">Select Department</option>
-                  <option value="dentalcare">DENTAL CARE</option>
-                  <option value="pharmacy">PHARMACY</option>
-                </select>
 
-                {firstErrorKey === "department" && (
-                  <p className="form-error">{errors.department?.message}</p>
-                )}
-              </div>
+            </div>
+              <div className="grid grid-cols-1 sm:grid-cols-1 gap-4 sm:gap-6">
 
+            {/* DEPARTMENT */}
+            <div className="flex flex-col w-full">
+              <select
+                {...register("department", {
+                  required: "Please select a department",
+                })}
+                className="inputcls"
+              >
+                <option value="">Select Department</option>
+                <option value="dentalcare">DENTAL CARE</option>
+                <option value="pharmacy">PHARMACY</option>
+              </select>
+
+              {firstErrorKey === "department" && (
+                <p className="form-error">{errors.department?.message}</p>
+              )}
+            </div>
             </div>
 
             {/* MESSAGE */}
@@ -877,14 +875,14 @@ const onSubmit = async (data) => {
                 type="submit"
                 className="relative bg-[#0072CE] cursor-pointer text-white font-semibold py-3 px-10 rounded-full flex items-center justify-center gap-2 w-full sm:w-auto"
               >
-              {submitLoading ? (
-  <>
-   
-    Submitting <FiLoader className="animate-spin" />
-  </>
-) : (
-  "SUBMIT FORM"
-)}
+                {submitLoading ? (
+                  <>
+
+                    Submitting <FiLoader className="animate-spin" />
+                  </>
+                ) : (
+                  "SUBMIT FORM"
+                )}
 
               </button>
             </div>
@@ -893,8 +891,8 @@ const onSubmit = async (data) => {
         </div>
 
         {/* LEFT SIDE */}
-         <div className="flex-1 relative w-full md:w-[45%] lg:w-[40%]">
-          <div className="absolute top-0 left-0 w-full h-[400px] sm:h-[450px] md:h-[500px] lg:h-full rounded-3xl overflow-hidden shadow-2xl">
+        <div className="flex-1 relative w-full  lg:w-[40%]">
+          <div className="absolute top-0 left-0 w-full h-full rounded-3xl overflow-hidden shadow-2xl">
             <Image
               src="/contact.png"
               alt="Contact Illustration"
@@ -917,12 +915,7 @@ const onSubmit = async (data) => {
                   7403330888
                 </span>
               </Link>
-              ,{" "}
-              <Link href="tel:7403330777" passHref>
-                <span className="hover:underline cursor-pointer">
-                  7403330777
-                </span>
-              </Link>
+
             </p>
             <p className="flex items-center text-[#fff] gap-3 text-sm sm:text-base">
               <HiOutlineMail />

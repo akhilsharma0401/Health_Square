@@ -46,7 +46,7 @@ export default function HealthServicesSection() {
 
   return (
     <div className="bg-white">
-      <section className="container mx-auto relative py-20 px-6 md:px-20 flex flex-col md:flex-row items-center gap-12 overflow-hidden">
+      <section className="container mx-auto relative py-10 md:py-20 px-6 md:px-20 flex flex-col md:flex-row items-center gap-12 overflow-hidden">
    
         <motion.div
           initial={{ y: 0 }}
@@ -141,7 +141,7 @@ export default function HealthServicesSection() {
           </h2>
 
           <p className="text-[#2B2F33]/75 leading-relaxed">
-            Health Square is a Dental Clinic in Jaipur with a dentist
+            Health Square is a dental clinic in Jaipur with a dentist
             specializing in cosmetics and world-class equipment. It also has a
             well-equipped pharmacy for all essential and premium medical needs.
           </p>

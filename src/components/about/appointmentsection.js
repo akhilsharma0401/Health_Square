@@ -18,7 +18,7 @@ const floatingIcons = [
 
 export default function AppointmentSection() {
   return (
-    <section className="relative w-full bg-gradient-to-b from-[#E0F4FF] via-white to-[#E6F4FF] py-20 px-6 md:px-16 overflow-hidden">
+    <section className="relative w-full bg-gradient-to-b from-[#E0F4FF] via-white to-[#E6F4FF] py-10 px-2 md:px-16 overflow-hidden">
 
  
       {floatingIcons.map((item, idx) => (
@@ -63,12 +63,12 @@ export default function AppointmentSection() {
       </motion.div>
         </div>
 
-        <div className="flex-1 w-full p-8 md:p-10 bg-white h-full">
+        <div className="flex-1 w-full p-2 md:p-10 bg-white h-full">
           <p className="text-sm text-[#00B388] font-semibold mb-1 uppercase tracking-wide">
             Health Square Care
           </p>
           <h3 className="text-lg md:text-xl font-semibold text-[#0072CE] mb-8 leading-snug">
-            Book an Online Appointment for Expert Consultation
+            Book an online appointment for expert consultation.
           </h3>
 
            <AppointmentForm />

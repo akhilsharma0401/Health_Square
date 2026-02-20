@@ -568,7 +568,7 @@ const [submitLoading, setSubmitLoading] = useState(false);
       </div>
 
 
-      <div className="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="col-span-full grid grid-cols-1  gap-4">
         <div className="flex flex-col">
           <div className="flex flex-col sm:flex-row gap-2">
             <input
@@ -585,6 +585,7 @@ const [submitLoading, setSubmitLoading] = useState(false);
               readOnly={otpVerified}
               className="flex-1 inputcls"
             />
+            <div>
 
             {!otpVerified && (
               <button
@@ -609,6 +610,7 @@ const [submitLoading, setSubmitLoading] = useState(false);
                )}
               </button>
             )}
+            </div>
           </div>
 
           {firstErrorKey === "mobile" && (
@@ -662,7 +664,10 @@ const [submitLoading, setSubmitLoading] = useState(false);
         )}
 
   
-        <div className="flex flex-col">
+        
+      </div>
+
+      <div className="flex flex-col">
           <select
             {...register("department", {
               required: "Please select a department",
@@ -700,7 +705,6 @@ const [submitLoading, setSubmitLoading] = useState(false);
             <p className="form-error">{errors.date?.message}</p>
           )}
         </div>
-      </div>
 
   
       <textarea

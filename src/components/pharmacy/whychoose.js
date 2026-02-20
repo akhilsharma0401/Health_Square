@@ -39,7 +39,7 @@ const cards = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="bg-gradient-to-b from-blue-50 to-blue-200 py-16 px-4 md:px-10 lg:px-20">
+    <section className="bg-gradient-to-b from-blue-50 to-blue-200 py-10 md:py-16 px-4 md:px-10 lg:px-20">
       <div className="max-w-7xl mx-auto mb-16">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-[#0a2b52]">
           Why Choose Health Square Pharmacy ?

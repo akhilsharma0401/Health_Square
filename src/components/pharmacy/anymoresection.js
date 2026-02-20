@@ -25,7 +25,7 @@ export default function QuestionsSection() {
   };
 
   return (
-    <section className="bg-gray-50 py-16 px-6 flex justify-center items-center text-center">
+    <section className="bg-gray-50 py-10 md:py-16 px-6 flex justify-center items-center text-center">
       <motion.div
         variants={container}
         initial="hidden"
@@ -50,7 +50,7 @@ export default function QuestionsSection() {
         {/* Paragraph */}
         <motion.p
           variants={item}
-          className="text-gray-700 leading-relaxed mb-8 text-base md:text-lg"
+          className="text-gray-700 leading-relaxed mb-8 text-base md:text-lg "
         >
           If you have any doubts you’d like to get cleared about the availability of
           certain products or our dental services, please reach out to us and we will

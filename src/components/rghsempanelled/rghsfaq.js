@@ -380,7 +380,7 @@ export default function FAQSection() {
               <div className="text-gray-600 md:text-base text-sm">
                 <p>
                   To contact Health Square, simply dial these numbers:
-                  +917403330888 | +917403330777. You can also drop an email to
+                  +917403330888. You can also drop an email to
                   info@healthsquare.in mentioning your inquiry or visit our
                   store located at 22, Ground Floor, Biswa Nagar, Opp. Metro
                   Pillar No. 75, New Sanganer Road, Jaipur – 302019.

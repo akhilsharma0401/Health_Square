@@ -38,7 +38,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative bg-white pt-[40px] pb-20 sm:pb-24 overflow-hidden">
+    <section className="relative bg-white pt-[40px] pb-10 md:pb-24 overflow-hidden">
 
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
@@ -66,7 +66,7 @@ export default function HeroSection() {
         >
           <motion.h1
             variants={fadeFromRight}
-            className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0E76CD] leading-tight"
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0E76CD] leading-tight "
           >
            Best Dental Care<br /> 
             <span className="text-[#00A859]"> & Pharmacy Services</span> <br />
@@ -75,13 +75,10 @@ export default function HeroSection() {
 
           <motion.p
             variants={fadeFromRight}
-            className="text-gray-600 mt-4 text-base sm:text-lg md:text-xl max-w-md sm:max-w-lg mx-auto md:mx-0 leading-relaxed"
+            className="text-gray-600 mt-4 text-base sm:text-lg md:text-xl max-w-md sm:max-w-lg mx-auto md:mx-0 leading-relaxed text-justify"
           >
-            Health Square is Jaipur’s leading <b>Pharmacy</b> and{" "}
-            <b>Dental Clinic</b> offering complete healthcare solutions under one
-            roof. From professional dental treatments to authentic medicines and
-            fast home delivery, we provide trusted, affordable, and accessible
-            healthcare for every family in Jaipur.
+            Health Square is Jaipur’s leading <b>pharmacy</b> and{" "}
+            <b>dental clinic,</b> offering complete healthcare solutions under one roof. From professional dental treatments to authentic medicines and fast home delivery, we provide trusted, affordable, and accessible healthcare for every family in Jaipur.
           </motion.p>
 
           <motion.div
@@ -116,7 +113,7 @@ export default function HeroSection() {
 
         <motion.div
           variants={fadeFromBottom}
-          className="flex-1 relative mt-12 sm:mt-16 md:mt-0 flex justify-center"
+          className="flex-1 relative mt-5 sm:mt-16 md:mt-0 flex justify-center"
         >
           <motion.div
             animate={{ y: [0, -10, 0] }}

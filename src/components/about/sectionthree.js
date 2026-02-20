@@ -31,7 +31,7 @@ export default function SectionThree() {
   return (
     <div
       ref={sectionRef}
-      className="bg-gradient-to-br from-blue-50 via-white to-purple-50 py-16 px-4 sm:px-6 lg:px-8"
+      className="bg-gradient-to-br from-blue-50 via-white to-purple-50 py-10 md:py-16 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -50,11 +50,11 @@ export default function SectionThree() {
               <h2 className="text-4xl sm:text-5xl font-bold text-[#0E76CD] leading-tight mb-6">
                 RGHS Pharmacy in Jaipur
               </h2>
-              <p className="text-gray-700 text-lg leading-relaxed mb-8">
+              <p className="text-gray-700 text-lg leading-relaxed text-justify mb-8">
                 <span className="font-bold text-gray-700">Health Square</span>{" "}
                 is an{" "}
                 <span className="font-bold text-gray-700">
-                  RGHS (Rajasthan Government Health Scheme) empanelled pharmacy
+                  RGHS (Rajasthan Government Health Scheme) empaneled pharmacy
                 </span>{" "}
                 in Jaipur providing authentic branded and generic medicines,
                 healthcare products, and cashless billing for RGHS
@@ -74,7 +74,7 @@ export default function SectionThree() {
                     Click here{" "}
                   </span>
                 </Link> */}
-                 Click here to know more about the RGHS scheme.
+                 Click here to learn more about the RGHS scheme.
               </p>
             </div>
 
@@ -88,8 +88,8 @@ export default function SectionThree() {
               {[
                 "Standard and authorized medicines.",
                 "Availability of other medical and personal care products.",
-                "24*7 home delivery of medicines on just a phone call.",
-                "Fast Delivery Across City",
+                "24*7 home delivery of medicines with just a phone call.",
+                "Fast delivery across the city.",
               ].map((text, idx) => (
                 <div key={idx} className="flex items-start space-x-3">
                   <div className="flex-shrink-0 w-5 h-5 rounded-full bg-[#0E76CD] flex items-center justify-center mt-1">

@@ -90,7 +90,7 @@ export default function HeroSection() {
       <div className="absolute -top-20 -left-20 w-96 h-96 bg-[#1dba63]/30 rounded-full mix-blend-multiply opacity-40 blur-3xl animate-pulse"></div>
       <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-[#0082e6]/30 rounded-full mix-blend-multiply opacity-40 blur-3xl animate-pulse"></div>
 
-      <div className="relative max-w-7xl mx-auto px-6 md:px-10 py-20 flex flex-col-reverse md:flex-row items-center justify-between gap-10">
+      <div className="relative max-w-7xl mx-auto px-6 md:px-10 py-10 md:py-20 flex flex-col-reverse md:flex-row items-center justify-between gap-10">
         {/* Left Content */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
@@ -105,14 +105,14 @@ export default function HeroSection() {
             <span className="text-[#1dba63]">Dental</span> Care
           </h1>
 
-          <p className="text-gray-600 text-base sm:text-lg md:text-xl leading-relaxed mb-6">
+          <p className="text-gray-600 text-base sm:text-lg md:text-xl leading-relaxed mb-4 text-justify">
             Health Square is Jaipur’s leading{" "}
-            <strong>Pharmacy and Dental Clinic</strong>, offering expert dental
+            <strong>pharmacy and dental clinic</strong>, offering expert dental
             care, cosmetic dentistry, and oral hygiene with reliable pharmacy
             services and <strong>free home medicine delivery</strong>.
           </p>
 
-          <p className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed mb-8">
+          <p className="text-gray-600 text-base sm:text-lg md:text-xl leading-relaxed mb-6 text-justify">
             Combining advanced dental technology, certified pharmacists, and a
             patient-first approach — we ensure affordable, high-quality
             healthcare that keeps your family smiling.

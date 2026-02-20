@@ -28,7 +28,7 @@ const categories = [
   { id: "baby-care", name: "Baby Care", icon: <FaBaby /> },
   { id: "orthopedic", name: "Orthopedic Supports & Brace", icon: <FaBriefcaseMedical /> },
   { id: "medical-devices", name: "Cough And Cold", icon: <FaStethoscope /> },
-  { id: "heart-care", name: "Dibeties Care", icon: <FaHeartbeat /> },
+  // { id: "heart-care", name: "Dibeties Care", icon: <FaHeartbeat /> },
 ];
 
 
@@ -37,7 +37,7 @@ const products = {
     {
       title: "Best Face Wash & Brightening Products",
       img: "/images/products/skincare/face-wash.jpg",
-      desc: "At our pharmacy, we offer a complete range of dermatologist-recommended face care products .“Discover gentle yet effective face washes that remove dirt, oil, pollutants and impurities without harming your skin barrier. We stock trusted brands like Himalaya, Ponds, Garnier, Clean & Clear, Nivea, Everyuth, and Dove—suitable for all skin types, including oily, dry, and sensitive.”",
+      desc: "At our pharmacy, we offer a complete range of dermatologist-recommended face care products .“Discover gentle yet effective face washes that remove dirt, oil, pollutants and impurities without harming your skin barrier. We stock trusted brands like Himalaya, Pond's, Garnier, Clean & Clear, Nivea, Everyuth, and Dove—suitable for all skin types, including oily, dry, and sensitive.”",
     },
    
   ],

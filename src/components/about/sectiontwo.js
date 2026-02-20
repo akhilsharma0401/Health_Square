@@ -30,7 +30,7 @@ export default function SectionTwo() {
   return (
     <div
       ref={sectionRef}
-      className="bg-gradient-to-br from-[#E6F0FF] via-white to-[#E0F7EB] py-16 px-4 sm:px-6 lg:px-8"
+      className="bg-gradient-to-br from-[#E6F0FF] via-white to-[#E0F7EB] py-10 md:py-16 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -49,16 +49,8 @@ export default function SectionTwo() {
               <h2 className="text-4xl sm:text-5xl font-bold text-[#0E76CD] leading-tight mb-6">
                 Dental Clinic in Jaipur
               </h2>
-              <p className="text-gray-700 text-lg leading-relaxed mb-8">
-                Looking for the best dental clinic in Jaipur? Visit Health
-                Square, led by Dr. Sonal Agarwal (BDS from RUHS & Fellowship in
-                Aesthetic and Cosmetic Dentistry, New Delhi) — a trusted dentist
-                in Jaipur with 7+ years of experience. We offer advanced dental
-                treatments including RCT, Smile Design, Braces, Teeth Whitening,
-                Full Mouth Rehabilitation, and Pediatric Dentistry. Our modern
-                clinic combines technology, hygiene, and personalized care to
-                make every dental visit safe, comfortable, and affordable for
-                families in Jaipur.
+              <p className="text-gray-700 text-lg leading-relaxed text-justify mb-8">
+                Looking for the best dental clinic in Jaipur? Visit Health Square, led by Dr. Sonal Agarwal (BDS from RUHS & Fellowship in Aesthetic and Cosmetic Dentistry, New Delhi)—a trusted dentist in Jaipur with  of experience. We offer advanced dental treatments including RCT, smile design, braces, teeth whitening, full mouth rehabilitation, and pediatric dentistry. Our modern clinic combines technology, hygiene, and personalized care to make every dental visit safe, comfortable, and affordable for families in Jaipur.
               </p>
             </div>
 

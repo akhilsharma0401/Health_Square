@@ -76,7 +76,7 @@ export default function ServicePage({ service }) {
       <main className="relative bg-gradient-to-b from-white/90 to-transparent">
 
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 space-y-24">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-10 md:py-24 space-y-10 md:space-y-24">
           <div className="hidden md:block absolute left-1/2 top-20 bottom-20 w-px bg-gradient-to-b from-transparent via-[#0E76CD]/20 to-transparent" />
 
           {mounted &&

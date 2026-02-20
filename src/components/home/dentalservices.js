@@ -18,7 +18,7 @@ const services = [
 
 export default function DentalServices() {
   return (
-    <section className="relative py-20 bg-white overflow-hidden">
+    <section className="relative py-10 md:py-20 bg-white overflow-hidden">
       {/* 🫧 Animated background shapes */}
       <motion.div
         initial={{ rotate: 0, y: 0 }}
@@ -50,7 +50,7 @@ export default function DentalServices() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.1 }}
           viewport={{ once: true }}
-          className="text-[#0072CE] text-lg mb-14"
+          className="text-[#0072CE] text-lg mb-5 md:mb-14"
         >
           Complete dental care designed for healthy, confident smiles.
         </motion.p>

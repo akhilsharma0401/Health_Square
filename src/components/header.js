@@ -124,13 +124,7 @@ export default function Header() {
                 >
                   7403330888
                 </Link>
-                <span>,</span>
-                <Link
-                  href="tel:7403330777"
-                  className="hover:underline font-medium"
-                >
-                  7403330777
-                </Link>
+                
               </div>
 
               <div className="flex items-center justify-center sm:justify-start gap-1">

@@ -7,6 +7,7 @@ import { HiClock } from "react-icons/hi";
 import { Ri24HoursFill } from "react-icons/ri";
 import { MapPin, Phone, Mail } from "lucide-react";
 import Seo from "../components/seo";
+import { FaLink } from "react-icons/fa";
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0 },
@@ -15,9 +16,9 @@ const fadeUp = {
 export default function Home() {
   return (
     <>
-    <Seo
-            title="RGHS Pharmacy Services | HealthSquare"
-            description="HealthSquare offers RGHS pharmacy services to help eligible members obtain free medicines under Rajasthan Government Health Scheme."/>
+      <Seo
+        title="RGHS Pharmacy Services | HealthSquare"
+        description="HealthSquare offers RGHS pharmacy services to help eligible members obtain free medicines under Rajasthan Government Health Scheme." />
       <HeroSection />
 
       <main className="max-w-7xl mx-auto py-12 px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,2.2fr)_minmax(260px,0.8fr)] gap-10">
@@ -48,7 +49,15 @@ export default function Home() {
             className="rounded-2xl shadow-lg bg-gradient-to-br from-emerald-50 via-white to-blue-50 border border-emerald-100 p-6 md:p-7"
           >
             <h2 className="text-xl md:text-2xl font-semibold text-emerald-800 mb-3">
-              What is RGHS (Rajasthan Government Health Scheme)?
+              What is RGHS <a
+                href="https://rghs.rajasthan.gov.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 inline-flex items-center gap-1 underline"
+              >
+                (Rajasthan Government Health Scheme?)
+                <FaLink className="text-sm" />
+              </a>
             </h2>
             <p>
               Rajasthan Government Health Scheme (RGHS) is formulated to provide
@@ -78,7 +87,7 @@ export default function Home() {
             </h2>
             <p>
               An RGHS card is necessary to enjoy the benefits under the scheme.
-              It&apos;s an ID card and offers access to all the impanelled
+              It&apos;s an ID card and offers access to all the empanelled
               services.
             </p>
             <p className="mt-3 font-medium">Step-by-Step Process:</p>
@@ -101,7 +110,7 @@ export default function Home() {
               is not merely a gesture. It&apos;s also compulsory for accessing
               cashless medical care, whether you&apos;re collecting free
               medicines from an RGHS-listed shop or availing treatment from an
-              impanelled hospital. Without it, you won&apos;t be able to take
+              empanelled hospital. Without it, you won&apos;t be able to take
               advantage of the entire gamut of services the scheme provides, so
               ensure you keep it handy and safe.
             </p>
@@ -128,9 +137,9 @@ export default function Home() {
               especially for government employees and pensioners. With the RGHS
               card, beneficiaries can access medicines free of cost from any
               empanelled RGHS pharmacy across the state. In addition to
-              medicines, the scheme also covers free or heavily subsidised
+              medicines, the scheme also covers free or heavily subsidized
               diagnostic tests, helping reduce out-of-pocket expenses for
-              routine and emergency health checkups. Another important feature
+              routine and emergency health check-ups. Another important feature
               of RGHS is that it doesn’t just benefit the cardholder—it also
               covers spouses, dependent children, and even parents, ensuring the
               whole family is protected. For senior citizens and pensioners,
@@ -181,7 +190,7 @@ export default function Home() {
               from regular doctor visits to hospital admissions. It also
               includes essential diagnostic services, such as lab tests and
               scans, further reducing out-of-pocket expenses. Another major
-              advantage is the inclusion of dependents, with spouse, children,
+              advantage is the inclusion of dependents, with spouses, children,
               and parents all eligible for coverage under a single card. For any
               questions or support, RGHS provides a dedicated toll-free
               helpline, ensuring help is always just a phone call away. With
@@ -191,7 +200,7 @@ export default function Home() {
             </p>
             <p className="mt-3">
               These RGHS scheme benefits ensure that both employees and
-              pensioners receive the best medical care without financial burden.
+              pensioners receive the best medical care without financial burdens.
             </p>
           </motion.section>
 
@@ -209,7 +218,7 @@ export default function Home() {
             <p>
               An RGHS pharmacy is a government-approved pharmacy that is
               eligible to dispense medicines under the scheme. HealthSquare is
-              an RGHS empanelled pharmacy, and hence, beneficiaries can access:
+              an RGHS empaneled pharmacy, and hence, beneficiaries can access:
             </p>
             <ul className="mt-3 list-disc pl-6 space-y-1">
               <li>Authentic RGHS medicines (branded and generic).</li>
@@ -235,7 +244,14 @@ export default function Home() {
             className="rounded-2xl shadow-lg bg-white border border-emerald-100 p-6 md:p-7"
           >
             <h2 className="text-xl md:text-2xl font-semibold text-blue-900 mb-3">
-              HealthSquare: An RGHS Verified Pharmacy
+              <a
+                href="https://healthsquare.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 gap-1 underline"
+              >
+                HealthSquare
+              </a>: An RGHS Verified Pharmacy
             </h2>
             <p>
               HealthSquare Pharmacy is a proud RGHS-verified pharmacy, offering
@@ -276,14 +292,14 @@ export default function Home() {
               RGHS Medicines: Cashless and Accessible
             </h2>
             <p>
-              Access to RGHS medicines cashless is one of the largest strengths
+              Access to RGHS medicines cashlessly is one of the largest strengths
               of the scheme. The beneficiaries just have to present their RGHS
-              card at an empanelled pharmacy such as HealthSquare, and medicines
+              card at an empaneled pharmacy such as HealthSquare, and medicines
               are delivered without actual payment.
             </p>
             <p className="mt-3">
               This center is particularly useful for those patients who need
-              long-term medication, e.g., those having diabetes, hypertension,
+              long-term medication, e.g., those with diabetes, hypertension,
               or heart disease.
             </p>
           </motion.section>
@@ -302,10 +318,10 @@ export default function Home() {
             <p>
               To provide a smooth and supportive experience to all its
               beneficiaries, the Rajasthan Government Health Scheme (RGHS)
-              provides a special toll-free helpline number — 181. This helpline
+              offers a special toll-free helpline number — 181. This helpline
               is an important contact for anyone in need of help with
               RGHS-related services. Whether you wish to inquire about your RGHS
-              card status, verify empanelled hospitals or chemists, or require
+              card status, verify empaneled hospitals or chemists, or require
               assistance concerning medication or billing issues, by dialing
               181, you in touch with trained representatives who can assist you.
             </p>
@@ -313,7 +329,7 @@ export default function Home() {
               The helpline is also a good means through which you can keep
               yourself updated on newly added benefits under the scheme, as well
               as ongoing information. To this government support, HealthSquare
-              Pharmacy adds its own customer helpdesk, specifically tailored to
+              Pharmacy adds its own customer help desk, specifically tailored to
               help patients navigate the use of RGHS cards, medication
               assistance, and clear billing services. From answering queries
               regarding covered medication to assisting pensioners in their
@@ -411,47 +427,44 @@ export default function Home() {
                 <span>11:00 AM – 4:00 PM</span>
               </li>
             </ul>
-            
-             <div className="h-px my-4 bg-white/20" />
-             <div className="space-y-3 text-sm">
+
+            <div className="h-px my-4 bg-white/20" />
+            <div className="space-y-3 text-sm">
               <span className="flex gap-3">
-              <Ri24HoursFill className="text-xl mt-1 " />
-              <h3 className="text-xl font-semibold relative z-10">
-               Visit Us Anytime
-              </h3>
-            </span>
-      <div className="flex items-start gap-3">
-        <MapPin className="w-5 h-5 mt-1 text-white/90" />
-        <p className="leading-relaxed">
-          <strong>Health Square</strong><br />
-          Vinayak Tower, 22, Ground Floor, Biswa Nagar,<br />
-          New Sanganer Road, Opp. Metro Pillar No. 75,<br />
-          Jaipur, Rajasthan – 302019
-        </p>
-      </div>
+                <Ri24HoursFill className="text-xl mt-1 " />
+                <h3 className="text-xl font-semibold relative z-10">
+                  Visit Us Anytime
+                </h3>
+              </span>
+              <div className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 mt-1 text-white/90" />
+                <p className="leading-relaxed">
+                  <strong>Health Square</strong><br />
+                  Vinayak Tower, 22, Ground Floor, Biswa Nagar,<br />
+                  New Sanganer Road, Opp. Metro Pillar No. 75,<br />
+                  Jaipur, Rajasthan – 302019
+                </p>
+              </div>
 
-      <div className="flex items-center gap-3">
-        <Phone className="w-5 h-5 text-white/90" />
-        <p className="">
-        <Link href="tel:7403330888" passHref>
-          <span className="hover:underline cursor-pointer">7403330888</span>
-        </Link>
-        ,{" "}
-        <Link href="tel:7403330777" passHref>
-          <span className="hover:underline cursor-pointer">7403330777</span>
-        </Link>
-      </p>
-      </div>
+              <div className="flex items-center gap-3">
+                <Phone className="w-5 h-5 text-white/90" />
+                <p className="">
+                  <Link href="tel:7403330888" passHref>
+                    <span className="hover:underline cursor-pointer">7403330888</span>
+                  </Link>
 
-      <div className="flex items-center gap-3">
-        <Mail className="w-5 h-5 text-white/90" />
-        <Link href="mailto:info@healthsquare.in" passHref>
-          <span className="hover:underline cursor-pointer">
-            info@healthsquare.in
-          </span>
-        </Link>
-      </div>
-    </div>
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <Mail className="w-5 h-5 text-white/90" />
+                <Link href="mailto:info@healthsquare.in" passHref>
+                  <span className="hover:underline cursor-pointer">
+                    info@healthsquare.in
+                  </span>
+                </Link>
+              </div>
+            </div>
           </motion.div>
 
           <motion.div
@@ -472,7 +485,7 @@ export default function Home() {
             </div>
           </motion.div>
         </aside>
-        
+
       </main>
 
 

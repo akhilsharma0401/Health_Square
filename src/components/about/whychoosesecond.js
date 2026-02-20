@@ -23,7 +23,7 @@ export default function WhyChoose() {
   };
 
   return (
-    <section className="bg-gray-50 py-16 px-6 flex justify-center items-center text-center">
+    <section className="bg-gray-50 py-10 md:py-16 px-6 flex justify-center items-center text-center">
       <motion.div
         variants={container}
         initial="hidden"
@@ -36,7 +36,7 @@ export default function WhyChoose() {
           variants={item}
           className="text-3xl md:text-4xl font-medium  mb-4"
         >
-        Why choose <span className="text-[#0e76cd]">HEALTH</span> <span className="text-[#00afef]">SQUARE</span> ?
+        Why choose <span className="text-[#0e76cd]">Health</span> <span className="text-[#00afef]">Square</span> ?
         </motion.h2>
 
     
@@ -48,9 +48,9 @@ export default function WhyChoose() {
        
         <motion.p
           variants={item}
-          className="text-gray-700 leading-relaxed mb-8 text-base md:text-lg"
+          className="text-gray-700 leading-relaxed mb-8 text-base md:text-lg text-justify"
         >
-         Our Dental clinic in Jaipur is fully equipped with world-class facilities and the latest medical technology to provide people with the best dental services available. Meanwhile, the Health Square Pharmacy is managed by medical experts who are familiar with all the medical, healthcare, and personal care products. Health Square’s prime location and delivery services also offer a great deal of convenience.
+         Our dental clinic in Jaipur is fully equipped with world-class facilities and the latest medical technology to provide people with the best dental services available. Meanwhile, the Health Square Pharmacy is managed by medical experts who are familiar with all the medical, healthcare, and personal care products. Health Square’s prime location and delivery services also offer a great deal of convenience.
         </motion.p>
 
       

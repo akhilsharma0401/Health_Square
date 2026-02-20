@@ -13,13 +13,13 @@ export const servicesData = [
         heading: "Why Smile Design?",
         image: "/images/services/smile/smile-01.png",
         content:
-          "Smile design helps you achieve the perfect smile by addressing various dental imperfections. This procedure is ideal for those looking to correct issues like discoloured, chipped, or misaligned teeth, ensuring a healthy and attractive smile.",
+          "Smile design helps you achieve the perfect smile by addressing various dental imperfections. This procedure is ideal for those looking to correct issues like discolored, chipped, or misaligned teeth, ensuring a healthy and attractive smile.",
       },
       {
         heading: "Which Dental Issues Deteriorate Smiles?",
         image: "/images/services/smile/smile-02.png",
         list: [
-          "Discoloured teeth: Teeth stained or yellowed due to various factors like coffee, tobacco, or ageing.",
+          "Discolored teeth: Teeth stained or yellowed due to various factors like coffee, tobacco, or aging.",
           "Chipped or cracked teeth: Teeth with minor or severe fractures compromising their appearance.",
           "Misaligned teeth: Teeth that are crooked or not properly aligned within the dental arch.",
           "Gaps between teeth: Visible spaces between teeth affect the uniformity of your smile.",
@@ -32,12 +32,12 @@ export const servicesData = [
         heading: "Dental Procedures To Improve Your Smile",
         image: "/images/services/smile/smile-03.png",
         list: [
-          "Teeth whitening: Lighten and brighten discoloured teeth.",
-          "Veneers: Thin shells to improve shape, colour, and alignment.",
-          "Dental bonding: Fix minor imperfections using tooth-coloured resin.",
+          "Teeth whitening: Lighten and brighten discolored teeth.",
+          "Veneers: Thin shells to improve shape, color, and alignment.",
+          "Dental bonding: Fix minor imperfections using tooth-colored resin.",
           "Invisalign: Clear aligners to straighten teeth discreetly.",
           "Crowns: Caps to restore shape and strength.",
-          "Dental implants: Permanent replacement for missing teeth.",
+          "Dental implants: Permanent replacements for missing teeth.",
           "Gum contouring: Reshape gum line for balance.",
         ],
       },
@@ -48,7 +48,7 @@ export const servicesData = [
           "Initial consultation and dental evaluation.",
           "Digital smile analysis with advanced technology.",
           "Customized treatment planning tailored to your needs.",
-          "Teeth preparation and restoration application.",
+          "Tooth preparation and restoration application.",
           "Final adjustments and polishing for a perfect finish.",
           "Post-treatment care and follow-up guidance.",
         ],
@@ -69,7 +69,7 @@ export const servicesData = [
       {
         question: "How long does the smile design process take?",
         answer:
-          "The duration varies depending on the complexity of the case, but typically it can take several weeks to complete.",
+          "The duration varies depending on the complexity of the case, but typically it can takes several weeks to complete.",
       },
       {
         question: "Is smile design painful?",
@@ -99,7 +99,7 @@ export const servicesData = [
       {
         question: "Are there any risks involved?",
         answer:
-          "Smile design is generally safe, but like any dental procedure, there may be minor risks which our dentist will discuss with you.",
+          "Smile design is generally safe, but like any dental procedure, there may be minor risks that our dentist will discuss with you.",
       },
       {
         question: "What should I expect during the consultation?",
@@ -119,23 +119,23 @@ export const servicesData = [
     slug: "advanced-root-canal-treatment",
       metatitle: "Advanced Root Canal Treatment Dental Clinic in Jaipur",
     metadescription:
-      "Root canal treatment at HealthSquare treats infected teeth, reduces tooth pain, and restores oral health with modern endodontic care.",
+      "Root canal treatment at HealthSquare addresses infected teeth, alleviates tooth pain, and restores oral health with modern endodontic care.",
     title: "Advanced Root Canal Treatment in Jaipur",
     banner: "/images/services/rootcanal/rootcanal-bg.png",
     intro:
-      "Root Canal Treatment is a common dental procedure administered to over 15 million people yearly in India. Also known as endodontic treatments, they cause lesser pain compared to tooth extractions and carry little risk with an average success rate of over 92%.",
+      "Root canal treatment is a common dental procedure administered to over 15 million people annually in India. Also known as endodontic treatments, they cause less pain compared to tooth extractions and carry minimal risk with an average success rate of over 92%.",
     sections: [
       {
         heading: "What is a Root Canal?",
         image: "/images/services/rootcanal/rootcanal-01.png",
         content:
-          "Each tooth has a visible, hard surface called enamel, beneath which is dentin, and then the soft, hyper-sensitive pulp. The pulp contains nerves and blood vessels. The root canal is the channel through which the tooth's nerves connect to the rest of the body.",
+          "Each tooth has a visible, hard surface called enamel, beneath which is dentin, and then the soft, hypersensitive pulp. The pulp contains nerves and blood vessels. The root canal is the channel through which the tooth's nerves connect to the rest of the body.",
       },
       {
         heading: "What is Root Canal Treatment?",
         image: "/images/services/rootcanal/rootcanal-02.png",
         content:
-          "Tooth decay caused by bacteria can damage the pulp. Once decay reaches the pulp, the dentist removes the infected tissue in a procedure called Root Canal Treatment. This saves the natural tooth while removing the infected area.",
+          "Tooth decay caused by bacteria can damage the pulp. Once decay reaches the pulp, the dentist removes the infected tissue in a procedure called root canal treatment. This saves the natural tooth while eliminating  the infected area.",
       },
       {
         heading: "When is Root Canal Treatment Necessary?",
@@ -152,24 +152,23 @@ export const servicesData = [
         heading: "Steps of a Root Canal Treatment",
         image: "/images/services/rootcanal/rootcanal-04.png",
         list: [
-          "Step 1: Identification – Digital X-ray to find infection extent.",
-          "Step 2: Preparing The Area – Anaesthesia and cavity preparation.",
-          "Step 3: Disinfection – Thorough cleaning and shaping of root canal.",
-          "Step 4: Filling – Hollowed tooth filled with gutta-percha.",
-          "Step 5: Restoration & Crown – Custom crown placed to restore tooth shape & strength.",
+          "Step 1: Identification—Digital X-ray to determine the extent of infection.",
+          "Step 2: Disinfection—Thorough cleaning and shaping of the root canal.",
+          "Step 3: Filling—The hollowed tooth is filled with gutta-percha.",
+          "Step 4: Restoration & Crown—A custom crown placed to restore tooth shape & strength.",
         ],
       },
       {
         heading: "Cost of Root Canal Treatment in Jaipur",
         image: "/images/services/rootcanal/rootcanal-05.png",
         content:
-          "Costs vary based on infection extent and crown type. On average ₹2,000–₹10,000 for the procedure, excluding crowns (₹5,000–₹30,000). Health Square ensures world-class safety & service within budget.",
+          "Costs vary based on the extent of infection and crown type. On average, the procedure ranges from ₹2,000 to ₹10,000, excluding crowns (₹5,000 to ₹30,000). Health Square ensures world-class safety and service within budget.",
       },
       {
         heading: "Why Choose Health Square Dental Clinic in Jaipur?",
         image: "/images/services/rootcanal/rootcanal-06.png",
         content:
-          "Dr Sonal Agarwal is the best dentist in Jaipur for cosmetic dental procedures. Our clinic has cutting-edge equipment and experienced staff. Over 100+ successful advanced root canal treatments have been performed.",
+          "Dr. Sonal Agarwal is one of the best dentists in Jaipur for cosmetic dental procedures. Our clinic is equipped with cutting-edge technology and experienced staff. Over 100 successful advanced root canal treatments have been performed.",
       },
     ],
     faqs: [
@@ -181,7 +180,7 @@ export const servicesData = [
       {
         question: "Is root canal treatment painful?",
         answer:
-          "The procedure is performed under local anaesthesia, so you won’t feel pain during treatment. Mild discomfort or swelling after the procedure is normal and temporary.",
+          "The procedure is performed under local anesthesia, so you won’t feel pain during treatment. Mild discomfort or swelling after the procedure is normal and temporary.",
       },
       {
         question: "How long does a root canal treatment take?",
@@ -364,7 +363,7 @@ export const servicesData = [
         heading: "What is Teeth Whitening?",
         image: "/images/services/teethwhitening/teethwhitening-01.png",
         content:
-          "It’s a 100% non-invasive cosmetic dental procedure that improves smiles with minimal investment. Advanced dental technology brightens the teeth’s surface and reduces discolouration.",
+          "It’s a 100% non-invasive cosmetic dental procedure that improves smiles with minimal investment. Advanced dental technology brightens the teeth’s surface and reduces discoloration.",
         list: [
           "Professional Treatment: Performed by a dentist for optimal and safe results.",
           "Take-home Kits: Custom-made trays with bleaching gel for convenient home use.",
@@ -376,8 +375,8 @@ export const servicesData = [
         image: "/images/services/teethwhitening/teethwhitening-02.png",
         list: [
           "Food & Drink: Everyday consumables like coffee, tea, red wine, and more can stain teeth.",
-          "Tobacco Use: Smoking or chewing tobacco leads to significant teeth discolouration.",
-          "Aging: Natural aging process causes enamel to thin and teeth to yellow.",
+          "Tobacco Use: Smoking or chewing tobacco leads to significant teeth discoloration.",
+          "Aging: The natural aging process causes enamel to thin and teeth to yellow.",
           "Medications: Certain medicines can also stain teeth over time.",
           "Poor Oral Hygiene: Inadequate brushing and flossing allow plaque and stains to build up.",
         ],
@@ -627,7 +626,7 @@ export const servicesData = [
         list: [
           "Tooth Decay: Severe cavities that damage teeth.",
           "Chipped or Cracked Teeth: Restoring damaged teeth to prevent further issues.",
-          "Discoloured Teeth: Enhancing the appearance of stained or discoloured teeth.",
+          "discolored Teeth: Enhancing the appearance of stained or discolored teeth.",
           "Worn-down Teeth: Restoring teeth that have been worn down over time.",
           "Misaligned Teeth: Correcting slight misalignment for a better smile.",
           "Gaps Between Teeth: Closing gaps to improve dental aesthetics.",
@@ -682,7 +681,7 @@ export const servicesData = [
       {
         question: "Are the procedures for veneers and crowns painful?",
         answer:
-          "These procedures are performed under local anaesthesia to minimize discomfort.",
+          "These procedures are performed under local anesthesia to minimize discomfort.",
       },
       {
         question: "How much do veneers and crowns cost?",
@@ -781,7 +780,7 @@ export const servicesData = [
         list: [
           "Initial Consultation: Comprehensive evaluation and treatment planning.",
           "Imaging and Diagnosis: Using advanced imaging technology to assess bone structure and plan implant placement.",
-          "Surgical Placement: Precise insertion of the implant into the jawbone under local anaesthesia.",
+          "Surgical Placement: Precise insertion of the implant into the jawbone under local anesthesia.",
           "Healing and Osseointegration: Allowing time for the implant to bond with the bone.",
           "Abutment Placement: Attaching a connector to the implant.",
           "Prosthetic Attachment: Securing the custom-made crown, bridge, or denture to the abutment.",
@@ -808,7 +807,7 @@ export const servicesData = [
       {
         question: "Is the dental implant procedure painful?",
         answer:
-          "The procedure is performed under local anaesthesia to minimize discomfort, and post-surgery pain can be managed with prescribed medication.",
+          "The procedure is performed under local anesthesia to minimize discomfort, and post-surgery pain can be managed with prescribed medication.",
       },
       {
         question: "How much do dental implants cost?",
@@ -909,7 +908,7 @@ export const servicesData = [
         list: [
           "Consultation: Initial assessment and discussion of treatment options.",
           "Evaluation: Detailed examination and imaging to plan the extraction.",
-          "Extraction: Safe and precise removal of the tooth under local anaesthesia.",
+          "Extraction: Safe and precise removal of the tooth under local anesthesia.",
           "Aftercare: Instructions and support for post-extraction care to ensure proper healing.",
         ],
       },
@@ -941,7 +940,7 @@ export const servicesData = [
       {
         question: "Is wisdom tooth extraction painful?",
         answer:
-          "The procedure is performed under local anaesthesia, minimizing discomfort during the extraction.",
+          "The procedure is performed under local anesthesia, minimizing discomfort during the extraction.",
       },
       {
         question:
@@ -997,7 +996,7 @@ export const servicesData = [
         heading: "What is a Digital X-Ray System?",
         image: "/images/services/digitalxraysystem/digital-x-ray-system-01.png",
         content:
-          "A Digital X-Ray System is an advanced dental imaging technology used to capture detailed images of teeth, gums, jawbone, and surrounding structures. Unlike traditional film X-rays, digital X-rays use electronic sensors to produce instant images on a computer screen.",
+          "A digital X-ray system is an advanced dental imaging technology used to capture detailed images of teeth, gums, jawbone, and surrounding structures. Unlike traditional film X-rays, digital X-rays use electronic sensors to produce instant images on a computer screen.",
         list: [
           "Modern Imaging Technology: Uses digital sensors instead of films.",
           "Instant Results: Images appear within seconds.",
@@ -1045,7 +1044,8 @@ export const servicesData = [
         list: [
           "Quick Process: Takes only a few minutes.",
           "Painless Experience: No discomfort involved.",
-          "Immediate Review: Dentist explains results instantly.",
+          "Immediate Review: The dentist explains the results instantly.",
+          
         ],
       },
       {

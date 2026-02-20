@@ -113,7 +113,7 @@ const OurServices = () => {
             className="md:w-[55%] w-full flex flex-col justify-center text-center md:text-left py-10 px-6 sm:px-10 md:pl-16"
           >
             <h1 className="text-3xl sm:text-4xl font-bold leading-snug">
-              <span className="text-[#0078C9]">Our </span>
+              {/* <span className="text-[#0078C9]">Our </span> */}
               <span className="text-[#00A859]">DENTAL SERVICES</span>
             </h1>
             <p className="text-gray-700 mt-3 leading-relaxed max-w-2xl mx-auto md:mx-0 text-base sm:text-lg">
@@ -124,7 +124,7 @@ const OurServices = () => {
           </motion.div>
         </div>
 
-        <div className="relative w-full px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 2xl:px-32 mt-10 pb-20">
+        <div className="relative w-full px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 2xl:px-32 mt-5 md:mt-10 pb-10 md:pb-20">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
             {services.map((service, i) => (
               <motion.div

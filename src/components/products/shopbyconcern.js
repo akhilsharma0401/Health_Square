@@ -15,11 +15,11 @@ export default function ShopByConcern() {
   });
 
   const concerns = [
-    { name: "Dibaties care ", img: "/images/products/shopbyconcern/dibatiescare.png" },
-    { name: "Oral care ", img: "/images/products/shopbyconcern/oralcare.png" },
-    { name: "Derma care", img: "/images/products/shopbyconcern/dermacare.png" },
-    { name: "joint care ", img: "/images/products/shopbyconcern/jointcare.png" },
-    { name: "heart care", img: "/images/products/shopbyconcern/heartcare.png" },
+    { name: "Diabetes Care ", img: "/images/products/shopbyconcern/dibatiescare.png" },
+    { name: "Oral Care ", img: "/images/products/shopbyconcern/oralcare.png" },
+    { name: "Derma Care", img: "/images/products/shopbyconcern/dermacare.png" },
+    { name: "Joint Care ", img: "/images/products/shopbyconcern/jointcare.png" },
+    { name: "Heart Care", img: "/images/products/shopbyconcern/heartcare.png" },
   ];
 
   const loopedConcerns = [...concerns, ...concerns];

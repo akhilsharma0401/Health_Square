@@ -36,17 +36,11 @@ const nextConfig = {
   productionBrowserSourceMaps: false,
 
   images: {
-    domains: ["192.168.1.36"],
+    domains: ["rest.healthsquare.in"],
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "192.168.1.36",
-        port: "3593",
-      },
-      {
         protocol: "https",
-        hostname: "473ebaf3fb86.ngrok-free.app",
-        // port: "3593",
+        hostname: "rest.healthsquare.in",
       },
     ],
   },
@@ -55,7 +49,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://192.168.1.36:3593/api/:path*",
+        destination: "https://rest.healthsquare.in/api/:path*",
       },
     ];
   },

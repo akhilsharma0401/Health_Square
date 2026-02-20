@@ -104,12 +104,7 @@ export default function About() {
                         7403330888
                       </span>
                     </Link>
-                    ,{" "}
-                    <Link href="tel:7403330777" passHref>
-                      <span className="hover:underline cursor-pointer">
-                        7403330777
-                      </span>
-                    </Link>
+                    
                   </li>
                   <li className="flex items-center gap-3">
                     <FaEnvelope className="text-[#0070C9] text-lg" />

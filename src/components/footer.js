@@ -31,7 +31,7 @@ export default function Footer() {
 
           <p className="text-gray-300 text-sm leading-relaxed">
             Health Square is a modern dental clinic and pharmacy equipped with
-            world-class technology. We ensure premium care, expert consultation,
+            world-class technology. We ensure premium care, expert consultations,
             and home delivery of medical supplies from{" "}
             <span className="text-[#00A859] font-semibold">7 AM – 11 PM</span>.
           </p>
@@ -58,13 +58,8 @@ export default function Footer() {
                 >
                   7403330888
                 </Link>{" "}
-                /{" "}
-                <Link
-                  href="tel:7403330777"
-                  className="hover:underline font-medium"
-                >
-                  7403330777
-                </Link>
+                {" "}
+                
               </span>
             </li>
             <li className="flex items-center space-x-3">
@@ -145,7 +140,7 @@ export default function Footer() {
               {
                 icon: <FaWhatsapp />,
                 color: "#25D366",
-                link: "https://wa.me/7403330777",
+                link: "https://wa.me/7403330888",
               },
             ].map((s, i) => (
               <a
