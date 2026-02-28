@@ -5,7 +5,11 @@ module.exports = {
   sitemapSize: 5000,
   changefreq: "weekly",
   priority: 0.9,
-  exclude: [],
+  exclude: [
+   '/admin*',        
+    '/admin/*',
+    '/admin/**',
+  ],
   alternateRefs: [],
 };
 
