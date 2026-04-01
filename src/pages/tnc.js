@@ -103,6 +103,7 @@ const sections = useMemo(
   title="Terms & Conditions | Health Square Jaipur – Dental Clinic & Pharmacy"
   description="Read the Terms & Conditions for using Health Square Jaipur’s website and services. Learn about appointments, payments, privacy, and RGHS cashless policies for our dental clinic and pharmacy."
   keywords="Health Square Jaipur terms and conditions, dental clinic policy, pharmacy policy Jaipur, RGHS terms, Health Square privacy policy, clinic rules Jaipur"
+  currentUrl="https://www.digibima.com/tnc"
 />
 
       <div

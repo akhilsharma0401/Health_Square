@@ -100,6 +100,7 @@ export default function BlogList() {
       <Seo
         title="Dental Care Tips & News - Health Square Blog"
         description="Stay updated with expert dental care tips and news on the Health Square Blog. Your go-to resource for oral health advice."
+        currentUrl="https://healthsquare.in/blog"
       />
       <section className="bg-[#f2f7fe] py-16 px-6 md:px-12 relative">
         <div className="max-w-6xl mx-auto grid gap-10 sm:grid-cols-2 lg:grid-cols-3">

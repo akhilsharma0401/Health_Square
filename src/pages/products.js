@@ -14,7 +14,9 @@ export default function Home() {
       <>
       <Seo
         title="Best Health & Wellness Pharmacy Store In Jaipur"
-        description="Shop pharmacy, vitamins, fitness, and wellness products at Health Square ,Jaipur’s trusted pharmacy with fast, reliable doorstep delivery."/>
+        description="Shop pharmacy, vitamins, fitness, and wellness products at Health Square ,Jaipur’s trusted pharmacy with fast, reliable doorstep delivery."
+        currentUrl="https://www.digibima.com/products"
+        />
        <main>
   {/* <SectionOne /> */}
   <SectionTwo />

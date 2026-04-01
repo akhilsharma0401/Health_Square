@@ -103,6 +103,7 @@ const sections = useMemo(
 <Seo
   title="Privacy Policy | Health Square Dental Clinic"
   description="Read the Privacy Policy of Health Square Dental Clinic to learn how we collect, use, and protect your personal information with complete transparency and care."
+  currentUrl="https://healthsquare.in/privacy-policy"
 />
 
 

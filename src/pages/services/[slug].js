@@ -28,6 +28,7 @@ export default function ServicePage({ service }) {
       <Seo
         title={service.metatitle}
         description={service.metadescription}
+        currentUrl={service.metacurrentUrl}
       />
 
 

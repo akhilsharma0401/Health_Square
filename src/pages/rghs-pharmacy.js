@@ -18,7 +18,9 @@ export default function Home() {
     <>
       <Seo
         title="RGHS Pharmacy Services | HealthSquare"
-        description="HealthSquare offers RGHS pharmacy services to help eligible members obtain free medicines under Rajasthan Government Health Scheme." />
+        description="HealthSquare offers RGHS pharmacy services to help eligible members obtain free medicines under Rajasthan Government Health Scheme." 
+        currentUrl="https://www.digibima.com/rghs-pharmacy"
+        />
       <HeroSection />
 
       <main className="max-w-7xl mx-auto py-12 px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,2.2fr)_minmax(260px,0.8fr)] gap-10">

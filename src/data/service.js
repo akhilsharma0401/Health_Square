@@ -2,6 +2,7 @@ export const servicesData = [
   {
     slug: "smile-design",
     metatitle: "Natural Smile Design at Healthsquare Clinic",
+    metacurrentUrl: "https://healthsquare.in/services/smile-design",
     metadescription:
       "Smile Design at HealthSquare enhances your smile’s shape, color, and alignment using advanced digital dental technology.",
     title: "Smile Design in Jaipur",
@@ -114,10 +115,11 @@ export const servicesData = [
     ],
   },
 
-
   {
     slug: "advanced-root-canal-treatment",
-      metatitle: "Advanced Root Canal Treatment Dental Clinic in Jaipur",
+    metatitle: "Advanced Root Canal Treatment Dental Clinic in Jaipur",
+    metacurrentUrl:
+      "https://healthsquare.in/services/advanced-root-canal-treatment",
     metadescription:
       "Root canal treatment at HealthSquare addresses infected teeth, alleviates tooth pain, and restores oral health with modern endodontic care.",
     title: "Advanced Root Canal Treatment in Jaipur",
@@ -222,7 +224,8 @@ export const servicesData = [
 
   {
     slug: "child-dental-care",
-      metatitle: "Gentle Child Dental Care in Jaipur | HealthSquare",
+    metatitle: "Gentle Child Dental Care in Jaipur | HealthSquare",
+    metacurrentUrl: "https://healthsquare.in/services/child-dental-care",
     metadescription:
       "Looking for child dental care? HealthSquare offers gentle pediatric dentistry, preventive treatments, and stress-free dental visits for kids.",
     title: "Child Dental Care in Jaipur",
@@ -351,9 +354,10 @@ export const servicesData = [
 
   {
     slug: "teeth-whitening",
-      metatitle: "Teeth Whitening in Jaipur | HealthSquare Dental Clinic",
+    metatitle: "Teeth Whitening in Jaipur | HealthSquare Dental Clinic",
     metadescription:
       "Teeth whitening at HealthSquare helps remove tooth stains, improve tooth color, and restore a brighter smile using safe dental techniques.",
+    metacurrentUrl: "https://healthsquare.in/services/teeth-whitening",
     title: "Teeth Whitening",
     banner: "/images/services/teethwhitening/teethwhitening-bg.png",
     intro:
@@ -470,9 +474,10 @@ export const servicesData = [
 
   {
     slug: "full-mouth-rehabilitation",
-      metatitle: "Full Mouth Rehabilitation Dental Clinic in Jaipur",
+    metatitle: "Full Mouth Rehabilitation Dental Clinic in Jaipur",
     metadescription:
       "HealthSquare offers full mouth rehabilitation to restore oral health, function, and smile aesthetics through advanced, personalized dental treatments.",
+      metacurrentUrl: "https://healthsquare.in/services/full-mouth-rehabilitation",
     title: "Full Mouth Rehabilitation",
     banner: "/images/services/mouth/mouth-bg.png",
     intro:
@@ -603,9 +608,10 @@ export const servicesData = [
 
   {
     slug: "veneers-and-crown",
-      metatitle: "Veneers & Crown Services at Jaipur Dental Clinic",
+    metatitle: "Veneers & Crown Services at Jaipur Dental Clinic",
     metadescription:
       "HealthSquare provides veneers and crowns to restore damaged teeth, improve smile appearance, and ensure long-lasting strength with expert dental care.",
+    metacurrentUrl: "https://healthsquare.in/services/veneers-and-crown",
     title: "Veneers & Crown",
     banner: "/images/services/veneerscrown/veneerscrown-bg.png",
     intro:
@@ -723,9 +729,10 @@ export const servicesData = [
 
   {
     slug: "tooth-implant",
-      metatitle: "Tooth Implant Dental Clinic in Jaipur | HealthSquare",
+    metatitle: "Tooth Implant Dental Clinic in Jaipur | HealthSquare",
     metadescription:
       "HealthSquare offers expert tooth implant solutions to replace missing teeth, restore function, and improve smile confidence with advanced dental care.",
+    metacurrentUrl: "https://healthsquare.in/services/tooth-implant",
     title: "Tooth Implant",
     banner: "/images/services/toothimplant/toothimplant-bg.png",
     intro:
@@ -841,9 +848,10 @@ export const servicesData = [
 
   {
     slug: "tooth-extraction",
-      metatitle: "Tooth Extraction in Jaipur | HealthSquare Dental Clinic",
+    metatitle: "Tooth Extraction in Jaipur | HealthSquare Dental Clinic",
     metadescription:
       "Need tooth extraction? HealthSquare provides gentle, professional tooth removal to treat infection, reduce pain, and support oral health.",
+    metacurrentUrl: "https://healthsquare.in/services/tooth-extraction",
     title: "Tooth Extraction",
     banner: "/images/services/toothextraction/toothextraction-bg.png",
     intro:
@@ -984,9 +992,10 @@ export const servicesData = [
 
   {
     slug: "digital-x-ray-system",
-      metatitle: "Digital X-Ray System | Advanced Diagnostic Imaging",
+    metatitle: "Digital X-Ray System | Advanced Diagnostic Imaging",
     metadescription:
       "HealthSquare offers advanced Digital X-Ray Systems with high-resolution imaging, low radiation exposure, and fast diagnosis.",
+    metacurrentUrl: "https://healthsquare.in/services/digital-x-ray-system",
     title: "Digital X-Ray System",
     banner: "/images/services/digitalxraysystem/digital-x-ray-system-bg.png",
     intro:
@@ -1045,7 +1054,6 @@ export const servicesData = [
           "Quick Process: Takes only a few minutes.",
           "Painless Experience: No discomfort involved.",
           "Immediate Review: The dentist explains the results instantly.",
-          
         ],
       },
       {
@@ -1068,7 +1076,6 @@ export const servicesData = [
           "Orthodontic Evaluation: Teeth alignment assessment",
         ],
       },
-      
     ],
     faqs: [
       {
@@ -1082,8 +1089,7 @@ export const servicesData = [
           "Yes. Digital X-rays emit much lower radiation than traditional X-rays. We also use protective gear like lead aprons to ensure maximum safety.",
       },
       {
-        question:
-          "How often do I need dental X-rays?",
+        question: "How often do I need dental X-rays?",
         answer:
           "The frequency depends on your oral health, age, and risk factors. Some patients may need them once a year, while others may need them less often.",
       },
@@ -1093,17 +1099,14 @@ export const servicesData = [
           "Yes. Digital X-rays are safe for children and are often essential for monitoring tooth development and detecting early problems.",
       },
       {
-        question:
-          "Are digital X-rays painful?",
-        answer:
-          "No. The procedure is completely painless and non-invasive.",
+        question: "Are digital X-rays painful?",
+        answer: "No. The procedure is completely painless and non-invasive.",
       },
       {
         question: "Should pregnant women avoid dental X-rays?",
         answer:
           "If you are pregnant or think you may be, inform us beforehand. X-rays are only taken if absolutely necessary, with extra safety precautions.",
       },
-      
     ],
   },
 ];

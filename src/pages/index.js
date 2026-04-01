@@ -27,6 +27,7 @@ export default function Home() {
       <Seo
         title="Best dentist in jaipur | #1 Dental clinic jaipur | Pharmacy near me"
         description="Looking for the best dentist in jaipur ? Healthsquare clinic is the #1 dental clinic in jaipur to treat all dental problems. Call us to schedule a visit today!" 
+        currentUrl="https://healthsquare.in"
         />
       <main>
         <HeroTwo />

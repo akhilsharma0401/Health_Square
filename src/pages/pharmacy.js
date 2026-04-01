@@ -17,6 +17,7 @@ export default function Pharmacy() {
     <Seo
   title="Pharmacy | Dental Clinic & Health Services in Jaipur | Health Square"
   description="Get all your dental and pharmacy needs under one roof at Health Square Jaipur. Trusted medicines, expert care, and complete wellness solutions."
+  currentUrl="https://healthsquare.in/pharmacy"
 />
 
        <main>

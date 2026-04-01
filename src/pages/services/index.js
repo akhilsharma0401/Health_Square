@@ -79,6 +79,7 @@ const OurServices = () => {
       <Seo
         title="Health Square – Advanced Dental Services & Root-Canal Care"
         description="Experience expert dental care in Jaipur with Health Square — from painless root canals to smile makeovers, teeth whitening, and complete oral treatments."
+        currentUrl="https://www.digibima.com/services"
       />
       <section
         className="relative w-full overflow-hidden bg-cover bg-center"

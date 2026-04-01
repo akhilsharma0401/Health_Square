@@ -24,6 +24,7 @@ export default function About() {
         title="Book Appointment | Health Square Jaipur – Dental Clinic & Pharmacy"
         description="Book your appointment at Health Square Jaipur — trusted dental clinic and pharmacy offering expert care, RGHS cashless treatment & home medicine delivery."
         keywords="Health Square Jaipur appointment, dentist Jaipur, pharmacy Jaipur, RGHS cashless treatment, oral care Jaipur, medicine home delivery"
+        currentUrl="https://www.digibima.com/appointment"
       />
 
       <style jsx>{`
