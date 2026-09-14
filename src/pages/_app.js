@@ -4,6 +4,7 @@ import Header from "@/src/components/header";
 import Footer from "@/src/components/footer";
 import { Toaster } from "react-hot-toast";
 import PageLoader from "@/src/layouts/loader";
+import JsonLd, { organizationSchema } from "@/src/components/schema";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
@@ -31,6 +32,7 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
+      <JsonLd id="organization" data={organizationSchema} />
       {isRouteChanging && <PageLoader />}
       {!isAdminRoot && <Header />}
       <Toaster  />

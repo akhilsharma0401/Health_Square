@@ -2,11 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import HeroSection from "../components/rghs/herosection";
-import RGHSFAQ from "../components/rghs/rghsfaq";
+import RGHSFAQ, { faqs as rghsFaqs } from "../components/rghs/rghsfaq";
 import { HiClock } from "react-icons/hi";
 import { Ri24HoursFill } from "react-icons/ri";
 import { MapPin, Phone, Mail } from "lucide-react";
 import Seo from "../components/seo";
+import JsonLd, { pharmacySchema, faqSchema, breadcrumbSchema } from "@/src/components/schema";
 import { FaLink } from "react-icons/fa";
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -17,10 +18,21 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="RGHS Pharmacy Services | HealthSquare"
+        title="RGHS Empanelled Pharmacy in Jaipur | Health Square"
         description="HealthSquare offers RGHS pharmacy services to help eligible members obtain free medicines under Rajasthan Government Health Scheme." 
-        currentUrl="https://www.digibima.com/rghs-pharmacy"
+        currentUrl="https://healthsquare.in/rghs-pharmacy"
         />
+      <JsonLd
+        id="page"
+        data={[
+          pharmacySchema,
+          faqSchema(rghsFaqs),
+          breadcrumbSchema([
+            { name: "Pharmacy", path: "/pharmacy" },
+            { name: "RGHS Pharmacy", path: "/rghs-pharmacy" },
+          ]),
+        ]}
+      />
       <HeroSection />
 
       <main className="max-w-7xl mx-auto py-12 px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,2.2fr)_minmax(260px,0.8fr)] gap-10">
@@ -268,8 +280,8 @@ export default function Home() {
               <li>Seamless, cashless access to RGHS medicines.</li>
               <li>Doorstep delivery of emergency and routine medicines.</li>
               <li>
-                Transparent billing, zero hidden costs.24/7 support and
-                guidance.
+                Transparent billing, zero hidden costs. Support and
+                guidance during store hours.
               </li>
             </ul>
             <p className="mt-3">
@@ -420,7 +432,7 @@ export default function Home() {
             </span>
             <ul className="space-y-2 text-sm tracking-wide relative z-10">
               <li className="flex justify-between">
-                <span>Mon – Fri:</span>
+                <span>Mon – Sat:</span>
                 <span>7 AM – 11 PM</span>
               </li>
 

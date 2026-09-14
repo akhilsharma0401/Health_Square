@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { FiChevronDown } from "react-icons/fi";
 import { HiCheckCircle } from "react-icons/hi";
 import Seo from "@/src/components/seo";
+import JsonLd, { dentistSchema, faqSchema, breadcrumbSchema } from "@/src/components/schema";
 import Link from "next/link";
 
 export default function ServicePage({ service }) {
@@ -22,13 +23,23 @@ export default function ServicePage({ service }) {
       </div>
     );
   }
-  console.log(service.title)
   return (
     <>
       <Seo
         title={service.metatitle}
         description={service.metadescription}
         currentUrl={service.metacurrentUrl}
+      />
+      <JsonLd
+        id="page"
+        data={[
+          dentistSchema,
+          faqSchema(service.faqs),
+          breadcrumbSchema([
+            { name: "Dental Care Services", path: "/services" },
+            { name: service.title, path: `/services/${service.slug}` },
+          ]),
+        ]}
       />
 
 

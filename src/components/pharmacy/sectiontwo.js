@@ -11,7 +11,7 @@ export default function SectionTwo() {
     {
       icon: <FaUserDoctor className="w-10 h-10 text-blue-600" />,
       title: "Personal Care",
-      desc: "Find all your personal care essentials in Vaishali Nagar at Health Square Pharmacy. Our selection of items includes pads, colognes, deodorants, lotions, makeup, hand soaps, body washes, toothpaste, and shampoos, all at reasonable prices.",
+      desc: "Find all your personal care essentials in Biswa Nagar, New Sanganer Road at Health Square Pharmacy. Our selection of items includes pads, colognes, deodorants, lotions, makeup, hand soaps, body washes, toothpaste, and shampoos, all at reasonable prices.",
     },
     {
       icon: <FaBaby className="w-10 h-10 text-blue-600" />,

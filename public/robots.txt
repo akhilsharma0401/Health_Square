@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /admin
+
+# Host
+Host: https://healthsquare.in
+
+# Sitemaps
+Sitemap: https://healthsquare.in/sitemap.xml

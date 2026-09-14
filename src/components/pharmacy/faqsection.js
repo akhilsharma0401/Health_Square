@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 
-const faqs = [
+export const faqs = [
   {
     question: "How do I order medicines online from Health Square Pharmacy?",
     answer:

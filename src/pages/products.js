@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Seo from '@/src/components/seo'
+import JsonLd, { breadcrumbSchema } from "@/src/components/schema";
 import SectionOne from '@/src/components/products/sectionone'
 import SectionTwo from '@/src/components/products/sectiontwo'
 import ShopByConcern from '@/src/components/products/shopbyconcern'
@@ -13,10 +14,11 @@ export default function Home() {
   return (
       <>
       <Seo
-        title="Best Health & Wellness Pharmacy Store In Jaipur"
+        title="Health & Wellness Products in Jaipur | Health Square Pharmacy"
         description="Shop pharmacy, vitamins, fitness, and wellness products at Health Square ,Jaipur’s trusted pharmacy with fast, reliable doorstep delivery."
-        currentUrl="https://www.digibima.com/products"
+        currentUrl="https://healthsquare.in/products"
         />
+      <JsonLd id="page" data={breadcrumbSchema([{ name: "Pharmacy", path: "/pharmacy" }, { name: "Health Products", path: "/products" }])} />
        <main>
   {/* <SectionOne /> */}
   <SectionTwo />

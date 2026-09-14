@@ -27,6 +27,9 @@ import {
   FaLinkedinIn,
   FaEnvelope,
   FaXRay ,
+  FaPills,
+  FaIdCard,
+  FaShoppingBasket,
 } from "react-icons/fa";
 
 export default function Header() {
@@ -98,7 +101,15 @@ export default function Header() {
         },
       ],
     },
-    { name: "Pharmacy", path: "/pharmacy" },
+    {
+      name: "Pharmacy",
+      path: "/pharmacy",
+      submenu: [
+        { name: "Pharmacy & Home Delivery", path: "/pharmacy", icon: <FaPills /> },
+        { name: "RGHS Pharmacy", path: "/rghs-pharmacy", icon: <FaIdCard /> },
+        { name: "Health Products", path: "/products", icon: <FaShoppingBasket /> },
+      ],
+    },
     { name: "Blog", path: "/blog" },
     { name: "Contact", path: "/contact" },
   ];

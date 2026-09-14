@@ -15,7 +15,7 @@ const products = [
   {
     icon: <FaUser />,
     title: "Personal Care",
-    desc: "Find all your personal care essentials in Vaishali Nagar at Health Square Pharmacy. Our selection includes soaps, colognes, deodorants, lotions, makeup, hand soaps, body washes, toothpaste, and shampoos, all at reasonable prices.",
+    desc: "Find all your personal care essentials in Biswa Nagar, New Sanganer Road at Health Square Pharmacy. Our selection includes soaps, colognes, deodorants, lotions, makeup, hand soaps, body washes, toothpaste, and shampoos, all at reasonable prices.",
   },
   {
     icon: <FaBaby />,

@@ -45,6 +45,24 @@ const nextConfig = {
     ],
   },
 
+  async redirects() {
+    return [
+      // Consolidate duplicate RGHS page into the single RGHS pillar page.
+      {
+        source: "/rghs-empanelled-pharmacy",
+        destination: "/rghs-pharmacy",
+        statusCode: 301,
+      },
+      // www -> non-www (canonical host).
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.healthsquare.in" }],
+        destination: "https://healthsquare.in/:path*",
+        statusCode: 301,
+      },
+    ];
+  },
+
   async rewrites() {
     return [
       {

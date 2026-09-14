@@ -1,4 +1,4 @@
- /** @type {import('next-sitemap').IConfig} */
+/** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl: "https://healthsquare.in",
   generateRobotsTxt: true,
@@ -6,10 +6,14 @@ module.exports = {
   changefreq: "weekly",
   priority: 0.9,
   exclude: [
-   '/admin*',        
-    '/admin/*',
-    '/admin/**',
+    "/admin",
+    "/admin/*",
+    "/api/*",
+    "/404",
+    "/rghs-empanelled-pharmacy",
   ],
   alternateRefs: [],
+  robotsTxtOptions: {
+    policies: [{ userAgent: "*", allow: "/", disallow: ["/admin"] }],
+  },
 };
-

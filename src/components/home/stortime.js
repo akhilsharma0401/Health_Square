@@ -42,6 +42,10 @@ export default function StoreTimings() {
                 <p className="text-lg text-white/90 font-medium">Home Delivery</p>
                 <p className="font-semibold text-[#A7FFEA] text-lg">7 AM – 11 PM</p>
               </div>
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-white/30 pb-3">
+                <p className="text-lg text-white/90 font-medium">Sunday</p>
+                <p className="font-semibold text-[#A7FFEA] text-lg">11 AM – 4 PM</p>
+              </div>
             </div>
           </div>
 

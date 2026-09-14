@@ -4,16 +4,16 @@ import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 
-const faqs = [
+export const faqs = [
   {
     question: "How do I order medicines?",
     answer:
       "You can avail of our home delivery service to order all your medical supplies from our pharmacy in Jaipur by calling us at +91 7403330888.",
   },
   {
-    question: "Is this a 24/7 pharmacy?",
+    question: "What are Health Square Pharmacy's opening hours?",
     answer:
-      "The Health Square Pharmacy is open from 7 AM to 11 PM every day. That’s 7 AM to 11 PM, seven days a week, twelve months a year.",
+      "Health Square Pharmacy is open Monday to Saturday from 7 AM to 11 PM, and on Sunday from 11 AM to 4 PM.",
   },
   {
     question: "Is Health Square child-friendly?",
@@ -28,7 +28,7 @@ const faqs = [
   {
     question: "Where is Health Square located?",
     answer:
-      "Health Square is located at 22, Ground Floor, Biswa Nagar, Opp. Metro Pillar No. 75, New Sanganer Road, Jaipur, Rajasthan, India – 302019",
+      "Health Square is located at Vinayak Tower, 22, Ground Floor, Biswa Nagar, Opp. Metro Pillar No. 75, New Sanganer Road, Jaipur, Rajasthan, India – 302019",
   },
 ];
 

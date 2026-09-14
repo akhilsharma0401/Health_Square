@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Seo from "@/src/components/seo";
+import JsonLd, { dentistSchema, breadcrumbSchema } from "@/src/components/schema";
 import {
   Smile,
   Activity,
@@ -77,10 +78,11 @@ const OurServices = () => {
   return (
     <>
       <Seo
-        title="Health Square – Advanced Dental Services & Root-Canal Care"
+        title="Dental Treatments in Jaipur | Health Square Dental Clinic"
         description="Experience expert dental care in Jaipur with Health Square — from painless root canals to smile makeovers, teeth whitening, and complete oral treatments."
-        currentUrl="https://www.digibima.com/services"
+        currentUrl="https://healthsquare.in/services"
       />
+      <JsonLd id="page" data={[dentistSchema, breadcrumbSchema([{ name: "Dental Care Services", path: "/services" }])]} />
       <section
         className="relative w-full overflow-hidden bg-cover bg-center"
         style={{ backgroundImage: "url('/images/appointment.jpg')" }}

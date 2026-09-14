@@ -32,8 +32,9 @@ export default function Footer() {
           <p className="text-gray-300 text-sm leading-relaxed">
             Health Square is a modern dental clinic and pharmacy equipped with
             world-class technology. We ensure premium care, expert consultations,
-            and home delivery of medical supplies from{" "}
-            <span className="text-[#00A859] font-semibold">7 AM – 11 PM</span>.
+            and home delivery of medical supplies Mon–Sat{" "}
+            <span className="text-[#00A859] font-semibold">7 AM – 11 PM</span>, Sun{" "}
+            <span className="text-[#00A859] font-semibold">11 AM – 4 PM</span>.
           </p>
         </div>
 
@@ -84,6 +85,7 @@ export default function Footer() {
               { name: "About", path: "/about" },
               { name: "Dental Care Services", path: "/services" },
               { name: "Pharmacy", path: "/pharmacy" },
+              { name: "RGHS Pharmacy", path: "/rghs-pharmacy" },
               { name: "Blog", path: "/blog" },
               { name: "Contact", path: "/contact" },
             ].map((item) => (

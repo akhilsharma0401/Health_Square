@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 
-const faqs = [
+export const faqs = [
   {
     question: "What is RGHS?",
     answer:
@@ -53,7 +53,7 @@ const faqs = [
   {
     question: "Why choose HealthSquare for RGHS services?",
     answer:
-      "HealthSquare Pharmacy provides cashless RGHS medicines, home delivery, and 24/7 support — trusted by thousands in Rajasthan.",
+      "HealthSquare Pharmacy provides cashless RGHS medicines, home delivery, and support during store hours — trusted by thousands in Rajasthan.",
   },
 ];
 
