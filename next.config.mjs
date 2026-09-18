@@ -54,12 +54,12 @@ const nextConfig = {
         statusCode: 301,
       },
       // www -> non-www (canonical host).
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "www.healthsquare.in" }],
-        destination: "https://healthsquare.in/:path*",
-        statusCode: 301,
-      },
+      // {
+      //   source: "/:path*",
+      //   has: [{ type: "host", value: "www.healthsquare.in" }],
+      //   destination: "https://healthsquare.in/:path*",
+      //   statusCode: 301,
+      // },
     ];
   },
 
