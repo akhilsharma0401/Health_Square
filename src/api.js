@@ -1,12 +1,4 @@
-import { openDB } from "idb";
-//import {constant} from './pages'
-const DB_NAME = "DIGIBIMA";
-const STORE_NAME = "digibima";
-import constant from "@/src/env";
-import axios from "axios";
-
 export async function callApi(url, method = "POST", data = null) {
-  // console.log(url, data);
   let options = {
     method,
     headers: {
@@ -29,8 +21,6 @@ export async function callApi(url, method = "POST", data = null) {
 
 
 export async function callApiData(url, method = "POST", data = null) {
-  console.log(url, data);
-
   let options = {
     method,
     headers: {
@@ -52,27 +42,6 @@ export async function callApiData(url, method = "POST", data = null) {
   }
 }
 
-
-// export async function callApi(url, method = "POST", data = null) {
-//   const token = localStorage.getItem("token");
-
-//   try {
-//     const res = await axios({
-//       method,
-//       url,
-//       headers: {
-//         "Content-Type": "application/json",
-//         // Authorization: `${token}`,
-//       },
-//       data: data ? { data } : undefined,
-//     });
-
-//     return res.data;
-//   } catch (err) {
-//     console.error("API Error:", err.response?.data || err.message);
-//     throw err;
-//   }
-// }
 
 export async function callApiWithFile(url, method = "POST", payload = null) {
   const token = localStorage.getItem("token");

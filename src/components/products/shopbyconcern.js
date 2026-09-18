@@ -38,7 +38,7 @@ export default function ShopByConcern() {
       const halfWidth = (loopedConcerns.length / 2) * cardWidth;
       container.scrollLeft = halfWidth;
     }
-  }, [cardWidth]);
+  }, [cardWidth, loopedConcerns.length]);
 
   // ⭐ FIXED INFINITE SCROLL LOGIC
   const scroll = (direction) => {

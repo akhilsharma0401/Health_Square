@@ -14,6 +14,29 @@ const SKELETON_COUNT = 5;
 
 export default function BlogTable() {
   const router = useRouter();
+  const [checking, setChecking] = useState(true);
+  const [allowed, setAllowed] = useState(false);
+
+  useEffect(() => {
+    // Wait for the router to be ready before deciding — otherwise this runs
+    // once with a not-yet-ready router and again once it's ready, firing
+    // router.replace() twice and racing against itself.
+    if (!router.isReady) return;
+    try {
+      const loggedIn = sessionStorage.getItem("logintype") === "admin";
+      if (loggedIn) {
+        setAllowed(true);
+      } else {
+        showError("Please login as admin to access this page");
+        router.replace("/admin");
+      }
+    } catch {
+      router.replace("/admin");
+    } finally {
+      setChecking(false);
+    }
+  }, [router, router.isReady]);
+
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -47,50 +70,6 @@ export default function BlogTable() {
           : "Draft",
     };
   }
-
-  // const fetchBlogs = useCallback(async (targetPage = 1) => {
-  //   try {
-  //     setLoading(true);
-  //     let url = constant.API.BLOG;
-  //     console.log(url)
-  //     url += (url.includes("?") ? "&" : "?") + `page=${targetPage}&per_page=${PER_PAGE}`;
-
-  //     const res = await callApi(url, "GET");
-  //     if (!res?.status) {
-  //       setBlogs([]);
-  //       setPage(1);
-  //       setTotalPages(1);
-  //       return;
-  //     }
-
-  //     const pg = res.data || {};
-  //     const rows = Array.isArray(pg.data) ? pg.data : [];
-  //     setBlogs(rows.map(normalizeBlog));
-
-  //     const current =
-  //       Number(pg.current_page) ||
-  //       Number(pg?.meta?.current_page) ||
-  //       Number(targetPage) ||
-  //       1;
-
-  //     const last =
-  //       Number(pg.last_page) ||
-  //       Number(pg?.meta?.last_page) ||
-  //       (pg.next_page_url != null ? current + 1 : current);
-
-  //     setPage(current);
-  //     setTotalPages(last);
-  //   } catch (err) {
-  //     console.error("Error fetching blogs:", err);
-  //     setBlogs([]);
-  //     setPage(1);
-  //     setTotalPages(1);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }, []);
-
-  // second methode
 
   const fetchBlogs = useCallback(async (targetPage = 1) => {
     try {
@@ -143,8 +122,6 @@ export default function BlogTable() {
       setLoading(false);
     }
   }, []);
-
-  // second methode
 
   async function handleDelete(id) {
     if (!id) return;
@@ -209,6 +186,16 @@ export default function BlogTable() {
       return dateStr;
     }
   }
+
+  if (checking) {
+    return (
+      <div className="min-h-screen grid place-items-center text-sm text-gray-500">
+        Checking permission…
+      </div>
+    );
+  }
+
+  if (!allowed) return null;
 
   return (
     <>

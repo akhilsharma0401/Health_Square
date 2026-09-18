@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { showSuccess, showError } from "@/src/components/toaster";
 import { callApi } from "@/src/api";
 import constant from "@/src/env";
@@ -14,7 +14,6 @@ const AdminLogin = ({ usersData }) => {
   const [showOtp, setShowOtp] = useState(false);
   const [timer, setTimer] = useState(20);
   const [canResend, setCanResend] = useState(false);
-  const [stoken, setToken] = useState();
   const router = useRouter();
 
   useEffect(() => {
@@ -39,13 +38,15 @@ const AdminLogin = ({ usersData }) => {
         return;
       }
 
-      const data = { mobile };
+      const data = { mobile, type: "auth" };
 
       const res = await callApi(
         constant.API.ADMIN.SENDOTP,
         "POST",
         data
       );
+
+    
 
 
       if (res.status === true) {
@@ -57,9 +58,14 @@ const AdminLogin = ({ usersData }) => {
         }
 
 
+
+
         setShowOtp(true);
         setTimer(20);
         setCanResend(false);
+      } else {
+        // e.g. { status: false, message: "Admin not registered or not authorized." }
+        showError(res?.message || "Admin not registered or not authorized.");
       }
     } catch (error) {
       console.log(error);
@@ -83,17 +89,40 @@ const AdminLogin = ({ usersData }) => {
         "POST",
         data
       );
-      if (response.status === false) {
-        showError(response.message);
+
+      // /api/user/verifyotp returns HTTP 200 with `status: true` for BOTH a
+      // correct and an incorrect OTP — it only means "request accepted", not
+      // "OTP matched" (confirmed: a wrong OTP returns
+      // { status: true, message: "Invalid OTP." }). Trusting `status` alone
+      // here would let a wrong OTP log someone into the admin panel, so the
+      // response message must be checked for a failure keyword too.
+      const message = String(response?.message || "");
+      const looksLikeFailure = /invalid|incorrect|wrong|expired|fail|error/i.test(
+        message
+      );
+      const verified = response?.status === true && !looksLikeFailure;
+
+      if (!verified) {
+        showError(
+          response?.status === false
+            ? response?.message || "Something went wrong. Please try again."
+            : "Invalid OTP. Please enter the correct OTP."
+        );
+        return;
       }
 
-      if (response.status === true) {
-        showSuccess("Welcome to admin");
-        // router.push(constant.ROUTES.ADMIN.ADMINDASHBOARD);
-        router.push(`admin/viewblogs`);
+      showSuccess("Welcome to admin");
+      try {
+        sessionStorage.setItem("logintype", "admin");
+        if (response?.token) sessionStorage.setItem("token", response.token);
+      } catch {
+        // sessionStorage unavailable (e.g. private browsing) — the admin
+        // pages' own guard will redirect back here in that case.
       }
+      router.push("/admin/viewblogs");
     } catch (error) {
       console.log(error);
+      showError("Something went wrong. Please try again.");
     }
   };
 

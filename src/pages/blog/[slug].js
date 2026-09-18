@@ -107,7 +107,6 @@ export default function BlogDetail() {
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
-  console.log(router.query)
 
   useEffect(() => {
     if (!id) return;
@@ -157,8 +156,6 @@ export default function BlogDetail() {
     [post?.content]
   );
   const title = post ? post.title : "Blog";
-  console.log(post)
-  console.log(title);
   const hero = toAbs(post?.image || "");
   const readMins = post ? calcReadingTime(post.content) : null;
 

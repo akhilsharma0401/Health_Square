@@ -13,32 +13,35 @@ export default function BlogUploadFormPage() {
   const [checking, setChecking] = useState(true);
   const [allowed, setAllowed] = useState(false);
 
-  //   useEffect(() => {
-  //     try {
-  //       const type = sessionStorage.getItem("logintype");
-  //       const token = sessionStorage.getItem("token");
-  //       if (type === "admin" && token) {
-  //         setAllowed(true);
-  //       } else {
-  //         showError("Please login as admin to access this page");
-  //         router.replace("/");
-  //       }
-  //     } catch {
-  //       router.replace("/");
-  //     } finally {
-  //       setChecking(false);
-  //     }
-  //   }, [router]);
+  useEffect(() => {
+    // Wait for the router to be ready before deciding — otherwise this runs
+    // once with a not-yet-ready router and again once it's ready, firing
+    // router.replace() twice and racing against itself.
+    if (!router.isReady) return;
+    try {
+      const loggedIn = sessionStorage.getItem("logintype") === "admin";
+      if (loggedIn) {
+        setAllowed(true);
+      } else {
+        showError("Please login as admin to access this page");
+        router.replace("/admin");
+      }
+    } catch {
+      router.replace("/admin");
+    } finally {
+      setChecking(false);
+    }
+  }, [router, router.isReady]);
 
-  //   if (checking) {
-  //     return (
-  //       <div className="min-h-screen grid place-items-center text-sm text-gray-500">
-  //         Checking permission…
-  //       </div>
-  //     );
-  //   }
+  if (checking) {
+    return (
+      <div className="min-h-screen grid place-items-center text-sm text-gray-500">
+        Checking permission…
+      </div>
+    );
+  }
 
-  //   if (!allowed) return null;
+  if (!allowed) return null;
 
   return <BlogUploadFormInner />;
 }

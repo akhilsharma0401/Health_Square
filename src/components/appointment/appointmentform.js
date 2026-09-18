@@ -1,372 +1,3 @@
-// "use client";
-
-// import { useState, useEffect } from "react";
-// import { useForm } from "react-hook-form";
-// import { callApi } from "@/src/api";
-// import constant from "@/src/env";
-// import { showSuccess, showError } from "@/src/components/toaster";
-// import { motion } from "framer-motion";
-// import Link from "next/link";
-
-// export default function AppointmentForm() {
-//   const [otpVisible, setOtpVisible] = useState(false);
-//   const [otpVerified, setOtpVerified] = useState(false);
-//   const [loading, setLoading] = useState(false);
-//   const [timer, setTimer] = useState(0);
-//   const [otp, setOtp] = useState("");
-//   const [captcha, setCaptcha] = useState("");
-//   const [userCaptcha, setUserCaptcha] = useState("");
-
-//   useEffect(() => {
-//     generateCaptcha();
-//   }, []);
-
-//   const generateCaptcha = () => {
-//     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-//     let randomStr = "";
-//     for (let i = 0; i < 5; i++) {
-//       randomStr += chars.charAt(Math.floor(Math.random() * chars.length));
-//     }
-//     setCaptcha(randomStr);
-//   };
-
-//   const {
-//     register,
-//     handleSubmit,
-//     watch,
-//     setError,
-//     clearErrors,
-//     reset,
-//     formState: { errors },
-//   } = useForm();
-
-//   const firstError = Object.keys(errors)[0]; // show only first error
-//   const mobile = watch("mobile");
-
-//   useEffect(() => {
-//     let interval;
-//     if (timer > 0) interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
-//     return () => clearInterval(interval);
-//   }, [timer]);
-
-//   const handleSendOtp = async () => {
-//     if (!mobile || mobile.length !== 10) {
-//       setError("mobile", { message: "Please enter a valid 10-digit mobile number." });
-//       return;
-//     }
-//     try {
-//       setLoading(true);
-//       const res = await callApi(constant.API.USER.SENDOTP, "POST", { mobile });
-//       if (res?.status || res?.message) {
-//         setOtp("");
-//         setOtpVisible(true);
-//         setTimer(30);
-//         showSuccess(res.message || "OTP sent successfully!");
-//       } else showError(res.message || "Failed to send OTP.");
-//     } catch (err) {
-//       showError(err.message || "Failed to send OTP.");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const handleVerifyOtp = async () => {
-//     if (!otp || otp.length !== 6)
-//       return showError("Please enter a valid 6-digit OTP.");
-//     try {
-//       setLoading(true);
-//       const res = await callApi(constant.API.USER.VERIFYOTP, "POST", { mobile, otp });
-//       if (res?.verified || res?.status) {
-//         setOtpVerified(true);
-//         setOtpVisible(false);
-//         showSuccess("OTP verified successfully!");
-//         clearErrors("otp");
-//       } else showError("Invalid OTP. Try again.");
-//     } catch (err) {
-//       showError(err.message || "Verification failed.");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const onSubmit = async (data) => {
-//     if (userCaptcha.toUpperCase() !== captcha) {
-//       showError("Invalid CAPTCHA. Please try again.");
-//       generateCaptcha();
-//       return;
-//     }
-//     if (!otpVerified) return showError("Please verify your mobile number first.");
-
-//     try {
-//       setLoading(true);
-//       const res = await callApi(constant.API.USER.USERINQUIRE, "POST", data);
-//       showSuccess(res.message || "Inquiry submitted successfully!");
-//       reset();
-//       setOtp("");
-//       setOtpVisible(false);
-//       setOtpVerified(false);
-//       setTimer(0);
-//     } catch (err) {
-//       showError(err.message || "Submission failed.");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-//             <style jsx>{`
-//       .form-error {
-//         font-size: 12px;
-//         color: #ef4444;
-//         margin-top: 2px;
-//         line-height: 1.2;
-//         min-height: 16px;
-//       }
-//     `}</style>
-//         {/* Name */}
-//         <div className="flex flex-col">
-//           <input
-//             type="text"
-//             placeholder="Name *"
-//             {...register("name", { required: "Name is required" })}
-//             className="inputcls"
-//           />
-//           {firstError === "name" && <p className="form-error">{errors.name?.message}</p>}
-//         </div>
-
-//         {/* Email */}
-//         <div className="flex flex-col">
-//           <input
-//             type="email"
-//             placeholder="Email *"
-//             {...register("email", {
-//               required: "Email is required",
-//               pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" },
-//             })}
-//             className="inputcls"
-//           />
-//           {firstError === "email" && <p className="form-error">{errors.email?.message}</p>}
-//         </div>
-
-//         {/* Mobile + OTP */}
-//         <div className="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-4">
-//           <div className="flex flex-col">
-//             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-//               <input
-//                 type="tel"
-//                 maxLength={10}
-//                 placeholder="Enter Mobile Number"
-//                 {...register("mobile", {
-//                   required: "Mobile number is required",
-//                   pattern: { value: /^[6-9]\d{9}$/, message: "Enter valid 10-digit mobile number" },
-//                 })}
-//                 readOnly={otpVerified}
-//                 className="flex-1 inputcls"
-//               />
-//               {!otpVerified && (
-//                 <button
-//                   type="button"
-//                   onClick={handleSendOtp}
-//                   disabled={mobile?.length !== 10 || loading || timer > 0}
-//                   className={`px-4 sm:px-5 py-2 sm:py-3 rounded-full bg-[#0E76CD] text-white text-sm font-medium shadow-md ${
-//                     mobile?.length === 10 && timer === 0
-//                       ? "hover:scale-105 transition"
-//                       : "opacity-50 cursor-not-allowed"
-//                   }`}
-//                 >
-//                   {timer > 0 ? `Resend` : "Send OTP"}
-//                 </button>
-//               )}
-//             </div>
-//             {firstError === "mobile" && <p className="form-error">{errors.mobile?.message}</p>}
-//             {!otpVerified && timer > 0 && (
-//               <p className="text-xs sm:text-sm text-red-600 mt-1">
-//                 You can resend OTP in 00:{timer.toString().padStart(2, "0")}
-//               </p>
-//             )}
-//           </div>
-
-//           {!otpVisible ? (
-//             <>
-//               <div className="flex flex-col">
-//                 <select
-//                   {...register("department", { required: "Please select a department" })}
-//                   className="inputcls"
-//                 >
-//                   <option value="">Select Department</option>
-//                   <option value="dentalcare">DENTAL CARE</option>
-//                   <option value="pharmacy">PHARMACY</option>
-//                 </select>
-//                 {firstError === "department" && (
-//                   <p className="form-error">{errors.department?.message}</p>
-//                 )}
-//               </div>
-
-//               <div className="flex flex-col">
-//                 <input
-//                   type="date"
-//                   {...register("date", {
-//                     required: "Date is required",
-//                     validate: (value) => {
-//                       const today = new Date();
-//                       const selected = new Date(value);
-//                       today.setHours(0, 0, 0, 0);
-//                       return selected >= today || "Please select today or a future date.";
-//                     },
-//                   })}
-//                   className="inputcls"
-//                 />
-//                 {firstError === "date" && <p className="form-error">{errors.date?.message}</p>}
-//               </div>
-//             </>
-//           ) : (
-//             <>
-//               <div className="flex flex-col">
-//                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-//                   <input
-//                     type="tel"
-//                     placeholder="Enter 6-digit OTP"
-//                     maxLength={6}
-//                     value={otp}
-//                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
-//                     className="flex-1 inputcls"
-//                   />
-//                   <button
-//                     type="button"
-//                     onClick={handleVerifyOtp}
-//                     disabled={otp.length !== 6 || loading}
-//                     className={`px-4 sm:px-5 py-2 sm:py-3 rounded-full text-white text-sm font-medium shadow-md ${
-//                       otp.length === 6
-//                         ? "bg-[#0E76CD] hover:scale-105 transition"
-//                         : "bg-gray-400 cursor-not-allowed"
-//                     }`}
-//                   >
-//                     {loading ? "Verifying..." : "Verify OTP"}
-//                   </button>
-//                 </div>
-//               </div>
-
-//               <div className="flex flex-col">
-//                 <select
-//                   {...register("department", { required: "Please select a department" })}
-//                   className="inputcls"
-//                 >
-//                   <option value="">Select Department</option>
-//                   <option value="dentalcare">DENTAL CARE</option>
-//                   <option value="pharmacy">PHARMACY</option>
-//                 </select>
-//                 {firstError === "department" && (
-//                   <p className="form-error">{errors.department?.message}</p>
-//                 )}
-//               </div>
-
-//               <div className="flex flex-col">
-//                 <input
-//                   type="date"
-//                   {...register("date", {
-//                     required: "Date is required",
-//                     validate: (value) => {
-//                       const today = new Date();
-//                       const selected = new Date(value);
-//                       today.setHours(0, 0, 0, 0);
-//                       return selected >= today || "Please select today or a future date.";
-//                     },
-//                   })}
-//                   className="inputcls"
-//                 />
-//                 {firstError === "date" && <p className="form-error">{errors.date?.message}</p>}
-//               </div>
-//             </>
-//           )}
-//         </div>
-
-//         {/* Message */}
-//         <textarea
-//           placeholder="How can we help?"
-//           rows="4"
-//           {...register("message")}
-//           className="w-full sm:col-span-2 bg-white/70 rounded-xl px-4 py-3 text-gray-700 placeholder-gray-400 inputcls"
-//         ></textarea>
-
-//         {/* CAPTCHA */}
-//         <div className="sm:col-span-2 flex flex-col gap-2 mt-2">
-//           <div className="flex items-center gap-3">
-//             <div className="w-1/4 px-4 py-2 bg-gray-100 text-lg font-semibold tracking-widest rounded-lg border border-gray-300 text-center select-none">
-//               {captcha}
-//             </div>
-//             <div className="w-3/4 flex items-center gap-2">
-//               <input
-//                 type="text"
-//                 placeholder="Enter CAPTCHA"
-//                 value={userCaptcha}
-//                 onChange={(e) => setUserCaptcha(e.target.value.toUpperCase())}
-//                 className="inputcls w-full"
-//               />
-//               <button
-//                 type="button"
-//                 onClick={generateCaptcha}
-//                 className="text-[#0070C9] text-sm font-medium underline cursor-pointer hover:text-[#005fa3]"
-//               >
-//                 Refresh
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Terms */}
-//         <div className="sm:col-span-2 flex flex-col">
-//           <label className="flex items-center gap-2 mt-2 cursor-pointer select-none">
-//             <input
-//               type="checkbox"
-//               {...register("terms", { required: "Please accept Terms & Conditions" })}
-//               className="w-4 h-4 accent-[#04A868] cursor-pointer"
-//             />
-//             <span className="text-gray-600 text-sm">
-//               I agree to all{" "}
-//               <Link
-//                 href="/tnc"
-//                 className="text-[#0070C9] underline hover:text-[#005fa3] transition-colors"
-//               >
-//                 Terms and Conditions
-//               </Link>
-//               .
-//             </span>
-//           </label>
-//           {firstError === "terms" && <p className="form-error">{errors.terms?.message}</p>}
-//         </div>
-
-//         {/* Submit */}
-//         <div className="text-center sm:text-start">
-//           <button
-//             type="submit"
-//             className="relative thmbtn overflow-hidden bg-[#0072CE] text-white font-semibold py-3 px-10 rounded-full shadow-md transition-all duration-500 ease-in-out group w-full sm:w-auto"
-//           >
-//             <span className="relative z-10">
-//               {loading ? "Submitting..." : "SUBMIT FORM"}
-//             </span>
-//             <span className="absolute inset-0 bg-[#00B388] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-in-out"></span>
-//           </button>
-//         </div>
-//       </form>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -420,6 +51,13 @@ const [submitLoading, setSubmitLoading] = useState(false);
   const firstErrorKey = Object.keys(errors)[0];
   const mobile = watch("mobile");
 
+  // Name/Email/Mobile are locked the moment "Send OTP" is clicked (so there's
+  // no edit window while the request is in flight) and stay locked while the
+  // resend countdown is running. Once "Resend OTP in 0" is reached (timer
+  // hits 0) and the OTP still isn't verified, they unlock again so the user
+  // can correct details before resending. They lock permanently once verified.
+  const contactDetailsLocked =
+    sendOtpLoading || otpVerified || (otpVisible && timer > 0);
 
   useEffect(() => {
     let interval;
@@ -571,7 +209,8 @@ const [submitLoading, setSubmitLoading] = useState(false);
           type="text"
           placeholder="Name *"
           {...register("name", { required: "Name is required" })}
-          className="inputcls"
+          disabled={contactDetailsLocked}
+          className="inputcls disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
         />
         {firstErrorKey === "name" && (
           <p className="form-error">{errors.name?.message}</p>
@@ -587,7 +226,8 @@ const [submitLoading, setSubmitLoading] = useState(false);
             required: "Email is required",
             pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" },
           })}
-          className="inputcls"
+          disabled={contactDetailsLocked}
+          className="inputcls disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
         />
         {firstErrorKey === "email" && (
           <p className="form-error">{errors.email?.message}</p>
@@ -613,8 +253,9 @@ const [submitLoading, setSubmitLoading] = useState(false);
                   e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
                 },
               })}
-              readOnly={otpVerified}
-              className="flex-1 inputcls"
+              readOnly={contactDetailsLocked}
+              disabled={contactDetailsLocked}
+              className="flex-1 inputcls disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
             />
             <div>
 
@@ -743,14 +384,19 @@ const [submitLoading, setSubmitLoading] = useState(false);
         </div>
 
   
-      <textarea
-        placeholder="How can we help?"
-        rows="4"
-        {...register("message")}
-        className="w-full sm:col-span-2 inputcls"
-      ></textarea>
+      <div className="flex flex-col w-full sm:col-span-2">
+        <textarea
+          placeholder="How can we help? *"
+          rows="4"
+          {...register("message", { required: "Please tell us how we can help" })}
+          className="w-full inputcls"
+        ></textarea>
+        {firstErrorKey === "message" && (
+          <p className="form-error">{errors.message?.message}</p>
+        )}
+      </div>
 
-      
+
       <div className="sm:col-span-2">
         <div className="flex gap-3 items-center">
           <div
@@ -792,13 +438,18 @@ const [submitLoading, setSubmitLoading] = useState(false);
          <label className="flex gap-2 cursor-pointer">
                 <input
                   type="checkbox"
-                  {...register("marketingOptIn")}
+                  {...register("marketingOptIn", {
+                    required: "Please accept to receive product updates and marketing communications",
+                  })}
                   className="w-4 h-4 accent-[#04A868]"
                 />
                 <span className="text-gray-600 text-sm">
                   I agree to receive product updates and marketing communications from Health Square.
                 </span>
               </label>
+        {firstErrorKey === "marketingOptIn" && (
+          <p className="form-error">{errors.marketingOptIn?.message}</p>
+        )}
         <label className="flex gap-2 cursor-pointer">
           <input
             type="checkbox"
@@ -847,11 +498,7 @@ const [submitLoading, setSubmitLoading] = useState(false);
            "SUBMIT FORM"
          )}
         </button>
-        {!otpVerified && (
-          <p className="text-xs text-gray-500 mt-2">
-            Please verify your mobile number OTP before submitting.
-          </p>
-        )}
+       
       </div>
     </form>
   );
