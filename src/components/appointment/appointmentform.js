@@ -446,6 +446,7 @@ const [submitLoading, setSubmitLoading] = useState(false);
         setOtp("");
         setOtpId(res.otpId || null);
         setOtpVisible(true);
+        setOtpVerified(false); // a fresh OTP invalidates any prior verification
         setTimer(30);
         // showSuccess("OTP sent successfully!");
       } else {
@@ -472,18 +473,44 @@ const [submitLoading, setSubmitLoading] = useState(false);
     try {
       setVerifyOtpLoading(true);
       const res = await callApi(constant.API.USER.VERIFYOTP, "POST", {
+        mobile,
         otpId,
         otp,
+        type: "auth",
       });
 
-      if (res?.verified || res?.status) {
+      // The verifyotp API returns HTTP 200 with `status: true` for BOTH a
+      // correct and an incorrect OTP — it only means "request accepted", not
+      // "OTP matched" (confirmed: a wrong OTP returns
+      // { status: true, message: "Invalid OTP." }). The only reliable signal
+      // is the response message itself, so a request-level `status: false`
+      // or a message containing a failure keyword must both be treated as
+      // "not verified" — never default to verified.
+      const message = String(res?.message || "");
+      const looksLikeFailure = /invalid|incorrect|wrong|expired|fail|error/i.test(
+        message
+      );
+      const isVerified = res?.status === true && !looksLikeFailure;
+
+      if (isVerified) {
         setOtpVerified(true);
         setOtpVisible(false);
         clearErrors("otp");
         setFormError("");
+        showSuccess("OTP Verified Successfully");
       } else {
-        setError("otp", { type: "manual", message: "Invalid OTP. Try again." });
+        setOtpVerified(false);
+        setError("otp", {
+          type: "manual",
+          message: "Invalid OTP. Please enter the correct OTP.",
+        });
       }
+    } catch (err) {
+      setOtpVerified(false);
+      setError("otp", {
+        type: "manual",
+        message: "OTP verification failed.",
+      });
     } finally {
       setVerifyOtpLoading(false);
     }
@@ -573,7 +600,8 @@ const [submitLoading, setSubmitLoading] = useState(false);
           <div className="flex flex-col sm:flex-row gap-2">
             <input
               type="tel"
-              maxLength={10}
+              inputMode="numeric"
+              maxLength={15}
               placeholder="Enter Mobile Number"
               {...register("mobile", {
                 required: "Mobile number is required",
@@ -581,13 +609,20 @@ const [submitLoading, setSubmitLoading] = useState(false);
                   value: /^[6-9]\d{9}$/,
                   message: "Enter valid 10-digit mobile number",
                 },
+                onChange: (e) => {
+                  e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
+                },
               })}
               readOnly={otpVerified}
               className="flex-1 inputcls"
             />
             <div>
 
-            {!otpVerified && (
+            {otpVerified ? (
+              <span className="px-5 py-3 rounded-full bg-green-100 text-green-700 text-sm font-medium flex items-center justify-center gap-1 whitespace-nowrap">
+                ✓ Verified
+              </span>
+            ) : (
               <button
                 type="button"
                 onClick={handleSendOtp}
@@ -600,7 +635,7 @@ const [submitLoading, setSubmitLoading] = useState(false);
               >
                                   {sendOtpLoading ? (
                  <>
-                   
+
                    Sending<FiLoader className="animate-spin" />
                  </>
                ) : timer > 0 ? (
@@ -629,10 +664,11 @@ const [submitLoading, setSubmitLoading] = useState(false);
             <div className="flex gap-2">
               <input
                 type="tel"
+                inputMode="numeric"
                 placeholder="Enter 6-digit OTP"
-                maxLength={6}
+                maxLength={10}
                 value={otp}
-                onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+                onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
                 className="flex-1 inputcls"
               />
 
@@ -717,7 +753,12 @@ const [submitLoading, setSubmitLoading] = useState(false);
       
       <div className="sm:col-span-2">
         <div className="flex gap-3 items-center">
-          <div className="px-4 py-2 bg-gray-200 rounded-lg text-lg tracking-widest">
+          <div
+            className="px-4 py-2 bg-gray-200 rounded-lg text-lg tracking-widest select-none"
+            onCopy={(e) => e.preventDefault()}
+            onCut={(e) => e.preventDefault()}
+            onContextMenu={(e) => e.preventDefault()}
+          >
             {captcha}
           </div>
 
@@ -748,6 +789,16 @@ const [submitLoading, setSubmitLoading] = useState(false);
 
   
       <div className="sm:col-span-2">
+         <label className="flex gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  {...register("marketingOptIn")}
+                  className="w-4 h-4 accent-[#04A868]"
+                />
+                <span className="text-gray-600 text-sm">
+                  I agree to receive product updates and marketing communications from Health Square.
+                </span>
+              </label>
         <label className="flex gap-2 cursor-pointer">
           <input
             type="checkbox"
@@ -779,17 +830,28 @@ const [submitLoading, setSubmitLoading] = useState(false);
       <div className="sm:col-span-2 text-start">
         <button
           type="submit"
-          className="relative bg-[#0072CE] cursor-pointer text-white font-semibold py-3 px-10 rounded-full flex items-center justify-center gap-2"
+          disabled={!otpVerified || submitLoading}
+          title={!otpVerified ? "Verify your mobile number OTP first" : undefined}
+          className={`relative text-white font-semibold py-3 px-10 rounded-full flex items-center justify-center gap-2 ${
+            !otpVerified || submitLoading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-[#0072CE] cursor-pointer"
+          }`}
         >
           {submitLoading ? (
            <>
-            
+
              Submitting <FiLoader className="animate-spin" />
            </>
          ) : (
            "SUBMIT FORM"
          )}
         </button>
+        {!otpVerified && (
+          <p className="text-xs text-gray-500 mt-2">
+            Please verify your mobile number OTP before submitting.
+          </p>
+        )}
       </div>
     </form>
   );
