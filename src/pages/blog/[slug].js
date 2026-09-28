@@ -72,6 +72,23 @@ const sanitizeAndAbsolutize = (html = "") => {
 
 
   html = html.replace(
+    /<h1([^>]*)>/gi,
+    (match, attrs) => {
+      const tailwind = "text-2xl md:text-4xl font-semibold my-4 leading-snug";
+
+      // If class already exists → merge
+      if (/class=/i.test(attrs)) {
+        return match.replace(
+          /class=(["'])(.*?)\1/i,
+          (m, q, cls) => `class=${q}${cls} ${tailwind}${q}`
+        );
+      }
+
+      // If no class → add new
+      return `<h2${attrs} class="${tailwind}">`;
+    }
+  );
+  html = html.replace(
     /<h2([^>]*)>/gi,
     (match, attrs) => {
       const tailwind = "text-xl md:text-3xl font-semibold my-4 leading-snug";
