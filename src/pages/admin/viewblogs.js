@@ -64,7 +64,7 @@ export default function BlogTable() {
       status:
         b.status == 1 ||
           b.status == "1" ||
-          b.status === "published" ||
+          b.status === "publish" ||
           b.is_published
           ? "Published"
           : "Draft",
@@ -286,7 +286,7 @@ export default function BlogTable() {
                         className={
                           "px-3 py-1 text-xs font-medium rounded-full " +
                           (blog.status === "Published"
-                            ? "bg-green-100 text-green-700"
+                            ? "bg-green-700 text-green-100"
                             : "bg-yellow-100 text-yellow-700")
                         }
                       >

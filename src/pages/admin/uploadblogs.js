@@ -7,7 +7,6 @@ import constant from "@/src/env";
 import RichTextEditor from "@/src/components/blog/uplodblogs/contenteditor";
 import Image from "next/image";
 
-
 export default function BlogUploadFormPage() {
   const router = useRouter();
   const [checking, setChecking] = useState(true);
@@ -81,7 +80,6 @@ function BlogUploadFormInner() {
 
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
-
 
   const normalizeSlug = (s) =>
     String(s || "")
@@ -332,9 +330,9 @@ function BlogUploadFormInner() {
 
     try {
       setSubmitting(true);
-      await submitToApi(formData);
+      await submitToApi({ ...formData, status: "publish" });
       showSuccess(
-        isEdit ? "Blog updated successfully" : "Blog saved successfully"
+        isEdit ? "Blog updated successfully" : "Blog saved successfully",
       );
 
       resetAll();
@@ -449,7 +447,6 @@ function BlogUploadFormInner() {
                   </p>
                 </div>
 
-          
                 <div className="space-y-2">
                   <label className="block text-sm font-semibold text-gray-700">
                     Slug <span className="text-rose-500">*</span>
@@ -468,7 +465,6 @@ function BlogUploadFormInner() {
                   </p>
                 </div>
 
-            
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <label className="block text-sm font-semibold text-gray-700">
@@ -488,7 +484,6 @@ function BlogUploadFormInner() {
                   />
                 </div>
 
-             
                 <div className="space-y-2">
                   <label className="block text-sm font-semibold text-gray-700">
                     Content <span className="text-rose-500">*</span>
@@ -510,7 +505,6 @@ function BlogUploadFormInner() {
                 </div>
               </div>
 
-             
               <div className="space-y-8 lg:pl-2">
                 <div className="space-y-3 rounded-xl border border-[#e5e7eb] bg-white shadow-sm p-4">
                   <div className="flex items-center justify-between">
@@ -742,7 +736,6 @@ function BlogUploadFormInner() {
                 </div>
               </div>
 
-          
               <div className="lg:col-span-3 border-t border-[#e5e7eb] pt-6 flex flex-col sm:flex-row justify-end gap-3 sm:gap-4">
                 <button
                   type="button"
@@ -762,8 +755,8 @@ function BlogUploadFormInner() {
                       ? "Updating…"
                       : "Publishing…"
                     : isEdit
-                    ? "Update"
-                    : "Publish"}
+                      ? "Update"
+                      : "Publish"}
                 </button>
               </div>
             </form>

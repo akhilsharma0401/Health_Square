@@ -74,7 +74,7 @@ const sanitizeAndAbsolutize = (html = "") => {
   html = html.replace(
     /<h1([^>]*)>/gi,
     (match, attrs) => {
-      const tailwind = "text-2xl md:text-4xl font-semibold my-4 leading-snug";
+      const tailwind = "text-2xl md:text-4xl font-semibold mb-2";
 
       // If class already exists → merge
       if (/class=/i.test(attrs)) {
@@ -91,7 +91,7 @@ const sanitizeAndAbsolutize = (html = "") => {
   html = html.replace(
     /<h2([^>]*)>/gi,
     (match, attrs) => {
-      const tailwind = "text-xl md:text-3xl font-semibold my-4 leading-snug";
+      const tailwind = "text-xl md:text-3xl font-semibold mb-2";
 
       // If class already exists → merge
       if (/class=/i.test(attrs)) {
