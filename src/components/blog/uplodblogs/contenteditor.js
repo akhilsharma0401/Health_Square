@@ -6,10 +6,31 @@ import dynamic from "next/dynamic";
 // lazy-load editor on client only
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
+// Default toolbar for the main blog content editor.
+const FULL_BUTTONS = [
+  "source", "|",
+  "bold", "italic", "underline", "strikethrough", "|",
+  "ul", "ol", "indent", "outdent", "|",
+  "font", "fontsize", "brush", "paragraph", "|",
+  "align", "link", "image", "table", "hr", "|",
+  "undo", "redo", "fullsize", "selectall", "print", "eraser",
+];
+
+// Compact toolbar for short fields (e.g. FAQ question/answer) where only
+// basic formatting and linking are needed — select text, add/edit/remove a
+// link on just that selection, no images/tables/source clutter.
+const COMPACT_BUTTONS = [
+  "bold", "italic", "underline", "|",
+  "link", "unlink", "|",
+  "undo", "redo", "eraser",
+];
+
 export default function RichTextEditor({
   value = "",
   onChange = () => {},
   height = 400,
+  minimal = false,
+  placeholder = "Write your blog content here…",
 }) {
   const editorRef = useRef(null);
   const [activeTab, setActiveTab] = useState("visual");
@@ -29,26 +50,17 @@ export default function RichTextEditor({
       height,
       toolbarAdaptive: false,
       toolbarSticky: false,
-      placeholder: "Write your blog content here…",
+      placeholder,
       disablePlugins: ["powered-by-jodit", "autosave"],
       uploader: { insertImageAsBase64URI: true },
-      buttons: [
-        "source", "|",
-        "bold", "italic", "underline", "strikethrough", "|",
-        "ul", "ol", "indent", "outdent", "|",
-        "font", "fontsize", "brush", "paragraph", "|",
-        "align", "link", "image", "table", "hr", "|",
-        "undo", "redo", "fullsize", "selectall", "print", "eraser",
-      ],
+      // Jodit's link dialog already covers: entering/pasting a URL, only
+      // wrapping the current selection (not the whole block), editing an
+      // existing link by re-opening the dialog on it, removing a link via
+      // "unlink", and an "open in new tab" checkbox that sets target="_blank".
+      buttons: minimal ? COMPACT_BUTTONS : FULL_BUTTONS,
     }),
-    [height]
+    [height, minimal, placeholder]
   );
-
-<style jsx>{`
-  .flex.items-center.justify-between.text-xs.text-gray-500 > span:last-child {
-    display: none !important;
-  }
-`}</style>
 
   // tab button (reusable)
   const TabButton = ({ id, children }) => {
@@ -68,6 +80,22 @@ export default function RichTextEditor({
       </button>
     );
   };
+
+  // Minimal mode skips the Visual/Text tab switcher (raw-HTML editing isn't
+  // useful for a one-line question or short answer) and just renders the
+  // Jodit editor directly with the compact toolbar.
+  if (minimal) {
+    return (
+      <div className="w-full rounded-xl overflow-hidden border border-[#e5e7eb]">
+        <JoditEditor
+          ref={editorRef}
+          value={value}
+          config={config}
+          onBlur={(newContent) => onChange(newContent)}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">

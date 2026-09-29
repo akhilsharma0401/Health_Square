@@ -13,6 +13,8 @@ import { callApi } from "@/src/api";
 import constant from "@/src/env";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import FAQSection from "@/src/components/blog/faqsection";
+import { toAbs, stripHtml, sanitizeAndAbsolutize } from "@/src/utils/sanitizeHtml";
 import {
   FiUser,
   FiCalendar,
@@ -31,83 +33,13 @@ export async function getStaticPaths() {
 export async function getStaticProps() {
   return { props: {} };
 }
-const toAbs = (url) => {
-  if (!url || typeof url !== "string") return "";
-  if (url.startsWith("http")) return url;
-  const clean = url.startsWith("/") ? url : `/${url}`;
-  return `${constant.BASE_URL}${clean}`;
-};
-const stripHtml = (s = "") =>
-  s
-    .replace(/<[^>]*>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+const FALLBACK_IMAGE = "/images/appointment.jpg";
+
 const calcReadingTime = (html = "") =>
   Math.max(
     1,
     Math.ceil(stripHtml(html).split(/\s+/).filter(Boolean).length / 200)
   );
-const sanitizeAndAbsolutize = (html = "") => {
-  if (!html || typeof html !== "string") return "";
-
-
-  html = html.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, "");
-
-
-  html = html.replace(/\son[a-z]+\s*=\s*(['"]).*?\1/gi, "");
-
-  html = html.replace(/(src|href)=["'](null|undefined)["']/gi, '$1="#"');
-
-
-  html = html.replace(
-    /src=["'](?!https?:|data:|\/)([^"']+)["']/gi,
-    (m, path) => `src="${constant.BASE_URL}/${path}"`
-  );
-
-
-  html = html.replace(
-    /style=["'][^"']*font-size:[^;"']*;?[^"']*["']/gi,
-    (m) => m.replace(/font-size:[^;]+;?/gi, "")
-  );
-
-
-  html = html.replace(
-    /<h1([^>]*)>/gi,
-    (match, attrs) => {
-      const tailwind = "text-2xl md:text-4xl font-semibold mb-2";
-
-      // If class already exists → merge
-      if (/class=/i.test(attrs)) {
-        return match.replace(
-          /class=(["'])(.*?)\1/i,
-          (m, q, cls) => `class=${q}${cls} ${tailwind}${q}`
-        );
-      }
-
-      // If no class → add new
-      return `<h2${attrs} class="${tailwind}">`;
-    }
-  );
-  html = html.replace(
-    /<h2([^>]*)>/gi,
-    (match, attrs) => {
-      const tailwind = "text-xl md:text-3xl font-semibold mb-2";
-
-      // If class already exists → merge
-      if (/class=/i.test(attrs)) {
-        return match.replace(
-          /class=(["'])(.*?)\1/i,
-          (m, q, cls) => `class=${q}${cls} ${tailwind}${q}`
-        );
-      }
-
-      // If no class → add new
-      return `<h2${attrs} class="${tailwind}">`;
-    }
-  );
-
-  return html;
-};
 
 
 // const pickTitle = (b) =>
@@ -140,6 +72,17 @@ export default function BlogDetail() {
               : null;
           if (b && typeof b === "object") {
             const tags = b?.tags?.split(",")
+            const rawFaqs = b.faqs ?? b.faq ?? [];
+            const parsedFaqs =
+              typeof rawFaqs === "string"
+                ? (() => {
+                    try {
+                      return JSON.parse(rawFaqs);
+                    } catch {
+                      return [];
+                    }
+                  })()
+                : rawFaqs;
             setPost({
               id: b.id,
               slug: b.slug,
@@ -149,11 +92,13 @@ export default function BlogDetail() {
               date: b.publishdate || b.created_at || "",
               author: b.author || b.created_by || "",
               meta: {
+                title: b.metatitle || "",
                 description: b.metadescription || "",
                 keywords: b.keywords || "",
               },
               category: b.category || "",
               tags: tags,
+              faqs: Array.isArray(parsedFaqs) ? parsedFaqs : [],
             });
           } else setErr(res?.message || "Post not found.");
         }
@@ -173,7 +118,7 @@ export default function BlogDetail() {
     [post?.content]
   );
   const title = post ? post.title : "Blog";
-  const hero = toAbs(post?.image || "");
+  const hero = toAbs(post?.image || "") || FALLBACK_IMAGE;
   const readMins = post ? calcReadingTime(post.content) : null;
 
   const fade = {
@@ -185,6 +130,7 @@ export default function BlogDetail() {
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
+    if (Number.isNaN(date.getTime())) return "";
     return date.toLocaleDateString("en-GB", {
       day: "2-digit",
       month: "short",
@@ -194,8 +140,17 @@ export default function BlogDetail() {
 
   return (
     <>
+      {/* Per-post SEO — prefers the CMS's own metatitle/metadescription
+          (falling back to the post title/stripped content) so every post
+          gets its own metadata instead of one static title for all posts.
+          currentUrl is passed explicitly (canonical must key off the real
+          slug, not whatever query params happen to be on this load). */}
       <Seo
-        title={`${title} | Health Square Blog`}
+        title={
+          post?.meta?.title
+            ? post.meta.title
+            : `${title} | Health Square Blog`
+        }
         description={
           post?.meta?.description ||
           stripHtml(post?.content || "").slice(0, 150) ||
@@ -203,6 +158,9 @@ export default function BlogDetail() {
         }
         keywords={post?.meta?.keywords || post?.tags || ""}
         image={hero}
+        currentUrl={
+          post?.slug ? `https://healthsquare.in/blog/${post.slug}` : undefined
+        }
       />
 
       <main className="relative w-full overflow-hidden">
@@ -309,12 +267,14 @@ export default function BlogDetail() {
 
 
           {/* Right Image */}
-          <div className="relative w-full  h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-xl">
-
+          <div className="relative w-full h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-xl bg-slate-100">
             <Image
-              src={hero || "/no-image.png"}
+              src={hero}
               alt={title || "Blog Image"}
               fill
+              priority
+              className="object-contain"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
 
@@ -370,6 +330,8 @@ export default function BlogDetail() {
             )}
           </div>
         </section>
+
+        {post?.faqs?.length > 0 && <FAQSection faqs={post.faqs} />}
 
         {/* <Head>
           <title>{title} | Blog</title>

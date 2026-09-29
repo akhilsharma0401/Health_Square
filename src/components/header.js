@@ -172,8 +172,8 @@ export default function Header() {
       </div>
 
       <header
-        className={`w-full  bg-white sticky top-0 z-50 transition-all md:mt-10 ${
-          isScrolled ? "shadow-lg" : ""
+        className={`w-full bg-white sticky z-50 transition-all duration-500 ease-in-out ${
+          isScrolled ? "top-0 shadow-lg" : "top-0 md:top-10"
         }`}
       >
         <div className="max-w-8xl mx-auto flex items-center justify-between px-1 sm:px-3 lg:px-4 h-[110px]">

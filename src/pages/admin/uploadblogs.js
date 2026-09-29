@@ -6,6 +6,7 @@ import { callApiWithFile, callApi } from "@/src/api";
 import constant from "@/src/env";
 import RichTextEditor from "@/src/components/blog/uplodblogs/contenteditor";
 import Image from "next/image";
+import { HiX } from "react-icons/hi";
 
 export default function BlogUploadFormPage() {
   const router = useRouter();
@@ -62,6 +63,8 @@ function BlogUploadFormInner() {
   const [newCat, setNewCat] = useState("");
   const [newAuthor, setNewAuthor] = useState("");
 
+  const [faqs, setFaqs] = useState([]);
+
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
@@ -87,6 +90,15 @@ function BlogUploadFormInner() {
       .trim()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
+
+  // FAQ question/answer are rich-text HTML now (so a specific word/phrase can
+  // carry its own link) — Jodit's "empty" state is markup like "<p><br></p>",
+  // not "", so strip tags before checking whether there's real text.
+  const isHtmlEmpty = (html) =>
+    String(html || "")
+      .replace(/<[^>]*>/g, "")
+      .replace(/&nbsp;/g, " ")
+      .trim() === "";
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -144,6 +156,20 @@ function BlogUploadFormInner() {
     }));
   };
 
+  const addFaq = () => {
+    setFaqs((prev) => [...prev, { question: "", answer: "" }]);
+  };
+
+  const updateFaq = (index, field, value) => {
+    setFaqs((prev) =>
+      prev.map((f, i) => (i === index ? { ...f, [field]: value } : f)),
+    );
+  };
+
+  const removeFaq = (index) => {
+    setFaqs((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -195,6 +221,7 @@ function BlogUploadFormInner() {
 
   function resetAll() {
     setFormData(EMPTY_FORM);
+    setFaqs([]);
     setImage(null);
     if (preview && typeof preview === "string" && preview.startsWith("blob:")) {
       URL.revokeObjectURL(preview);
@@ -264,6 +291,26 @@ function BlogUploadFormInner() {
         const existingImage =
           blog.featured_image_url || blog.featuredimage || blog.image || "";
         if (existingImage) setPreview(toAbsUrl(existingImage));
+
+        const rawFaqs = blog.faqs ?? blog.faq ?? [];
+        const parsedFaqs =
+          typeof rawFaqs === "string"
+            ? (() => {
+                try {
+                  return JSON.parse(rawFaqs);
+                } catch {
+                  return [];
+                }
+              })()
+            : rawFaqs;
+        setFaqs(
+          Array.isArray(parsedFaqs)
+            ? parsedFaqs.map((f) => ({
+                question: f?.question || "",
+                answer: f?.answer || "",
+              }))
+            : [],
+        );
       } catch (e) {
         console.error(e);
         showError("Failed to load blog");
@@ -293,8 +340,20 @@ function BlogUploadFormInner() {
 
   async function submitToApi(payload) {
     const fd = new FormData();
-    Object.entries(payload).forEach(([k, v]) => fd.append(k, v ?? ""));
+    Object.entries(payload).forEach(([k, v]) => {
+      const value = v && typeof v === "object" ? JSON.stringify(v) : (v ?? "");
+      fd.append(k, value);
+    });
     if (image) fd.append("featuredimage", image);
+
+    // Log the exact payload being sent (faqs included) so it's easy to
+    // verify in devtools what the API actually receives.
+    console.log("[uploadblogs] API payload:", {
+      ...payload,
+      faqs: payload.faqs,
+      featuredimage: image ? image.name : undefined,
+      id: isEdit ? blogId : undefined,
+    });
 
     if (!isEdit) {
       const res = await callApiWithFile(constant.API.BLOG, "POST", fd);
@@ -327,10 +386,18 @@ function BlogUploadFormInner() {
       showError("Featured Image is required");
       return;
     }
+    // FAQs are optional overall, but any FAQ that was added must be filled
+    // in completely before submitting.
+    for (const [i, f] of faqs.entries()) {
+      if (isHtmlEmpty(f.question) || isHtmlEmpty(f.answer)) {
+        showError(`FAQ #${i + 1} needs both a question and an answer`);
+        return;
+      }
+    }
 
     try {
       setSubmitting(true);
-      await submitToApi({ ...formData, status: "published" });
+      await submitToApi({ ...formData, faqs, status: "published" });
       showSuccess(
         isEdit ? "Blog updated successfully" : "Blog saved successfully",
       );
@@ -356,7 +423,7 @@ function BlogUploadFormInner() {
     }
     try {
       setSubmitting(true);
-      await submitToApi({ ...formData, status: "draft" });
+      await submitToApi({ ...formData, faqs, status: "draft" });
       showSuccess(isEdit ? "Draft updated" : "Draft saved");
     } catch (err) {
       console.error(err);
@@ -429,7 +496,7 @@ function BlogUploadFormInner() {
               className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-6 sm:p-8"
             >
               {/* LEFT SIDE */}
-              <div className="lg:col-span-2 space-y-8">
+              <div className="lg:col-span-2 space-y-3">
                 <div className="space-y-2">
                   <label className="block text-sm font-semibold text-gray-700">
                     Title <span className="text-rose-500">*</span>
@@ -502,6 +569,78 @@ function BlogUploadFormInner() {
                       Autosave coming soon 💾
                     </span>
                   </div>
+                </div>
+
+                <div className="space-y-3 overflow-y-auto max-h-[800px] bg-white">
+                  <div className="flex items-center justify-start mt-1">
+                    <label className="block text-sm font-semibold text-gray-700">
+                      Frequently Asked Questions{" "}
+                      <span className="text-gray-400 font-normal">(optional)</span>
+                    </label>
+                  </div>
+
+                  {faqs.length > 0 && (
+                    <div className="space-y-3">
+                      {faqs.map((faq, i) => (
+                        <div
+                          key={i}
+                          className="space-y-2 rounded-xl border border-[#e5e7eb] bg-white shadow-sm p-4"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs font-semibold text-gray-500">
+                              FAQ #{i + 1}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => removeFaq(i)}
+                              className="inline-flex items-center gap-1 rounded-full pl-2 pr-2.5 py-1 text-xs font-medium text-rose-600 bg-rose-50 hover:bg-rose-100 hover:text-rose-700 transition-colors"
+                              title="Remove FAQ"
+                            >
+                              <HiX className="h-3.5 w-3.5" />
+                              Remove
+                            </button>
+                          </div>
+                          <div>
+                            <span className="block text-xs text-gray-500 mb-1">
+                              Question — select text and use the link icon to
+                              link just that word/phrase
+                            </span>
+                            <RichTextEditor
+                              value={faq.question}
+                              onChange={(html) =>
+                                updateFaq(i, "question", html)
+                              }
+                              minimal
+                              height={90}
+                              placeholder="Question"
+                            />
+                          </div>
+                          <div>
+                            <span className="block text-xs text-gray-500 mb-1">
+                              Answer — select text and use the link icon to
+                              link just that word/phrase
+                            </span>
+                            <RichTextEditor
+                              value={faq.answer}
+                              onChange={(html) => updateFaq(i, "answer", html)}
+                              minimal
+                              height={140}
+                              placeholder="Answer"
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                <div className="flex items-center justify-end mt-1">
+                  <button
+                    type="button"
+                    onClick={addFaq}
+                    className="px-3 py-1.5 cursor-pointer thmbtn rounded-2xl text-sm"
+                  >
+                    + Add
+                  </button>
+                </div>
                 </div>
               </div>
 
@@ -592,10 +731,10 @@ function BlogUploadFormInner() {
                           <button
                             type="button"
                             onClick={() => deleteCategory(c)}
-                            className="text-rose-600 hover:text-rose-700"
+                            className="rounded-full p-0.5 text-rose-600 hover:bg-rose-100 hover:text-rose-700 transition-colors"
                             title="Delete category"
                           >
-                            ✕
+                            <HiX className="h-3 w-3" />
                           </button>
                         </span>
                       ))}

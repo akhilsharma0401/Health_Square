@@ -4,17 +4,117 @@ import { callApi } from "@/src/api";
 import constant from "@/src/env";
 import Link from "next/link";
 import Seo from "@/src/components/seo";
-import { showError } from "@/src/components/toaster";
 import Image from "next/image";
+import { toAbs } from "@/src/utils/sanitizeHtml";
 
 const PER_PAGE = 6;
+const FALLBACK_IMAGE = "/images/appointment.jpg";
+
+// publishdate can be missing/invalid — never let a raw "Invalid Date" reach
+// the UI.
+const formatBlogDate = (dateString) => {
+  if (!dateString) return "";
+  const d = new Date(dateString);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("en-IN", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
+
+// Published-only, mapped down to what the card needs.
+const normalizeBlogs = (list) =>
+  (Array.isArray(list) ? list : [])
+    .filter((b) => b?.status === "published" || b?.status === 1 || b?.status === "1")
+    .map((b) => ({
+      id: b.id,
+      title: b.title || "Untitled",
+      author: b.author || "",
+      category: b.category || "",
+      date: formatBlogDate(b.publishdate),
+      image: b.image ? toAbs(b.image) : "",
+      shortdes: b.shortdes || "",
+      slug: b.slug,
+    }));
+
+function BlogCard({ blog }) {
+  return (
+    <div className="group bg-white rounded-2xl border border-[#e4ebfa] shadow-sm hover:shadow-md transition-all duration-300 p-5 cursor-pointer">
+      <div className="relative overflow-hidden rounded-xl mb-4 group">
+        <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden bg-slate-100">
+          <Image
+            src={blog.image || FALLBACK_IMAGE}
+            alt={blog.title}
+            fill
+            className="object-contain rounded-xl transform transition-all duration-[900ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:scale-110 group-hover:-translate-y-2"
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+        </div>
+
+        <div className="absolute inset-0 bg-gradient-to-t from-[#00000070] via-[#00000030] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
+      </div>
+
+      <div className="flex items-center gap-2 text-gray-400 text-sm mb-3">
+        {blog.date && (
+          <>
+            <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+            <span>{blog.date}</span>
+          </>
+        )}
+        {blog.author && (
+          <>
+            <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+            <span>{blog.author}</span>
+          </>
+        )}
+      </div>
+
+      <h3 className="text-[17px] font-semibold text-[#1b2c4f] mb-3 leading-snug line-clamp-2 group-hover:text-[#1363df] transition-colors duration-300">
+        {blog.title}
+      </h3>
+
+      <p className="text-gray-500 text-sm mb-5 line-clamp-2">
+        {blog.shortdes}
+      </p>
+
+      <Link
+        href={{
+          pathname: `/blog/${blog.slug}`,
+          query: { id: blog.id },
+        }}
+      >
+        <button
+          type="submit"
+          className="relative overflow-hidden cursor-pointer bg-[#0072CE] text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-500 ease-in-out group w-full sm:w-auto"
+        >
+          <span className="relative z-10 transition-colors duration-500 ease-in-out">
+            Read More →
+          </span>
+          <span className="absolute inset-0 bg-[#00B388] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-in-out"></span>
+        </button>
+      </Link>
+    </div>
+  );
+}
+
+function BlogCardSkeleton() {
+  return (
+    <div className="bg-white rounded-2xl border border-[#e4ebfa] p-5 animate-pulse">
+      <div className="h-56 w-full bg-gray-200 rounded-xl mb-4"></div>
+      <div className="h-4 w-3/4 bg-gray-200 rounded mb-2"></div>
+      <div className="h-4 w-1/2 bg-gray-200 rounded mb-6"></div>
+      <div className="h-8 w-32 bg-gray-200 rounded-full"></div>
+    </div>
+  );
+}
 
 export default function BlogList() {
   const [blogs, setBlogs] = useState([]);
-  const [blogsFeatured, setBlogsFeatured] = useState([]);
-  const [recent, setRecent] = useState([]);
+  const [recentBlogs, setRecentBlogs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const reqIdRef = useRef(0);
@@ -22,6 +122,7 @@ export default function BlogList() {
   const fetchBlogs = useCallback(async (p = 1) => {
     const id = ++reqIdRef.current;
     setLoading(true);
+    setError("");
 
     try {
       const base = constant?.API?.BLOG;
@@ -34,56 +135,31 @@ export default function BlogList() {
 
       if (!res?.status) {
         setBlogs([]);
-        setRecent([]);
+        setRecentBlogs([]);
         setCategories([]);
-        return
+        setError(res?.message || "Unable to load blogs right now.");
+        return;
       }
-      const results = res?.data?.map((b) => ({
-        id: b.id,
-        title: b.title,
-        author: b.author,
-        category: b.category,
-        date: new Date(b.publishdate).toLocaleDateString("en-IN", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        }),
-        image: `${constant.BASE_URL}/${b.image}`,
-        shortdes: b.shortdes,
-        slug: b.slug,
-      }));
+      const results = normalizeBlogs(res?.data);
+      const mainIds = new Set(results.map((b) => b.id));
 
-      const featured = res?.recentblog?.map((b) => ({
-        id: b.id,
-        title: b.title,
-        author: b.author,
-        category: b.category,
-        date: new Date(b.publishdate).toLocaleDateString("en-IN", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        }),
-        image: `${constant.BASE_URL}/${b.image}`,
-        shortdes: b.shortdes,
-        slug: b.slug,
-      }));
+      // "Recent Blogs" is a genuinely different set from the main list —
+      // whatever the API's own "most recent" feed returns, minus anything
+      // already shown above, so nothing appears twice on the page.
+      const recent = normalizeBlogs(res?.recentblog).filter(
+        (b) => !mainIds.has(b.id)
+      );
 
       setBlogs(results);
-      setBlogsFeatured(featured);
-
-      setRecent(res.recentblog || []);
+      setRecentBlogs(recent);
       setCategories(res.categoryCounts || []);
       const total = Number(res.totalPages);
-      setTotalPages(total);
-
-      //  console.warn("Invalid response:", res);
-      // // showError("Unable to load blogs.");
-      // setBlogs([]);
-      // setRecent([]);
-      // setCategories([]);
+      setTotalPages(Number.isFinite(total) && total > 0 ? total : 1);
     } catch (err) {
       console.error("Error fetching blogs:", err);
       setBlogs([]);
+      setRecentBlogs([]);
+      setError("Failed to load blogs. Please try again.");
     } finally {
       if (id === reqIdRef.current) setLoading(false);
     }
@@ -106,152 +182,39 @@ export default function BlogList() {
         <div className="max-w-6xl mx-auto grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {loading ? (
             Array.from({ length: PER_PAGE }).map((_, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-2xl border border-[#e4ebfa] p-5 animate-pulse"
-              >
-                <div className="h-56 w-full bg-gray-200 rounded-xl mb-4"></div>
-                <div className="h-4 w-3/4 bg-gray-200 rounded mb-2"></div>
-                <div className="h-4 w-1/2 bg-gray-200 rounded mb-6"></div>
-                <div className="h-8 w-32 bg-gray-200 rounded-full"></div>
-              </div>
+              <BlogCardSkeleton key={i} />
             ))
+          ) : error ? (
+            <div className="col-span-full text-center text-red-600 font-medium py-10">
+              {error}
+            </div>
           ) : blogs.length === 0 ? (
             <div className="col-span-full text-center text-gray-500 py-10">
               No blogs available.
             </div>
           ) : (
-            blogs.map((blog, i) => (
-              <div
-                key={i}
-                className="group bg-white rounded-2xl border border-[#e4ebfa] shadow-sm hover:shadow-md transition-all duration-300 p-5 cursor-pointer"
-              >
-                <div className="relative overflow-hidden rounded-xl mb-4 group">
-                  <div className="relative w-full h-56 rounded-xl overflow-hidden">
-                    <Image
-                      src={blog.image}
-                      alt={blog.title}
-                      fill
-                      className="object-cover rounded-xl transform transition-all duration-[900ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:scale-110 group-hover:-translate-y-2"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  </div>
-
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#00000070] via-[#00000030] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
-                </div>
-
-                <div className="flex items-center gap-2 text-gray-400 text-sm mb-3">
-                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  <span>{blog.date}</span>
-                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  <span>{blog.author}</span>
-                </div>
-
-                <h3 className="text-[17px] font-semibold text-[#1b2c4f] mb-3 leading-snug group-hover:text-[#1363df] transition-colors duration-300">
-                  {blog.title}
-                </h3>
-
-                <p className="text-gray-500 text-sm mb-5 line-clamp-2">
-                  {blog.shortdes}
-                </p>
-
-                <Link
-                  href={{
-                    pathname: `/blog/${blog.slug}`,
-                    query: { id: blog.id },
-                  }}
-                >
-                  <button
-                    type="submit"
-                    className="relative overflow-hidden cursor-pointer bg-[#0072CE] text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-500 ease-in-out group w-full sm:w-auto"
-                  >
-                    <span className="relative z-10 transition-colors duration-500 ease-in-out">
-                      Read More →
-                    </span>
-                    <span className="absolute inset-0 bg-[#00B388] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-in-out"></span>
-                  </button>
-                </Link>
-              </div>
+            blogs.map((blog) => (
+              <BlogCard key={blog.id ?? blog.slug} blog={blog} />
             ))
           )}
         </div>
-        <div className="my-8 max-w-6xl mx-auto flex items-center gap-4">
-          <h3 className="text-xl sm:text-2xl font-extrabold text-[#0C78D1]">Recent Blogs</h3>
-          <div className="h-px flex-1 bg-slate-300"></div>
-        </div>
 
-        <div className="max-w-6xl mx-auto grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {loading ? (
-            Array.from({ length: PER_PAGE }).map((_, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-2xl border border-[#e4ebfa] p-5 animate-pulse"
-              >
-                <div className="h-56 w-full bg-gray-200 rounded-xl mb-4"></div>
-                <div className="h-4 w-3/4 bg-gray-200 rounded mb-2"></div>
-                <div className="h-4 w-1/2 bg-gray-200 rounded mb-6"></div>
-                <div className="h-8 w-32 bg-gray-200 rounded-full"></div>
-              </div>
-            ))
-          ) : blogsFeatured?.length === 0 ? (
-            <div className="col-span-full text-center text-gray-500 py-10">
-              No blogs available.
+        {!loading && !error && recentBlogs.length > 0 && (
+          <>
+            <div className="my-8 max-w-6xl mx-auto flex items-center gap-4">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-[#0C78D1]">
+                Recent Blogs
+              </h3>
+              <div className="h-px flex-1 bg-slate-300"></div>
             </div>
-          ) : (
-            blogsFeatured?.map((blog, i) => (
-              <div
-                key={i}
-                className="group bg-white rounded-2xl border border-[#e4ebfa] shadow-sm hover:shadow-md transition-all duration-300 p-5 cursor-pointer"
-              >
-                <div className="relative overflow-hidden rounded-xl mb-4 group">
-                  <div className="relative w-full h-56 rounded-xl overflow-hidden">
-                    <Image
-                      src={blog.image}
-                      alt={blog.title}
-                      fill
-                      className="object-cover rounded-xl transform transition-all duration-[900ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:scale-110 group-hover:-translate-y-2"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  </div>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#00000070] via-[#00000030] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
-                </div>
-
-                <div className="flex items-center gap-2 text-gray-400 text-sm mb-3">
-                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  <span>{blog.date}</span>
-                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  <span>{blog.author}</span>
-                </div>
-
-                <h3 className="text-[17px] font-semibold text-[#1b2c4f] mb-3 leading-snug group-hover:text-[#1363df] transition-colors duration-300">
-                  {blog.title}
-                </h3>
-
-                <p className="text-gray-500 text-sm mb-5 line-clamp-2">
-                  {blog.shortdes}
-                </p>
-
-                <Link
-                  href={{
-                    pathname: `/blog/${blog.slug}`,
-                    query: { id: blog.id },
-                  }}
-                >
-                  <button
-                    type="submit"
-                    className="relative overflow-hidden cursor-pointer bg-[#0072CE] text-white font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-500 ease-in-out group w-full sm:w-auto"
-                  >
-                    <span className="relative z-10 transition-colors duration-500 ease-in-out">
-                      Read More →
-                    </span>
-                    <span className="absolute inset-0 bg-[#00B388] -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-in-out"></span>
-                  </button>
-                </Link>
-              </div>
-            ))
-          )}
-        </div>
+            <div className="max-w-6xl mx-auto grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+              {recentBlogs.map((blog) => (
+                <BlogCard key={blog.id ?? blog.slug} blog={blog} />
+              ))}
+            </div>
+          </>
+        )}
 
         {!loading && totalPages > 1 && (
           <div className="max-w-6xl mx-auto flex justify-end mt-10">
