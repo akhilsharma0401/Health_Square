@@ -88,6 +88,19 @@ export const sanitizeFaqHtml = (html = "") => {
     (m, path) => `src="${constant.BASE_URL}/${path}"`
   );
 
+  // Content pasted into the editor from elsewhere (a code editor, a
+  // dark-themed page, Word/Google Docs) can carry its own inline
+  // style="..." and class="..." along with it — e.g. a black background and
+  // monospace font. The FAQ card's own design should always win, so drop
+  // any author-supplied style/class entirely rather than letting pasted
+  // formatting override it.
+  html = html.replace(/\s(style|class)=["'][^"']*["']/gi, "");
+
+  // Unwrap (not strip — keep the text) any code/pre/font blocks a paste may
+  // have introduced; they're a common source of the dark/monospace look and
+  // aren't appropriate formatting for a short question or answer.
+  html = html.replace(/<\/?(?:pre|code|font)(?:\s[^>]*)?>/gi, "");
+
   // Any <a> that doesn't already declare a target opens in a new tab, with
   // rel="noopener noreferrer" for safety.
   html = html.replace(/<a\s+(?![^>]*target=)([^>]*)>/gi, (m, attrs) => {

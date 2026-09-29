@@ -67,7 +67,8 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://rest.healthsquare.in/api/:path*",
+        // destination: "https://rest.healthsquare.in/api/:path*",
+        destination: "http://192.168.1.48:3593/api/:path*",
       },
     ];
   },
