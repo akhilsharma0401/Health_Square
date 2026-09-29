@@ -164,7 +164,7 @@ export default function BlogDetail() {
       />
 
       <main className="relative w-full overflow-hidden">
-        <section className="max-w-6xl mx-auto grid md:grid-cols-2 grid-cols-1 items-center justify-between gap-5 px-4 py-2 md:py-10">
+        <section className="max-w-7xl mx-auto grid md:grid-cols-2 grid-cols-1 items-center justify-between gap-5 px-4 py-2 md:py-10">
 
           {/* Left Content */}
           <motion.div
@@ -281,8 +281,8 @@ export default function BlogDetail() {
         </section>
 
 
-        <section className="relative bg-gradient-to-b from-[#f8fbff] to-white py-5 md:py-16 px-6">
-          <div className="max-w-5xl mx-auto">
+        <section className="relative bg-gradient-to-b from-[#f8fbff] to-white py-5 md:py-10 px-6">
+          <div className="max-w-7xl mx-auto">
             <div className="mb-2 md:mb-10 flex justify-between items-center text-sm text-gray-600">
               <div className="flex flex-wrap items-center gap-2">
                 <Link href="/" className="hover:text-[#1F4C7A]">

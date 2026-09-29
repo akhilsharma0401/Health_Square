@@ -24,19 +24,19 @@ export default function FAQSection({ faqs }) {
   if (items.length === 0) return null;
 
   return (
-    <section className="relative">
-      <div className="mx-auto mb-10 h-6 w-40 rounded-b-[999px] bg-gradient-to-r from-[#03AB68]/40 via-[#0E76CD]/40 to-[#03AB68]/40" />
+    <section className="relative max-w-7xl mx-auto mb-5 md:mb-10">
+      {/* <div className="mx-auto mb-10 h-6 w-40 rounded-b-[999px] bg-gradient-to-r from-[#03AB68]/40 via-[#0E76CD]/40 to-[#03AB68]/40" /> */}
       <motion.div
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="bg-gradient-to-br from-[#F0F7FF] via-white to-[#F0FFF7] rounded-3xl shadow-2xl border border-[#DDEBFF] p-8 md:p-10"
+        className="bg-gradient-to-br from-[#F0F7FF] via-white to-[#F0FFF7] rounded-3xl shadow-xl border border-[#DDEBFF] p-8 md:p-10"
       >
         <h2 className="text-3xl font-extrabold text-[#0E76CD] text-center mb-8">
           Frequently Asked Questions
         </h2>
-        <div className="max-w-3xl mx-auto space-y-4">
+        <div className="max-w-5xl mx-auto space-y-4">
           {items.map((faq, i) => (
             <FAQItem
               key={i}
@@ -91,7 +91,7 @@ function FAQItem({ i, openIndex, setOpenIndex, question, answer }) {
         className="overflow-hidden border-t border-[#F1F6FF]"
       >
         <div
-          className="px-6 py-4 text-gray-700 [&_p]:m-0 [&_a]:text-[#0E76CD] [&_a]:underline"
+          className="px-6 py-4 text-gray-700 [&_p]:m-0 [&_a]:text-[#0E76CD] [&_a]:underline text-md"
           dangerouslySetInnerHTML={{ __html: answer }}
         />
       </motion.div>
