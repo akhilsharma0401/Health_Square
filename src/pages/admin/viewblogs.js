@@ -64,7 +64,7 @@ export default function BlogTable() {
       status:
         b.status == 1 ||
           b.status == "1" ||
-          b.status === "publish" ||
+          b.status === "published" ||
           b.is_published
           ? "Published"
           : "Draft",
@@ -77,7 +77,7 @@ export default function BlogTable() {
       let url = constant.API.BLOG;
       url +=
         (url.includes("?") ? "&" : "?") +
-        `page=${targetPage}&per_page=${PER_PAGE}`;
+        `page=${targetPage}&per_page=${PER_PAGE}&role=admin`;
 
       let res = null;
       try {

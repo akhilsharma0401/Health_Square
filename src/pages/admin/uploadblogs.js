@@ -330,7 +330,7 @@ function BlogUploadFormInner() {
 
     try {
       setSubmitting(true);
-      await submitToApi({ ...formData, status: "publish" });
+      await submitToApi({ ...formData, status: "published" });
       showSuccess(
         isEdit ? "Blog updated successfully" : "Blog saved successfully",
       );
