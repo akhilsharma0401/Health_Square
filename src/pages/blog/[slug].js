@@ -14,7 +14,11 @@ import constant from "@/src/env";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import FAQSection from "@/src/components/blog/faqsection";
-import { toAbs, stripHtml, sanitizeAndAbsolutize } from "@/src/utils/sanitizeHtml";
+import {
+  toAbs,
+  stripHtml,
+  sanitizeAndAbsolutize,
+} from "@/src/utils/sanitizeHtml";
 import {
   FiUser,
   FiCalendar,
@@ -38,9 +42,8 @@ const FALLBACK_IMAGE = "/images/appointment.jpg";
 const calcReadingTime = (html = "") =>
   Math.max(
     1,
-    Math.ceil(stripHtml(html).split(/\s+/).filter(Boolean).length / 200)
+    Math.ceil(stripHtml(html).split(/\s+/).filter(Boolean).length / 200),
   );
-
 
 // const pickTitle = (b) =>
 //   b?.metatitle ||
@@ -71,7 +74,7 @@ export default function BlogDetail() {
               ? res.data || res.blog
               : null;
           if (b && typeof b === "object") {
-            const tags = b?.tags?.split(",")
+            const tags = b?.tags?.split(",");
             const rawFaqs = b.faqs ?? b.faq ?? [];
             const parsedFaqs =
               typeof rawFaqs === "string"
@@ -115,7 +118,7 @@ export default function BlogDetail() {
 
   const safeHtml = useMemo(
     () => sanitizeAndAbsolutize(post?.content || ""),
-    [post?.content]
+    [post?.content],
   );
   const title = post ? post.title : "Blog";
   const hero = toAbs(post?.image || "") || FALLBACK_IMAGE;
@@ -147,9 +150,7 @@ export default function BlogDetail() {
           slug, not whatever query params happen to be on this load). */}
       <Seo
         title={
-          post?.meta?.title
-            ? post.meta.title
-            : `${title} | Health Square Blog`
+          post?.meta?.title ? post.meta.title : `${title} | Health Square Blog`
         }
         description={
           post?.meta?.description ||
@@ -165,7 +166,6 @@ export default function BlogDetail() {
 
       <main className="relative w-full overflow-hidden">
         <section className="max-w-7xl mx-auto grid md:grid-cols-2 grid-cols-1 items-center justify-between gap-5 px-4 py-2 md:py-10">
-
           {/* Left Content */}
           <motion.div
             {...fade}
@@ -231,14 +231,17 @@ export default function BlogDetail() {
                   const url = window.location.href;
 
                   try {
-                    if (navigator.share && window.location.protocol === "https:") {
+                    if (
+                      navigator.share &&
+                      window.location.protocol === "https:"
+                    ) {
                       await navigator.share({ title, text: title, url });
                     } else if (navigator.clipboard) {
                       await navigator.clipboard.writeText(url);
                       setCopied(true);
                       setTimeout(() => setCopied(false), 1400);
                     }
-                  } catch { }
+                  } catch {}
                 }}
                 className="flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2 text-sm font-medium hover:bg-slate-100 transition"
               >
@@ -265,7 +268,6 @@ export default function BlogDetail() {
             </motion.div>
           </motion.div>
 
-
           {/* Right Image */}
           <div className="relative w-full h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-xl bg-slate-100">
             <Image
@@ -273,13 +275,11 @@ export default function BlogDetail() {
               alt={title || "Blog Image"}
               fill
               priority
-              className="object-contain"
+              className="object-fill"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
-
         </section>
-
 
         <section className="relative bg-gradient-to-b from-[#f8fbff] to-white py-5 md:py-10 px-6">
           <div className="max-w-7xl mx-auto">
