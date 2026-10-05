@@ -20,7 +20,7 @@ export default function Home() {
       <Seo
         title="RGHS Empanelled Pharmacy in Jaipur | Health Square"
         description="HealthSquare offers RGHS pharmacy services to help eligible members obtain free medicines under Rajasthan Government Health Scheme." 
-        currentUrl="https://healthsquare.in/rghs-pharmacy"
+        currentUrl="https://www.healthsquare.in/rghs-pharmacy"
         />
       <JsonLd
         id="page"
@@ -259,7 +259,7 @@ export default function Home() {
           >
             <h2 className="text-xl md:text-2xl font-semibold text-blue-900 mb-3">
               <a
-                href="https://healthsquare.in"
+                href="https://www.healthsquare.in"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 gap-1 underline"

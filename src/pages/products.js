@@ -16,7 +16,7 @@ export default function Home() {
       <Seo
         title="Health & Wellness Products in Jaipur | Health Square Pharmacy"
         description="Shop pharmacy, vitamins, fitness, and wellness products at Health Square ,Jaipur’s trusted pharmacy with fast, reliable doorstep delivery."
-        currentUrl="https://healthsquare.in/products"
+        currentUrl="https://www.healthsquare.in/products"
         />
       <JsonLd id="page" data={breadcrumbSchema([{ name: "Pharmacy", path: "/pharmacy" }, { name: "Health Products", path: "/products" }])} />
        <main>

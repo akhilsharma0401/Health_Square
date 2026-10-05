@@ -28,7 +28,7 @@ export default function Home() {
       <Seo
         title="Health Square Jaipur | Dental Clinic & Pharmacy in Biswa Nagar"
         description="Health Square, Biswa Nagar, Jaipur: a dental clinic led by Dr. Sonal Agarwal and an RGHS-empanelled pharmacy with home delivery. Call 7403330888."
-        currentUrl="https://healthsquare.in"
+        currentUrl="https://www.healthsquare.in"
         />
       <JsonLd id="page" data={[dentistSchema, pharmacySchema, personSchema]} />
       <main>

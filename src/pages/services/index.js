@@ -80,7 +80,7 @@ const OurServices = () => {
       <Seo
         title="Dental Treatments in Jaipur | Health Square Dental Clinic"
         description="Experience expert dental care in Jaipur with Health Square — from painless root canals to smile makeovers, teeth whitening, and complete oral treatments."
-        currentUrl="https://healthsquare.in/services"
+        currentUrl="https://www.healthsquare.in/services"
       />
       <JsonLd id="page" data={[dentistSchema, breadcrumbSchema([{ name: "Dental Care Services", path: "/services" }])]} />
       <section

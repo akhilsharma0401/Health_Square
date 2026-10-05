@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-const SITE_URL = "https://healthsquare.in";
+const SITE_URL = "https://www.healthsquare.in/";
 
 export default function Seo({ title = "Health Square", description, currentUrl, image, noindex = false }) {
   const router = useRouter();

@@ -11,7 +11,7 @@ export default function Contact() {
       <Seo
   title="Contact Us | Health Square Dental Clinic & Pharmacy in Jaipur"
   description="Reach out to Health Square Dental Clinic and Pharmacy in Jaipur. Call, visit, or message us for appointments, dental treatments, and pharmacy support."
-  currentUrl="https://healthsquare.in/contact"
+  currentUrl="https://www.healthsquare.in/contact"
 />
       <JsonLd id="page" data={[dentistSchema, pharmacySchema, breadcrumbSchema([{ name: "Contact", path: "/contact" }])]} />
 

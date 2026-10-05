@@ -18,7 +18,7 @@ export default function Pharmacy() {
     <Seo
   title="Pharmacy in Jaipur with Home Delivery | Health Square Pharmacy"
   description="Health Square Pharmacy, Biswa Nagar, Jaipur: genuine medicines, healthcare products and home delivery. Open Mon–Sat 7 AM–11 PM, Sun 11 AM–4 PM."
-  currentUrl="https://healthsquare.in/pharmacy"
+  currentUrl="https://www.healthsquare.in/pharmacy"
 />
       <JsonLd id="page" data={[pharmacySchema, faqSchema(pharmacyFaqs), breadcrumbSchema([{ name: "Pharmacy", path: "/pharmacy" }])]} />
 

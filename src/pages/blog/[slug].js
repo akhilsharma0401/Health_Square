@@ -160,7 +160,7 @@ export default function BlogDetail() {
         keywords={post?.meta?.keywords || post?.tags || ""}
         image={hero}
         currentUrl={
-          post?.slug ? `https://healthsquare.in/blog/${post.slug}` : undefined
+          post?.slug ? `https://www.healthsquare.in/blog/${post.slug}` : undefined
         }
       />
 

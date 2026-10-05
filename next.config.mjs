@@ -57,7 +57,7 @@ const nextConfig = {
       // {
       //   source: "/:path*",
       //   has: [{ type: "host", value: "www.healthsquare.in" }],
-      //   destination: "https://healthsquare.in/:path*",
+      //   destination: "https://www.healthsquare.in/:path*",
       //   statusCode: 301,
       // },
     ];

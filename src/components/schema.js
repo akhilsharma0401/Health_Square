@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export const SITE_URL = "https://healthsquare.in";
+export const SITE_URL = "https://www.healthsquare.in";
 
 // Single source of truth for NAP + hours. Keep in sync with the Google Business Profile.
 export const BUSINESS = {
