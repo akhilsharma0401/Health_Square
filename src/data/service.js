@@ -2,7 +2,7 @@ export const servicesData = [
   {
     slug: "smile-design",
     metatitle: "Natural Smile Design at Healthsquare Clinic",
-    metacurrentUrl: "https://www.healthsquare.in//services/smile-design",
+    metacurrentUrl: "https://www.healthsquare.in/services/smile-design",
     metadescription:
       "Smile Design at HealthSquare enhances your smile’s shape, color, and alignment using advanced digital dental technology.",
     title: "Smile Design in Jaipur",
@@ -225,7 +225,7 @@ export const servicesData = [
   {
     slug: "child-dental-care",
     metatitle: "Gentle Child Dental Care in Jaipur | HealthSquare",
-    metacurrentUrl: "https://www.healthsquare.in//services/child-dental-care",
+    metacurrentUrl: "https://www.healthsquare.in/services/child-dental-care",
     metadescription:
       "Looking for child dental care? HealthSquare offers gentle pediatric dentistry, preventive treatments, and stress-free dental visits for kids.",
     title: "Child Dental Care in Jaipur",
