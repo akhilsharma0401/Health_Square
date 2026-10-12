@@ -5,8 +5,16 @@ import { showSuccess, showError } from "@/src/components/toaster";
 import { callApiWithFile, callApi } from "@/src/api";
 import constant from "@/src/env";
 import RichTextEditor from "@/src/components/blog/uplodblogs/contenteditor";
+import RelatedBlogsSelect from "@/src/components/blog/uplodblogs/relatedblogsselect";
 import Image from "next/image";
 import { HiX } from "react-icons/hi";
+import {
+  isFeaturedValue,
+  pickFeaturedBlog,
+  blogsFromListResponse,
+  toLocalDateInput,
+  unfeatureOtherBlogs,
+} from "@/src/utils/featuredBlog";
 
 export default function BlogUploadFormPage() {
   const router = useRouter();
@@ -64,6 +72,16 @@ function BlogUploadFormInner() {
   const [newAuthor, setNewAuthor] = useState("");
 
   const [faqs, setFaqs] = useState([]);
+
+  // Related blogs: ids of the selected blogs, plus the pickable options
+  // fetched from the existing blog-list API.
+  const [relatedBlogs, setRelatedBlogs] = useState([]);
+  const [blogOptions, setBlogOptions] = useState([]);
+  const [blogOptionsLoading, setBlogOptionsLoading] = useState(true);
+  const [blogOptionsError, setBlogOptionsError] = useState("");
+  // The blog currently flagged as the Featured Blog (shown as a hint under
+  // the "Set as Featured Blog" option).
+  const [currentFeatured, setCurrentFeatured] = useState(null);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -170,7 +188,64 @@ function BlogUploadFormInner() {
     setFaqs((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handleImageChange = (e) => {
+  // Every blog image is saved at one common size (1200×800, 3:2) so cards
+  // and heroes look uniform. The whole picture is kept — never cropped; any
+  // spare space is filled with a blurred copy of it. Falls back to the
+  // original file if the browser can't process it.
+  const standardizeBlogImage = (file) =>
+    new Promise((resolve) => {
+      const W = 1200;
+      const H = 800;
+      const url = URL.createObjectURL(file);
+      const img = new window.Image();
+      img.onload = () => {
+        try {
+          const canvas = document.createElement("canvas");
+          canvas.width = W;
+          canvas.height = H;
+          const ctx = canvas.getContext("2d");
+          const iw = img.naturalWidth;
+          const ih = img.naturalHeight;
+
+          const cover = Math.max(W / iw, H / ih);
+          ctx.filter = "blur(28px)";
+          ctx.drawImage(
+            img,
+            (W - iw * cover) / 2,
+            (H - ih * cover) / 2,
+            iw * cover,
+            ih * cover
+          );
+          ctx.filter = "none";
+
+          const fit = Math.min(W / iw, H / ih);
+          const dw = iw * fit;
+          const dh = ih * fit;
+          ctx.drawImage(img, (W - dw) / 2, (H - dh) / 2, dw, dh);
+
+          canvas.toBlob(
+            (blob) => {
+              URL.revokeObjectURL(url);
+              if (!blob) return resolve(file);
+              const base = file.name.replace(/\.[^.]+$/, "") || "blog-image";
+              resolve(new File([blob], `${base}.jpg`, { type: "image/jpeg" }));
+            },
+            "image/jpeg",
+            0.9
+          );
+        } catch {
+          URL.revokeObjectURL(url);
+          resolve(file);
+        }
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        resolve(file);
+      };
+      img.src = url;
+    });
+
+  const handleImageChange = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -189,10 +264,12 @@ function BlogUploadFormInner() {
       return;
     }
 
+    const standard = await standardizeBlogImage(file);
+
     if (preview && preview.startsWith("blob:")) URL.revokeObjectURL(preview);
 
-    setImage(file);
-    setPreview(URL.createObjectURL(file));
+    setImage(standard);
+    setPreview(URL.createObjectURL(standard));
   };
 
   useEffect(() => {
@@ -200,6 +277,52 @@ function BlogUploadFormInner() {
       if (preview && preview.startsWith("blob:")) URL.revokeObjectURL(preview);
     };
   }, [preview]);
+
+  // Populate the Related Blogs dropdown from the existing list API. The
+  // paginated full list comes back in `recentblog` (it honours
+  // page/per_page); `data` is only a fixed top-3, so it's just a fallback.
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setBlogOptionsLoading(true);
+      setBlogOptionsError("");
+      try {
+        const res = await callApi(
+          `${constant.API.BLOG}?page=1&per_page=1000&role=admin`,
+          "GET"
+        );
+        if (cancelled) return;
+        if (!res?.status) {
+          setBlogOptionsError(res?.message || "Could not load blogs.");
+          return;
+        }
+        const raw = Array.isArray(res.recentblog) && res.recentblog.length
+          ? res.recentblog
+          : Array.isArray(res.data)
+          ? res.data
+          : [];
+        const seen = new Set();
+        const opts = [];
+        for (const b of raw) {
+          if (b?.id == null || seen.has(String(b.id))) continue;
+          seen.add(String(b.id));
+          opts.push({ id: b.id, title: b.title || `Blog #${b.id}` });
+        }
+        setBlogOptions(opts);
+        const feat = pickFeaturedBlog(blogsFromListResponse(res));
+        setCurrentFeatured(
+          feat ? { id: feat.id, slug: feat.slug, title: feat.title } : null
+        );
+      } catch (e) {
+        if (!cancelled) setBlogOptionsError("Could not load blogs.");
+      } finally {
+        if (!cancelled) setBlogOptionsLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // --------- EDIT: load existing blog by id ----------
 
@@ -222,6 +345,7 @@ function BlogUploadFormInner() {
   function resetAll() {
     setFormData(EMPTY_FORM);
     setFaqs([]);
+    setRelatedBlogs([]);
     setImage(null);
     if (preview && typeof preview === "string" && preview.startsWith("blob:")) {
       URL.revokeObjectURL(preview);
@@ -233,7 +357,11 @@ function BlogUploadFormInner() {
     if (!path) return "";
     const s = String(path).trim();
     if (/^https?:\/\//i.test(s)) return s;
-    const base = (constant.BASE_URL || "").replace(/\/$/, "");
+    // Dev: same-origin, proxied by next.config.mjs to the active backend.
+    const base =
+      process.env.NODE_ENV === "production"
+        ? (constant.BASE_URL || "").replace(/\/$/, "")
+        : "";
     const file = s.replace(/^\/+/, "");
     return base ? `${base}/${file}` : `/${file}`;
   }
@@ -269,12 +397,9 @@ function BlogUploadFormInner() {
             blog.author_name ||
             blog.author ||
             "Admin",
-          publishdate: (
-            blog.publishdate ||
-            blog.publishDate ||
-            blog.published_at ||
-            ""
-          ).slice(0, 10),
+          publishdate: toLocalDateInput(
+            blog.publishdate || blog.publishDate || blog.published_at || ""
+          ),
           metatitle: blog.metatitle || blog.meta_title || "",
           metadescription: blog.metadescription || blog.meta_description || "",
           keywords: blog.keywords || "",
@@ -285,7 +410,9 @@ function BlogUploadFormInner() {
             blog.status === "Published"
               ? "published"
               : "draft",
-          featured: Boolean(blog.featured || blog.is_featured),
+          featured: isFeaturedValue(
+            blog.featured ?? blog.isFeatured ?? blog.is_featured
+          ),
         });
 
         const existingImage =
@@ -311,6 +438,30 @@ function BlogUploadFormInner() {
               }))
             : [],
         );
+
+        // Related blogs may arrive as an array, a JSON string, or a
+        // comma-separated string, of ids or of {id, ...} objects.
+        let rawRelated = blog.relatedBlogs ?? blog.related_blogs ?? [];
+        if (typeof rawRelated === "string") {
+          const t = rawRelated.trim();
+          if (t.startsWith("[")) {
+            try {
+              rawRelated = JSON.parse(t);
+            } catch {
+              rawRelated = [];
+            }
+          } else {
+            rawRelated = t ? t.split(",") : [];
+          }
+        }
+        const relatedIds = [];
+        (Array.isArray(rawRelated) ? rawRelated : []).forEach((r) => {
+          const rid = r && typeof r === "object" ? r.id : r;
+          const key = String(rid ?? "").trim();
+          if (!key || key === String(id) || relatedIds.includes(key)) return;
+          relatedIds.push(key);
+        });
+        setRelatedBlogs(relatedIds);
       } catch (e) {
         console.error(e);
         showError("Failed to load blog");
@@ -397,10 +548,53 @@ function BlogUploadFormInner() {
 
     try {
       setSubmitting(true);
-      await submitToApi({ ...formData, faqs, status: "published" });
+      await submitToApi({
+        ...formData,
+        faqs,
+        relatedBlogs: relatedBlogs.map(String),
+        isFeatured: formData.featured,
+        status: "published",
+      });
       showSuccess(
         isEdit ? "Blog updated successfully" : "Blog saved successfully",
       );
+
+      // Only one blog may be featured at a time. The backend doesn't
+      // enforce that itself, so clear the flag on every other blog now that
+      // this one is saved as featured.
+      if (formData.featured) {
+        try {
+          const { cleared, failed } = await unfeatureOtherBlogs({
+            keepId: isEdit ? blogId : null,
+            keepSlug: formData.slug,
+          });
+          if (cleared.length > 0) {
+            showSuccess("This is now the only Featured Blog.");
+          }
+          if (failed.length > 0) {
+            showError(
+              "Saved, but couldn't un-feature " +
+                failed.length +
+                " other blog(s). Edit them and untick “Set as Featured Blog”."
+            );
+          }
+        } catch {
+          showError(
+            "Saved, but couldn't check for other Featured Blogs. Please verify on the Blogs page."
+          );
+        }
+        setCurrentFeatured({
+          id: isEdit ? blogId : null,
+          slug: formData.slug,
+          title: formData.title,
+        });
+      } else if (
+        isEdit &&
+        currentFeatured &&
+        String(currentFeatured.id) === String(blogId)
+      ) {
+        setCurrentFeatured(null);
+      }
 
       resetAll();
 
@@ -423,7 +617,13 @@ function BlogUploadFormInner() {
     }
     try {
       setSubmitting(true);
-      await submitToApi({ ...formData, faqs, status: "draft" });
+      await submitToApi({
+        ...formData,
+        faqs,
+        relatedBlogs: relatedBlogs.map(String),
+        isFeatured: formData.featured,
+        status: "draft",
+      });
       showSuccess(isEdit ? "Draft updated" : "Draft saved");
     } catch (err) {
       console.error(err);
@@ -652,7 +852,7 @@ function BlogUploadFormInner() {
                       {isEdit ? "" : <span className="text-rose-500">*</span>}
                     </label>
                     <span className="text-[10px] px-2 py-1 rounded-full bg-sky-50 text-sky-700 border border-sky-100">
-                      1200×630 suggested
+                      Auto-resized to 1200×800
                     </span>
                   </div>
 
@@ -762,6 +962,24 @@ function BlogUploadFormInner() {
 
                 <div className="space-y-2">
                   <label className="block text-sm font-semibold text-gray-700">
+                    Related Blogs{" "}
+                    <span className="text-gray-400 font-normal">(optional)</span>
+                  </label>
+                  <RelatedBlogsSelect
+                    options={blogOptions}
+                    value={relatedBlogs}
+                    onChange={setRelatedBlogs}
+                    excludeId={blogId}
+                    loading={blogOptionsLoading}
+                    error={blogOptionsError}
+                  />
+                  <p className="text-xs text-gray-500">
+                    Pick other posts readers might want to see next.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-gray-700">
                     Author <span className="text-rose-500">*</span>
                   </label>
                   <select
@@ -851,27 +1069,56 @@ function BlogUploadFormInner() {
                   />
                 </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-[#e5e7eb] bg-white shadow-sm p-4">
-                  <label className="inline-flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      name="featured"
-                      checked={formData.featured}
-                      onChange={handleChange}
-                      className="w-4 h-4 accent-[#04A868] cursor-pointer rounded border-gray-300 text-indigo-600 focus:ring-indigo-200"
-                    />
-                    <span className="text-sm text-gray-700">Featured Blog</span>
-                  </label>
+                <div className="rounded-xl border border-[#e5e7eb] bg-white shadow-sm divide-y divide-[#e5e7eb]">
+                  <div className="p-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="featured"
+                        checked={formData.featured}
+                        onChange={handleChange}
+                        className="w-4 h-4 shrink-0 accent-[#04A868] cursor-pointer rounded border-gray-300"
+                      />
+                      <span className="text-sm font-medium text-gray-700">
+                        Set as Featured Blog
+                      </span>
+                    </label>
+                    <p className="mt-1.5 pl-6 text-xs leading-relaxed text-gray-500">
+                      {formData.featured &&
+                      currentFeatured &&
+                      String(currentFeatured.id) !== String(blogId) &&
+                      currentFeatured.slug !== formData.slug ? (
+                        <>
+                          Replaces the current Featured Blog:{" "}
+                          <span className="font-semibold text-blue-500">
+                            “{currentFeatured.title}”
+                          </span>
+                          .
+                        </>
+                      ) : (
+                        "Shown at the top of the Blogs page. Only one blog can be featured at a time."
+                      )}
+                    </p>
+                  </div>
 
-                  <select
-                    name="status"
-                    value={formData.status}
-                    onChange={handleChange}
-                    className="inputcls"
-                  >
-                    <option value="draft">Draft</option>
-                    <option value="published">Publish</option>
-                  </select>
+                  <div className="p-4 flex items-center justify-between gap-3">
+                    <label
+                      htmlFor="blog-status"
+                      className="text-sm font-medium text-gray-700"
+                    >
+                      Status
+                    </label>
+                    <select
+                      id="blog-status"
+                      name="status"
+                      value={formData.status}
+                      onChange={handleChange}
+                      className="inputcls !w-40"
+                    >
+                      <option value="draft">Draft</option>
+                      <option value="published">Publish</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 

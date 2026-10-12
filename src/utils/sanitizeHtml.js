@@ -2,11 +2,17 @@ import constant from "@/src/env";
 
 // Resolve a possibly-relative asset path (e.g. from the CMS) to an absolute
 // URL against the API's base URL.
+// In development, relative asset paths stay same-origin (next.config.mjs
+// proxies /uploads to whichever backend /api points at); in production they
+// resolve against the API's base URL.
+const assetBase = () =>
+  process.env.NODE_ENV === "production" ? constant.BASE_URL : "";
+
 export const toAbs = (url) => {
   if (!url || typeof url !== "string") return "";
   if (url.startsWith("http")) return url;
   const clean = url.startsWith("/") ? url : `/${url}`;
-  return `${constant.BASE_URL}${clean}`;
+  return `${assetBase()}${clean}`;
 };
 
 export const stripHtml = (s = "") =>
@@ -30,7 +36,7 @@ export const sanitizeAndAbsolutize = (html = "") => {
 
   html = html.replace(
     /src=["'](?!https?:|data:|\/)([^"']+)["']/gi,
-    (m, path) => `src="${constant.BASE_URL}/${path}"`
+    (m, path) => `src="${assetBase()}/${path}"`
   );
 
   html = html.replace(
@@ -85,7 +91,7 @@ export const sanitizeFaqHtml = (html = "") => {
   html = html.replace(/(src|href)=["'](null|undefined)["']/gi, '$1="#"');
   html = html.replace(
     /src=["'](?!https?:|data:|\/)([^"']+)["']/gi,
-    (m, path) => `src="${constant.BASE_URL}/${path}"`
+    (m, path) => `src="${assetBase()}/${path}"`
   );
 
   // Content pasted into the editor from elsewhere (a code editor, a

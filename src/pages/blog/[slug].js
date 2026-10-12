@@ -5,7 +5,7 @@ export const dynamicParams = true;
 export const fetchCache = "force-no-store";
 
 import Seo from "@/src/components/seo";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
@@ -14,6 +14,8 @@ import constant from "@/src/env";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import FAQSection from "@/src/components/blog/faqsection";
+import RelatedBlogs from "@/src/components/blog/relatedblogs";
+import { DEMO_RELATED_BY_SLUG } from "@/src/data/demoRelatedBlogs";
 import {
   toAbs,
   stripHtml,
@@ -39,6 +41,30 @@ export async function getStaticProps() {
 }
 const FALLBACK_IMAGE = "/images/appointment.jpg";
 
+// The blog API can only look a post up by numeric id, but post URLs are
+// clean (/blog/<slug>, no ?id=). Resolve slug -> id from the list API once
+// and keep it; a slug that isn't in the cached map triggers one refresh so
+// freshly published posts still resolve.
+let slugIdCache = null;
+async function resolveIdFromSlug(slug, { refresh = false } = {}) {
+  if (!slug) return null;
+  if (!slugIdCache || refresh) {
+    const res = await callApi(`${constant.API.BLOG}?page=1&per_page=1000`, "GET");
+    const list = [
+      ...(Array.isArray(res?.recentblog) ? res.recentblog : []),
+      ...(Array.isArray(res?.data) ? res.data : []),
+    ];
+    const map = new Map();
+    list.forEach((b) => {
+      if (b?.slug && b?.id != null) map.set(String(b.slug), b.id);
+    });
+    slugIdCache = map;
+  }
+  if (slugIdCache.has(slug)) return slugIdCache.get(slug);
+  if (!refresh) return resolveIdFromSlug(slug, { refresh: true });
+  return null;
+}
+
 const calcReadingTime = (html = "") =>
   Math.max(
     1,
@@ -54,19 +80,36 @@ const calcReadingTime = (html = "") =>
 
 export default function BlogDetail() {
   const router = useRouter();
-  const { id } = router.query;
+  const { slug, id: queryId } = router.query;
+  // Old links carry ?id=<n>; keep honouring it (no lookup needed) and clean
+  // the URL up afterwards. It's read through a ref so dropping it from the
+  // URL doesn't re-trigger the load below.
+  const queryIdRef = useRef(queryId);
+  queryIdRef.current = queryId;
   const [post, setPost] = useState(null);
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    if (!id) return;
+    if (!router.isReady || !slug) return;
     let cancelled = false;
+    // Moving between posts (e.g. via a Related Blogs card) reuses this same
+    // page component, so clear the previous post — otherwise its content,
+    // FAQs and related blogs linger until the new one arrives — and start
+    // the new one at the top.
+    setPost(null);
+    if (typeof window !== "undefined") window.scrollTo(0, 0);
     (async () => {
       setLoading(true);
       setErr("");
       try {
+        const id = queryIdRef.current || (await resolveIdFromSlug(slug));
+        if (cancelled) return;
+        if (id == null || id === "") {
+          setErr("Post not found.");
+          return;
+        }
         const res = await callApi(constant.API.SINGLEBLOG, "POST", { id });
         if (!cancelled) {
           const b =
@@ -86,6 +129,20 @@ export default function BlogDetail() {
                     }
                   })()
                 : rawFaqs;
+            // Related blogs come from the API. Until the backend stores them,
+            // fall back to the demo mapping (slug -> id) so the demo posts
+            // can show each other — see src/data/demoRelatedBlogs.js.
+            let related = b.relatedBlogs ?? b.related_blogs ?? [];
+            const hasRelated = Array.isArray(related)
+              ? related.length > 0
+              : String(related || "").trim() !== "";
+            if (!hasRelated && DEMO_RELATED_BY_SLUG[b.slug]) {
+              const resolved = await Promise.all(
+                DEMO_RELATED_BY_SLUG[b.slug].map((sl) => resolveIdFromSlug(sl))
+              );
+              if (cancelled) return;
+              related = resolved.filter((v) => v != null);
+            }
             setPost({
               id: b.id,
               slug: b.slug,
@@ -102,6 +159,7 @@ export default function BlogDetail() {
               category: b.category || "",
               tags: tags,
               faqs: Array.isArray(parsedFaqs) ? parsedFaqs : [],
+              relatedBlogs: related,
             });
           } else setErr(res?.message || "Post not found.");
         }
@@ -114,7 +172,18 @@ export default function BlogDetail() {
     return () => {
       cancelled = true;
     };
-  }, [id]);
+  }, [slug, router.isReady]);
+
+  // Old-style /blog/<slug>?id=<n> links: once loaded, show the clean URL.
+  useEffect(() => {
+    if (post && router.isReady && router.query.id !== undefined) {
+      router.replace(`/blog/${router.query.slug}`, undefined, {
+        shallow: true,
+        scroll: false,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [post]);
 
   const safeHtml = useMemo(
     () => sanitizeAndAbsolutize(post?.content || ""),
@@ -269,13 +338,18 @@ export default function BlogDetail() {
           </motion.div>
 
           {/* Right Image */}
-          <div className="relative w-full h-[300px] md:h-[400px] rounded-2xl overflow-hidden shadow-xl bg-slate-100">
+          <div className="relative w-full aspect-[3/2] rounded-2xl overflow-hidden shadow-xl bg-slate-100">
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 scale-125 bg-cover bg-center blur-xl opacity-60"
+              style={{ backgroundImage: `url("${hero}")` }}
+            />
             <Image
               src={hero}
               alt={title || "Blog Image"}
               fill
               priority
-              className="object-fill"
+              className="object-contain"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
@@ -332,6 +406,10 @@ export default function BlogDetail() {
         </section>
 
         {post?.faqs?.length > 0 && <FAQSection faqs={post.faqs} />}
+
+        {post?.id != null && (
+          <RelatedBlogs relatedBlogs={post.relatedBlogs} currentId={post.id} />
+        )}
 
         {/* <Head>
           <title>{title} | Blog</title>
