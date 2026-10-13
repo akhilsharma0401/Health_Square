@@ -15,6 +15,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import FAQSection from "@/src/components/blog/faqsection";
 import RelatedBlogs from "@/src/components/blog/relatedblogs";
+import BlogDetailSkeleton from "@/src/components/blog/blogdetailskeleton";
 import { DEMO_RELATED_BY_SLUG } from "@/src/data/demoRelatedBlogs";
 import {
   toAbs,
@@ -110,7 +111,11 @@ export default function BlogDetail() {
           setErr("Post not found.");
           return;
         }
-        const res = await callApi(constant.API.SINGLEBLOG, "POST", { id });
+        // String id: the blog-show API matches ids as text (a numeric id from the
+        // list can come back "not found").
+        const res = await callApi(constant.API.SINGLEBLOG, "POST", {
+          id: String(id),
+        });
         if (!cancelled) {
           const b =
             res?.status && (res?.data || res?.blog)
@@ -233,6 +238,13 @@ export default function BlogDetail() {
         }
       />
 
+      {/* While the post is being fetched (open, refresh, or moving between
+          posts) show a layout-matched skeleton instead of an empty page.
+          It's tied to the real request: it ends when the post arrives or
+          the request fails (then the error state below renders). */}
+      {!post && !err ? (
+        <BlogDetailSkeleton />
+      ) : (
       <main className="relative w-full overflow-hidden">
         <section className="max-w-7xl mx-auto grid md:grid-cols-2 grid-cols-1 items-center justify-between gap-5 px-4 py-2 md:py-10">
           {/* Left Content */}
@@ -388,15 +400,6 @@ export default function BlogDetail() {
               <div dangerouslySetInnerHTML={{ __html: safeHtml }} />
             </motion.article>
 
-            {loading && (
-              <div className="mt-12 animate-pulse bg-white rounded-3xl p-6 ring-1 ring-black/5 shadow-md">
-                <div className="h-6 bg-slate-200 rounded w-3/4 mb-3"></div>
-                <div className="h-6 bg-slate-200 rounded w-1/2 mb-3"></div>
-                <div className="h-4 bg-slate-200 rounded w-full mb-2"></div>
-                <div className="h-4 bg-slate-200 rounded w-5/6"></div>
-              </div>
-            )}
-
             {!loading && err && (
               <p className="py-10 text-center text-red-600 font-medium">
                 {err}
@@ -420,6 +423,7 @@ export default function BlogDetail() {
           )}
         </Head> */}
       </main>
+      )}
     </>
   );
 }
